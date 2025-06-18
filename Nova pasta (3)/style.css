@@ -1,0 +1,99 @@
+:root {
+  --vermelho-principal: #c90000;
+  --vermelho-escuro: #8b0000;
+  --branco: #ffffff;
+  --cinza-texto: #333;
+  --fundo-claro: #fdfdfd;
+  --fonte: 'Segoe UI', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--fonte);
+  background-color: var(--fundo-claro);
+  color: var(--cinza-texto);
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    "header"
+    "nav"
+    "main"
+    "footer";
+  grid-template-columns: 1fr;
+  min-height: 100vh;
+}
+
+.header {
+  grid-area: header;
+  background-color: var(--vermelho-principal);
+  color: var(--branco);
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.nav {
+  grid-area: nav;
+  background-color: var(--vermelho-escuro);
+  padding: 1rem 0;
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.nav a {
+  text-decoration: none;
+  color: var(--branco);
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  background-color: var(--vermelho-principal);
+  transition: background 0.3s;
+}
+
+.nav a:hover {
+  background-color: #ff4444;
+}
+
+.main {
+  grid-area: main;
+  padding: 2rem;
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+}
+
+.main img {
+  margin-top: 1rem;
+  max-width: 100%;
+  border: 3px solid var(--vermelho-principal);
+  border-radius: 10px;
+}
+
+.footer {
+  grid-area: footer;
+  background-color: var(--vermelho-escuro);
+  color: var(--branco);
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+
+@media (min-width: 768px) {
+  .nav ul {
+    justify-content: center;
+  }
+}
