@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Mundo da Natureza</title>
+</head>
+
+<body>
+    <div class="grid-container">
+        <header>
+
+  <video autoplay muted loop playsinline class="video-banner">
+    <source src="video/[NATUREZA] - Filmagem na floresta em Alta Qualidade com Drone - [4K] - AltaQualidade Videos (144p, h264).mp4" type="video/mp4">
+    Seu navegador não suporta vídeos em HTML5.
+  </video>
+
+ 
+  <h1>NATUREZA AMBIENTAL</h1>
+  <nav>
+    <ul>
+      <li><a href="#cuidar">Cuidar da Natureza</a></li>
+      <li><a href="#ninguem">O que ninguém te fala</a></li>
+      <li><a href="#vista">Uma bela vista</a></li>
+      <li><a href="#curiosidades">Curiosidades</a></li>
+      <li><a href="#rs">Florestas no Rio Grande do Sul</a></li>
+    </ul>
+  </nav>
+</header>
+
+        <main>
+            <section class="card1" id="cuidar">
+      
+                <img src="imagens/Asset-151@4x-8.png" alt="Natureza sendo preservada">
+                <div class="card11">
+                    <h2>Cuidar da Natureza</h2>
+                    <p>A consciência ambiental refere-se à compreensão de que as ações humanas têm um impacto direto no meio ambiente, exigindo atitudes responsáveis e sustentáveis.</p>
+                </div>
+            </section>
+
+            <br>
+
+            <section class="card2" id="ninguem">
+                <img src="imagens/fogo-na-floresta.webp" alt="Queimadas na Amazônia">
+                <div class="card22">
+                    <h2>O que ninguém te fala</h2>
+                    <p>As queimadas na Amazônia são um problema recorrente, com aumento alarmante em 2024. Elas afetam a biodiversidade, emitem gases e mudam o clima.</p>
+                </div>
+            </section>
+
+            <br>
+
+            <section class="card3-com-aside" id="vista">
+                <div class="card3">
+                    <img src="imagens/images.jpg" alt="Floresta natural">
+                    <div class="card33">
+                        <h2>Uma bela vista</h2>
+                        <p>Quer tirar um tempo da vida agitada das cidades? Conheça essa bela floresta totalmente natural.</p>
+                    </div>
+                </div>
+
+                <aside id="curiosidades">
+                    <h3>VOCÊ SABIA?</h3>
+                    <p>As florestas cobrem cerca de um terço do planeta e são vitais para a vida, regulando o clima e armazenando carbono.</p>
+                </aside>
+            </section>
+
+            <section class="card4" id="rs">
+                <img src="imagens/images" alt="Florestas no RS">
+                <div class="card44">
+                    <h2>Florestas no Rio Grande do Sul</h2>
+                    <p>O estado abriga trechos da Mata Atlântica, com florestas densas, araucárias e florestas plantadas de eucalipto, pinus e acácia-negra.</p>
+                </div>
+            </section>
+
+            <form action="#">
+                <fieldset>
+                    <legend>Formulário</legend>
+
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" placeholder="Digite seu nome aqui" required>
+
+                    <label for="cpfcnj">CPF/CNPJ:</label>
+                    <input type="text" id="cpfcnj" placeholder="000.000.000-00" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}">
+
+                    <label for="data">Data de nascimento:</label>
+                    <input type="date" id="data" max="2025-07-02" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" placeholder="Digite aqui seu Email" required>
+
+                    <label for="numero">Número de telefone:</label>
+                    <input type="tel" id="numero" placeholder="(00) 00000-0000" pattern="\(\d{2}\) \d{5}-\d{4}">
+
+                    <label><strong>Assunto:</strong></label>
+                    <input type="radio" name="assunto" value="Preservação Ambiental" required>Preservação Ambiental<br>
+                    <input type="radio" name="assunto" value="Dúvidas sobre Animais e Plantas">Dúvidas sobre Animais e Plantas<br>
+                    <input type="radio" name="assunto" value="Sustentabilidade e Reciclagem">Sustentabilidade e Reciclagem<br>
+                    <input type="radio" name="assunto" value="Educação Ambiental">Educação Ambiental<br>
+                    <input type="radio" name="assunto" value="Outros">Outros:
+                    <input type="text" id="assunto" placeholder="Especifique se escolheu Outros">
+
+                    <label for="mensagem">Mensagem:</label>
+                    <textarea id="mensagem" rows="5" placeholder="Escreva sua mensagem aqui..." required></textarea>
+
+                    <label for="termo" title="Declaro que li e concordo com os termos de uso e com a política de privacidade.">
+                        Termos e Condições (Mantenha o mouse aqui para ver os termos)
+                    </label>
+                    <input type="checkbox" name="termo" required> Aceito
+
+                    <br><br>
+                    <button type="submit">Enviar</button>
+                </fieldset>
+            </form>
+        </main>
+
+        <footer>
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>Contato</h3>
+                    <p>Email: natureza.ambieltal@yahoo.com</p>
+                    <p>Telefone: (69) 1587-6895</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Links</h3>
+                    <p><a href="#">Página Inicial</a></p>
+                    <p><a href="#">Sobre Nós</a></p>
+                    <p><a href="#">Serviços</a></p>
+                </div>
+                <div class="footer-col">
+                    <h3>Siga-nos</h3>
+                    <p>VK | Koo | Orkut</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
