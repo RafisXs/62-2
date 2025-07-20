@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIKONFIG - Loja Completa</title>
+    <style>
+        /* ===== VARIÁVEIS GLOBAIS ===== */
+        :root {
+            --primary: #002366;
+            --primary-dark: #001a4d;
+            --secondary: #ff69b4;
+            --secondary-dark: #e0559c;
+            --dark: #222;
+            --light: #f8f9fa;
+            --gray: #e0e0e0;
+            --gray-dark: #ccc;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* ===== LAYOUT ===== */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ===== COMPONENTES ===== */
+        /* Header */
+        .main-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            box-shadow: var(--box-shadow);
+            padding: 15px 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Navigation */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            margin: 5px 0;
+            transition: var(--transition);
+        }
+
+        .nav-list {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            position: relative;
+            padding: 5px 0;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .cart-count {
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 40px 0;
+            min-height: calc(100vh - 150px);
+        }
+
+        .page-title {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: var(--primary);
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: var(--secondary-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Product Cards */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            border: 1px solid var(--gray);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .product-old-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .product-discount {
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        /* Product Detail */
+        .product-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .product-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 400px;
+            object-fit: contain;
+            border: 1px solid var(--gray);
+            border-radius: var(--border-radius);
+            padding: 20px;
+        }
+
+        .thumbnail-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .thumbnail {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border: 1px solid var(--gray);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .thumbnail:hover {
+            border-color: var(--primary);
+        }
+
+        .product-meta {
+            margin-bottom: 20px;
+        }
+
+        .product-ref {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .product-description {
+            margin: 20px 0;
+            line-height: 1.8;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--gray);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .quantity-btn {
+            background: var(--gray);
+            border: none;
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .quantity-input {
+            width: 50px;
+            height: 40px;
+            text-align: center;
+            border: none;
+            border-left: 1px solid var(--gray);
+            border-right: 1px solid var(--gray);
+        }
+
+        /* Cart Page */
+        .cart-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            border: 1px solid var(--gray);
+            border-radius: var(--border-radius);
+        }
+
+        .cart-item-image {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            border-radius: var(--border-radius);
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .cart-item-price {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .cart-item-remove {
+            color: var(--danger);
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .cart-summary {
+            padding: 20px;
+            border: 1px solid var(--gray);
+            border-radius: var(--border-radius);
+            height: fit-content;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .summary-total {
+            font-size: 20px;
+            font-weight: 700;
+            border-top: 1px solid var(--gray);
+            padding-top: 15px;
+        }
+
+        /* Checkout */
+        .checkout-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .checkout-steps::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gray);
+            z-index: -1;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--gray);
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .step.active .step-number {
+            background: var(--primary);
+            color: white;
+        }
+
+        .step.completed .step-number {
+            background: var(--success);
+            color: white;
+        }
+
+        .step-title {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .checkout-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--gray);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 35, 102, 0.1);
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .payment-method {
+            border: 1px solid var(--gray);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary);
+        }
+
+        .payment-method.selected {
+            border-color: var(--primary);
+            background: rgba(0, 35, 102, 0.05);
+        }
+
+        .payment-icon {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .payment-name {
+            font-weight: 500;
+        }
+
+        /* Order Summary */
+        .order-summary {
+            border: 1px solid var(--gray);
+            border-radius: var(--border-radius);
+            padding: 20px;
+        }
+
+        .order-items {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .order-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--gray);
+        }
+
+        .order-item-image {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border-radius: var(--border-radius);
+        }
+
+        .order-item-details {
+            flex: 1;
+        }
+
+        .order-item-title {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .order-item-price {
+            font-size: 14px;
+            color: var(--primary);
+        }
+
+        /* Success Page */
+        .order-success {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .success-icon {
+            font-size: 80px;
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        .main-footer {
+            background: var(--dark);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
+        @media (max-width: 992px) {
+            .cart-container,
+            .product-detail,
+            .checkout-form {
+                grid-template-columns: 1fr;
+            }
+
+            .product-gallery {
+                order: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+
+            .nav-list {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: var(--box-shadow);
+                transition: var(--transition);
+            }
+
+            .nav-list.active {
+                left: 0;
+            }
+
+            .cart-item {
+                flex-direction: column;
+            }
+
+            .cart-item-image {
+                width: 100%;
+                height: auto;
+            }
+
+            .product-actions {
+                flex-direction: column;
+            }
+
+            .quantity-selector {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container header-container">
+            <a href="#" class="logo" onclick="loadPage('index.html')">BIKONFIG</a>
+            
+            <button class="nav-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="#" class="nav-link" onclick="loadPage('index.html')">Home</a></li>
+                    <li><a href="#" class="nav-link" onclick="loadPage('produtos.html')">Produtos</a></li>
+                    <li><a href="#" class="nav-link" onclick="loadPage('carrinho.html')">Carrinho <span class="cart-count" id="header-cart-count">0</span></a></li>
+                    <li><a href="#" class="nav-link" onclick="loadPage('login.html')">Minha Conta</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Dynamic Content Area -->
+    <main class="main-content" id="main-content">
+        <!-- Content will be loaded dynamically -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2023 BIKONFIG. Todos os direitos reservados.</p>
+            <div class="payment-icons" style="margin-top: 20px;">
+                <img src="https://cdn-icons-png.flaticon.com/512/196/196578.png" alt="Visa" width="40" style="margin: 0 5px;">
+                <img src="https://cdn-icons-png.flaticon.com/512/196/196561.png" alt="Mastercard" width="40" style="margin: 0 5px;">
+                <img src="https://cdn-icons-png.flaticon.com/512/825/825454.png" alt="Pix" width="40" style="margin: 0 5px;">
+                <img src="https://cdn-icons-png.flaticon.com/512/888/888857.png" alt="PayPal" width="40" style="margin: 0 5px;">
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== GLOBAL STATE =====
+        const state = {
+            cart: JSON.parse(localStorage.getItem('cart')) || [],
+            currentPage: 'index.html',
+            checkoutStep: 1,
+            selectedPayment: null,
+            products: [
+                {
+                    id: 1,
+                    name: "GiosBR CODE 26",
+                    price: 1500.00,
+                    oldPrice: 1799.99,
+                    image: "https://via.placeholder.com/600x400?text=GiosBR+CODE",
+                    images: [
+                        "https://via.placeholder.com/600x400?text=GiosBR+CODE+1",
+                        "https://via.placeholder.com/600x400?text=GiosBR+CODE+2",
+                        "https://via.placeholder.com/600x400?text=GiosBR+CODE+3"
+                    ],
+                    description: "Quadro GiosBR code 26 Cromoly único Azul Marinho e rosa. Material: Cromoly, Diâmetro Canote: 25.4mm, Peso: 3250g",
+                    ref: "78439",
+                    specs: {
+                        material: "Cromoly",
+                        weight: "3250g",
+                        sizes: ["13.5", "15", "17", "19"]
+                    },
+                    colors: [
+                        { name: "Azul Marinho/Rosa", code: "#002366" },
+                        { name: "Preto/Vermelho", code: "#000000" }
+                    ]
+                },
+                {
+                    id: 2,
+                    name: "VikingX Tuff X-38",
+                    price: 999.99,
+                    oldPrice: 1200.00,
+                    image: "https://via.placeholder.com/600x400?text=VikingX+Tuff",
+                    images: [
+                        "https://via.placeholder.com/600x400?text=VikingX+Tuff+1",
+                        "https://via.placeholder.com/600x400?text=VikingX+Tuff+2"
+                    ],
+                    description: "Quadro VikingX Tuff X-38 performance para trilhas pesadas",
+                    ref: "78440",
+                    specs: {
+                        material: "Alumínio 6061",
+                        weight: "2800g",
+                        sizes: ["S", "M", "L"]
+                    }
+                },
+                {
+                    id: 3,
+                    name: "GiosBR 4TRIX",
+                    price: 1100.00,
+                    oldPrice: 1300.00,
+                    image: "https://via.placeholder.com/600x400?text=GiosBR+4TRIX",
+                    images: [
+                        "https://via.placeholder.com/600x400?text=GiosBR+4TRIX+1",
+                        "https://via.placeholder.com/600x400?text=GiosBR+4TRIX+2"
+                    ],
+                    description: "Quadro GiosBR 4TRIX edição especial para street",
+                    ref: "78441",
+                    specs: {
+                        material: "Cromoly",
+                        weight: "3100g",
+                        sizes: ["14", "16", "18"]
+                    }
+                }
+            ],
+            paymentMethods: [
+                {
+                    id: 1,
+                    name: "Cartão de Crédito",
+                    icon: "https://cdn-icons-png.flaticon.com/512/196/196578.png",
+                    description: "Pague com seu cartão de crédito em até 12x sem juros"
+                },
+                {
+                    id: 2,
+                    name: "PIX",
+                    icon: "https://cdn-icons-png.flaticon.com/512/825/825454.png",
+                    description: "Pague via PIX e receba 5% de desconto"
+                },
+                {
+                    id: 3,
+                    name: "Boleto Bancário",
+                    icon: "https://cdn-icons-png.flaticon.com/512/2965/2965300.png",
+                    description: "Pague via boleto com desconto de 3%"
+                }
+            ]
+        };
+
+        // ===== DOM ELEMENTS =====
+        const mainContent = document.getElementById('main-content');
+        const cartCount = document.getElementById('header-cart-count');
+
+        // ===== INITIAL SETUP =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup mobile menu
+            const navToggle = document.querySelector('.nav-toggle');
+            const navList = document.querySelector('.nav-list');
+            
+            if (navToggle && navList) {
+                navToggle.addEventListener('click', function() {
+                    navList.classList.toggle('active');
+                    this.setAttribute('aria-expanded', navList.classList.contains('active'));
+                });
+            }
+
+            // Load current page
+            const page = window.location.hash.substring(1) || 'index.html';
+            loadPage(page);
+            
+            // Update cart count
+            updateCartCount();
+        });
+
+        // ===== PAGE LOADING SYSTEM =====
+        function loadPage(page) {
+            state.currentPage = page;
+            window.location.hash = page;
+            
+            let content = '';
+            
+            switch(page) {
+                case 'index.html':
+                    content = `
+                        <section class="hero">
+                            <div class="container">
+                                <h1>A BIKENOVA QUE VOCÊ QUERIA COM ATÉ 40% OFF!</h1>
+                                <p>25% OFF direto no carrinho em vestuário</p>
+                                <button class="btn btn-primary" onclick="loadPage('produtos.html')">Ver Ofertas</button>
+                            </div>
+                        </section>
+                        
+                        <section class="container">
+                            <h2 class="section-title">Produtos em Destaque</h2>
+                            <div class="product-grid">
+                                ${state.products.slice(0, 3).map(product => productCard(product)).join('')}
+                            </div>
+                        </section>
+                    `;
+                    break;
+                    
+                case 'produtos.html':
+                    content = `
+                        <section class="container">
+                            <h1 class="page-title">Nossos Produtos</h1>
+                            <div class="product-grid">
+                                ${state.products.map(product => productCard(product)).join('')}
+                            </div>
+                        </section>
+                    `;
+                    break;
+                    
+                case 'produto-detalhe.html':
+                    const productId = parseInt(new URLSearchParams(window.location.search).get('id'));
+                    const product = state.products.find(p => p.id === productId) || state.products[0];
+                    
+                    content = `
+                        <section class="container">
+                            <div class="product-detail">
+                                <div class="product-gallery">
+                                    <img src="${product.image}" alt="${product.name}" class="main-image" id="main-product-image">
+                                    <div class="thumbnail-container">
+                                        ${product.images.map((img, index) => `
+                                            <img src="${img}" alt="${product.name} - ${index + 1}" class="thumbnail" onclick="document.getElementById('main-product-image').src = '${img}'">
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                <div class="product-info">
+                                    <h1 class="page-title">${product.name}</h1>
+                                    <div class="product-meta">
+                                        <span class="product-ref">Ref: ${product.ref}</span>
+                                    </div>
+                                    
+                                    <div class="product-pricing">
+                                        <span class="product-old-price">De: R$ ${product.oldPrice.toFixed(2)}</span>
+                                        <span class="product-price">Por: R$ ${product.price.toFixed(2)}</span>
+                                        <span class="product-discount">(${Math.round((1 - product.price / product.oldPrice) * 100)}% OFF)</span>
+                                    </div>
+                                    
+                                    <div class="product-description">
+                                        <p>${product.description}</p>
+                                        
+                                        ${product.specs ? `
+                                            <h3 style="margin-top: 20px;">Especificações Técnicas</h3>
+                                            <ul style="margin-top: 10px; list-style: inside;">
+                                                ${Object.entries(product.specs).map(([key, value]) => `
+                                                    <li><strong>${key.charAt(0).toUpperCase() + key.slice(1)}:</strong> ${value}</li>
+                                                `).join('')}
+                                            </ul>
+                                        ` : ''}
+                                        
+                                        ${product.colors ? `
+                                            <h3 style="margin-top: 20px;">Cores Disponíveis</h3>
+                                            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                                                ${product.colors.map(color => `
+                                                    <div style="width: 30px; height: 30px; border-radius: 50%; background: ${color.code}; border: 1px solid #ccc;" title="${color.name}"></div>
+                                                `).join('')}
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                    
+                                    <div class="product-actions">
+                                        <div class="quantity-selector">
+                                            <button class="quantity-btn" onclick="this.nextElementSibling.stepDown()">-</button>
+                                            <input type="number" class="quantity-input" value="1" min="1" max="10">
+                                            <button class="quantity-btn" onclick="this.previousElementSibling.stepUp()">+</button>
+                                        </div>
+                                        <button class="btn btn-primary" onclick="addToCart(${product.id}, parseInt(document.querySelector('.quantity-input').value))">Adicionar ao Carrinho</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    `;
+                    break;
+                    
+                case 'carrinho.html':
+                    if (state.cart.length === 0) {
+                        content = `
+                            <section class="container">
+                                <h1 class="page-title">Seu Carrinho</h1>
+                                <p style="text-align: center; margin: 40px 0;">Seu carrinho está vazio</p>
+                                <div style="text-align: center;">
+                                    <button class="btn btn-primary" onclick="loadPage('produtos.html')">Ver Produtos</button>
+                                </div>
+                            </section>
+                        `;
+                    } else {
+                        const cartItems = state.cart.map(item => {
+                            const product = state.products.find(p => p.id === item.id);
+                            return product ? cartItem(product, item.quantity) : '';
+                        }).join('');
+                        
+                        const subtotal = state.cart.reduce((sum, item) => {
+                            const product = state.products.find(p => p.id === item.id);
+                            return sum + (product ? product.price * item.quantity : 0);
+                        }, 0);
+                        
+                        const discount = subtotal > 2000 ? subtotal * 0.05 : 0;
+                        const total = subtotal - discount;
+                        
+                        content = `
+                            <section class="container">
+                                <h1 class="page-title">Seu Carrinho</h1>
+                                <div class="cart-container">
+                                    <div class="cart-items">
+                                        ${cartItems}
+                                    </div>
+                                    <div class="cart-summary">
+                                        <h3>Resumo do Pedido</h3>
+                                        <div class="summary-row">
+                                            <span>Subtotal (${state.cart.reduce((sum, item) => sum + item.quantity, 0)} itens)</span>
+                                            <span>R$ ${subtotal.toFixed(2)}</span>
+                                        </div>
+                                        ${discount > 0 ? `
+                                            <div class="summary-row">
+                                                <span>Desconto (5%)</span>
+                                                <span style="color: var(--success);">- R$ ${discount.toFixed(2)}</span>
+                                            </div>
+                                        ` : ''}
+                                        <div class="summary-row">
+                                            <span>Frete</span>
+                                            <span>Grátis</span>
+                                        </div>
+                                        <div class="summary-row summary-total">
+                                            <span>Total</span>
+                                            <span>R$ ${total.toFixed(2)}</span>
+                                        </div>
+                                        <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="startCheckout()">Finalizar Compra</button>
+                                    </div>
+                                </div>
+                            </section>
+                        `;
+                    }
+                    break;
+                    
+                case 'checkout.html':
+                    const cartSubtotal = state.cart.reduce((sum, item) => {
+                        const product = state.products.find(p => p.id === item.id);
+                        return sum + (product ? product.price * item.quantity : 0);
+                    }, 0);
+                    
+                    const cartDiscount = cartSubtotal > 2000 ? cartSubtotal * 0.05 : 0;
+                    const cartTotal = cartSubtotal - cartDiscount;
+                    
+                    content = `
+                        <section class="container">
+                            <div class="checkout-steps">
+                                <div class="step ${state.checkoutStep >= 1 ? 'active' : ''} ${state.checkoutStep > 1 ? 'completed' : ''}">
+                                    <div class="step-number">1</div>
+                                    <div class="step-title">Informações</div>
+                                </div>
+                                <div class="step ${state.checkoutStep >= 2 ? 'active' : ''} ${state.checkoutStep > 2 ? 'completed' : ''}">
+                                    <div class="step-number">2</div>
+                                    <div class="step-title">Pagamento</div>
+                                </div>
+                                <div class="step ${state.checkoutStep >= 3 ? 'active' : ''}">
+                                    <div class="step-number">3</div>
+                                    <div class="step-title">Revisão</div>
+                                </div>
+                            </div>
+                            
+                            ${state.checkoutStep === 1 ? `
+                                <form id="checkout-form" onsubmit="event.preventDefault(); nextCheckoutStep()">
+                                    <h2 class="section-title">Informações de Entrega</h2>
+                                    <div class="checkout-form">
+                                        <div>
+                                            <div class="form-group">
+                                                <label class="form-label">Nome Completo</label>
+                                                <input type="text" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">E-mail</label>
+                                                <input type="email" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Telefone</label>
+                                                <input type="tel" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="form-group">
+                                                <label class="form-label">CEP</label>
+                                                <input type="text" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Endereço</label>
+                                                <input type="text" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Número</label>
+                                                <input type="text" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Complemento</label>
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="text-align: right; margin-top: 30px;">
+                                        <button type="submit" class="btn btn-primary">Continuar para Pagamento</button>
+                                    </div>
+                                </form>
+                            ` : ''}
+                            
+                            ${state.checkoutStep === 2 ? `
+                                <div>
+                                    <h2 class="section-title">Método de Pagamento</h2>
+                                    <div class="payment-methods">
+                                        ${state.paymentMethods.map(method => `
+                                            <div class="payment-method ${state.selectedPayment === method.id ? 'selected' : ''}" 
+                                                 onclick="selectPaymentMethod(${method.id})">
+                                                <img src="${method.icon}" alt="${method.name}" class="payment-icon">
+                                                <div class="payment-name">${method.name}</div>
+                                                <div class="payment-description" style="font-size: 12px; color: #666; margin-top: 5px;">${method.description}</div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                    
+                                    ${state.selectedPayment ? `
+                                        <div id="payment-details" style="margin-top: 30px;">
+                                            ${state.selectedPayment === 1 ? `
+                                                <div class="form-section">
+                                                    <h3 class="form-section-title">Cartão de Crédito</h3>
+                                                    <div class="form-group">
+                                                        <label class="form-label">Número do Cartão</label>
+                                                        <input type="text" class="form-control" placeholder="1234 5678 9012 3456" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="form-label">Nome no Cartão</label>
+                                                        <input type="text" class="form-control" required>
+                                                    </div>
+                                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Validade</label>
+                                                            <input type="text" class="form-control" placeholder="MM/AA" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="form-label">CVV</label>
+                                                            <input type="text" class="form-control" placeholder="123" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="form-label">Parcelas</label>
+                                                        <select class="form-control" required>
+                                                            <option value="">Selecione</option>
+                                                            ${Array.from({length: 12}, (_, i) => `
+                                                                <option value="${i + 1}">${i + 1}x de R$ ${(cartTotal / (i + 1)).toFixed(2)} ${i < 9 ? 'sem juros' : ''}</option>
+                                                            `).join('')}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            ` : ''}
+                                            
+                                            ${state.selectedPayment === 2 ? `
+                                                <div class="form-section">
+                                                    <h3 class="form-section-title">PIX</h3>
+                                                    <p>Você receberá um QR Code para pagamento após finalizar o pedido.</p>
+                                                    <p style="color: var(--success); font-weight: 500;">Desconto de 5% aplicado!</p>
+                                                </div>
+                                            ` : ''}
+                                            
+                                            ${state.selectedPayment === 3 ? `
+                                                <div class="form-section">
+                                                    <h3 class="form-section-title">Boleto Bancário</h3>
+                                                    <p>Você receberá o boleto para pagamento após finalizar o pedido.</p>
+                                                    <p style="color: var(--success); font-weight: 500;">Desconto de 3% aplicado!</p>
+                                                </div>
+                                            ` : ''}
+                                            
+                                            <div style="display: flex; justify-content: space-between; margin-top: 30px;">
+                                                <button class="btn btn-outline" onclick="prevCheckoutStep()">Voltar</button>
+                                                <button class="btn btn-primary" onclick="nextCheckoutStep()">Continuar para Revisão</button>
+                                            </div>
+                                        </div>
+                                    ` : `
+                                        <p style="text-align: center; margin: 20px 0; color: var(--danger);">Selecione um método de pagamento</p>
+                                    `}
+                                </div>
+                            ` : ''}
+                            
+                            ${state.checkoutStep === 3 ? `
+                                <div>
+                                    <h2 class="section-title">Revisão do Pedido</h2>
+                                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px;">
+                                        <div>
+                                            <div class="form-section">
+                                                <h3 class="form-section-title">Informações de Entrega</h3>
+                                                <p><strong>Nome:</strong> João da Silva</p>
+                                                <p><strong>E-mail:</strong> joao@email.com</p>
+                                                <p><strong>Endereço:</strong> Rua Exemplo, 123 - São Paulo/SP</p>
+                                            </div>
+                                            
+                                            <div class="form-section">
+                                                <h3 class="form-section-title">Método de Pagamento</h3>
+                                                <p>${state.paymentMethods.find(m => m.id === state.selectedPayment).name}</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="order-summary">
+                                            <h3 style="margin-bottom: 20px;">Resumo do Pedido</h3>
+                                            <div class="order-items">
+                                                ${state.cart.map(item => {
+                                                    const product = state.products.find(p => p.id === item.id);
+                                                    return product ? `
+                                                        <div class="order-item">
+                                                            <img src="${product.image}" alt="${product.name}" class="order-item-image">
+                                                            <div class="order-item-details">
+                                                                <div class="order-item-title">${product.name}</div>
+                                                                <div class="order-item-price">${item.quantity} x R$ ${product.price.toFixed(2)}</div>
+                                                            </div>
+                                                        </div>
+                                                    ` : '';
+                                                }).join('')}
+                                            </div>
+                                            
+                                            <div class="summary-row">
+                                                <span>Subtotal</span>
+                                                <span>R$ ${cartSubtotal.toFixed(2)}</span>
+                                            </div>
+                                            ${cartDiscount > 0 ? `
+                                                <div class="summary-row">
+                                                    <span>Desconto</span>
+                                                    <span style="color: var(--success);">- R$ ${cartDiscount.toFixed(2)}</span>
+                                                </div>
+                                            ` : ''}
+                                            <div class="summary-row">
+                                                <span>Frete</span>
+                                                <span>Grátis</span>
+                                            </div>
+                                            <div class="summary-row summary-total">
+                                                <span>Total</span>
+                                                <span>R$ ${cartTotal.toFixed(2)}</span>
+                                            </div>
+                                            
+                                            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="completeOrder()">Confirmar Pedido</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </section>
+                    `;
+                    break;
+                    
+                case 'order-success.html':
+                    content = `
+                        <section class="container order-success">
+                            <div class="success-icon">✓</div>
+                            <h1 class="page-title">Pedido Confirmado!</h1>
+                            <p style="font-size: 18px; margin-bottom: 30px;">Seu pedido foi recebido e está sendo processado.</p>
+                            <p style="margin-bottom: 30px;">Número do pedido: #${Math.floor(Math.random() * 1000000)}</p>
+                            <button class="btn btn-primary" onclick="loadPage('index.html')">Voltar à Loja</button>
+                        </section>
+                    `;
+                    break;
+                    
+                case 'login.html':
+                    content = `
+                        <section class="container">
+                            <div class="login-container" style="max-width: 500px; margin: 0 auto;">
+                                <h1 class="page-title">Login</h1>
+                                <form id="login-form" onsubmit="event.preventDefault(); login()">
+                                    <div class="form-group">
+                                        <label class="form-label">E-mail</label>
+                                        <input type="email" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Senha</label>
+                                        <input type="password" class="form-control" required>
+                                    </div>
+                                    <div style="text-align: right; margin-bottom: 20px;">
+                                        <a href="#" style="font-size: 14px;">Esqueceu a senha?</a>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" style="width: 100%;">Entrar</button>
+                                </form>
+                                <p style="text-align: center; margin-top: 20px;">Não tem uma conta? <a href="#" onclick="loadPage('register.html')">Cadastre-se</a></p>
+                            </div>
+                        </section>
+                    `;
+                    break;
+                    
+                default:
+                    content = `
+                        <section class="container">
+                            <h1 class="page-title">Página não encontrada</h1>
+                            <button class="btn btn-primary" onclick="loadPage('index.html')">Voltar para Home</button>
+                        </section>
+                    `;
+            }
+            
+            mainContent.innerHTML = content;
+        }
+
+        // ===== COMPONENT TEMPLATES =====
+        function productCard(product) {
+            const discount = Math.round((1 - product.price / product.oldPrice) * 100);
+            
+            return `
+                <div class="product-card" onclick="loadPage('produto-detalhe.html?id=${product.id}')">
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="product-pricing">
+                            <span class="product-old-price">R$ ${product.oldPrice.toFixed(2)}</span>
+                            <span class="product-price">R$ ${product.price.toFixed(2)}</span>
+                            <span class="product-discount">${discount}% OFF</span>
+                        </div>
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); addToCart(${product.id}, 1)">Adicionar</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function cartItem(product, quantity) {
+            return `
+                <div class="cart-item">
+                    <img src="${product.image}" alt="${product.name}" class="cart-item-image">
+                    <div class="cart-item-details">
+                        <h3 class="cart-item-title">${product.name}</h3>
+                        <p class="cart-item-price">R$ ${product.price.toFixed(2)}</p>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+                            <button onclick="updateCartItem(${product.id}, ${quantity - 1})" ${quantity <= 1 ? 'disabled' : ''} style="width: 30px; height: 30px; border: 1px solid var(--gray); border-radius: 50%; background: none; cursor: pointer;">-</button>
+                            <span>${quantity}</span>
+                            <button onclick="updateCartItem(${product.id}, ${quantity + 1})" style="width: 30px; height: 30px; border: 1px solid var(--gray); border-radius: 50%; background: none; cursor: pointer;">+</button>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="cart-item-remove" onclick="removeFromCart(${product.id})">Remover</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ===== CART FUNCTIONS =====
+        function addToCart(productId, quantity = 1) {
+            const existingItem = state.cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                state.cart.push({ id: productId, quantity });
+            }
+            
+            saveCart();
+            updateCartCount();
+            showToast('Produto adicionado ao carrinho!');
+        }
+
+        function updateCartItem(productId, newQuantity) {
+            if (newQuantity < 1) return;
+            
+            const item = state.cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity = newQuantity;
+                saveCart();
+                loadPage('carrinho.html');
+            }
+        }
+
+        function removeFromCart(productId) {
+            state.cart = state.cart.filter(item => item.id !== productId);
+            saveCart();
+            updateCartCount();
+            loadPage('carrinho.html');
+        }
+
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(state.cart));
+        }
+
+        function updateCartCount() {
+            const count = state.cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = count;
+            cartCount.style.display = count > 0 ? 'inline-flex' : 'none';
+        }
+
+        // ===== CHECKOUT FUNCTIONS =====
+        function startCheckout() {
+            state.checkoutStep = 1;
+            loadPage('checkout.html');
+        }
+
+        function nextCheckoutStep() {
+            if (state.checkoutStep < 3) {
+                state.checkoutStep++;
+                loadPage('checkout.html');
+            } else {
+                completeOrder();
+            }
+        }
+
+        function prevCheckoutStep() {
+            if (state.checkoutStep > 1) {
+                state.checkoutStep--;
+                loadPage('checkout.html');
+            }
+        }
+
+        function selectPaymentMethod(methodId) {
+            state.selectedPayment = methodId;
+            loadPage('checkout.html');
+        }
+
+        function completeOrder() {
+            // Simulate order processing
+            setTimeout(() => {
+                state.cart = [];
+                saveCart();
+                updateCartCount();
+                loadPage('order-success.html');
+            }, 1000);
+        }
+
+        // ===== UTILITY FUNCTIONS =====
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.position = 'fixed';
+            toast.style.bottom = '20px';
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.backgroundColor = 'var(--primary)';
+            toast.style.color = 'white';
+            toast.style.padding = '10px 20px';
+            toast.style.borderRadius = 'var(--border-radius)';
+            toast.style.boxShadow = 'var(--box-shadow)';
+            toast.style.zIndex = '1000';
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.transition = 'opacity 0.5s';
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        function login() {
+            showToast('Login realizado com sucesso!');
+            setTimeout(() => loadPage('index.html'), 1000);
+        }
+    </script>
+</body>
+</html>
