@@ -1,0 +1,273 @@
+/* ------------------------- RESET E BASE ------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #ffffff;
+  color: #111;
+  line-height: 1.6;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ------------------------- CABEÇALHO ------------------------- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+  color: #222;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+}
+
+.nav-link:hover {
+  color: red;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.search-input {
+  padding: 8px 12px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.search-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  stroke: #777;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* ------------------------- BANNER ------------------------- */
+.hero-banner {
+  width: 100%;
+  height: 300px;
+  background-color: black;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-bottom: 40px;
+}
+
+.hero-text-line {
+  font-size: 64px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.hero-text-shadow {
+  color: transparent;
+  -webkit-text-stroke: 2px white;
+}
+
+/* ------------------------- PRODUTOS ------------------------- */
+.products-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  padding: 20px 40px;
+}
+
+.product-card {
+  width: 220px;
+  text-align: center;
+}
+
+.product-info {
+  margin-top: 8px;
+  font-size: 15px;
+}
+
+.product-image {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  height: auto;
+}
+
+.brand-title {
+  text-align: center;
+  font-size: 28px;
+  margin-top: 40px;
+  margin-bottom: 12px;
+}
+
+/* ------------------------- BOTÕES ------------------------- */
+.btn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.btn-outline {
+  border: 2px solid #222;
+  color: #222;
+  background: transparent;
+}
+
+.btn-outline:hover {
+  background-color: #222;
+  color: #fff;
+}
+
+.btn-primary {
+  background-color: red;
+  color: white;
+  border: 2px solid transparent;
+}
+
+.btn-primary:hover {
+  background-color: #cc0000;
+}
+
+/* ------------------------- FORMULÁRIOS ------------------------- */
+.login-section,
+.contact-section {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.login-form,
+.contact-form {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-title {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.form-input,
+.form-textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.form-link {
+  font-size: 14px;
+  color: #0077cc;
+  text-decoration: none;
+}
+
+.form-link:hover {
+  text-decoration: underline;
+}
+
+.form-btn {
+  margin-top: 12px;
+}
+
+/* ------------------------- SOBRE ------------------------- */
+.about-section {
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.about-container {
+  max-width: 800px;
+  text-align: center;
+}
+
+.about-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.about-text {
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+/* ------------------------- RESPONSIVO ------------------------- */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .nav-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-text-line {
+    font-size: 36px;
+  }
+
+  .products-grid {
+    padding: 10px;
+  }
+
+  .product-card {
+    width: 45%;
+  }
+
+  .logo {
+    font-size: 24px;
+  }
+
+  .form-title {
+    font-size: 22px;
+  }
+}

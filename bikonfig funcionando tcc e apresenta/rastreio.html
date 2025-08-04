@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastreamento - Bikenova</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #d32f2f;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .store-name {
+            font-size: 16px;
+        }
+
+        .content-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #d32f2f;
+        }
+
+        .product-info {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .product-name {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .product-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .total-price {
+            font-weight: bold;
+            font-size: 16px;
+            color: #2e7d32;
+        }
+
+        .tracking-section {
+            margin-top: 30px;
+        }
+
+        .tracking-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #d32f2f;
+        }
+
+        .tracking-description {
+            margin-bottom: 15px;
+        }
+
+        .tracking-input {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .tracking-input input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .tracking-input label {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #fff;
+            padding: 0 5px;
+            color: #888;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .track-btn {
+            padding: 10px 20px;
+            background-color: #d32f2f;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .track-btn i {
+            font-size: 18px;
+        }
+
+        .tracking-status {
+            margin-top: 40px;
+            display: none;
+        }
+
+        .status-title {
+            font-size: 20px;
+            color: #d32f2f;
+            margin-bottom: 15px;
+        }
+
+        .status-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .status-step {
+            text-align: center;
+        }
+
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #ccc;
+            color: #fff;
+            border-radius: 50%;
+            margin: 0 auto 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .step-icon.active {
+            background-color: #d32f2f;
+        }
+
+        .step-label {
+            font-size: 14px;
+        }
+
+        .step-label.active {
+            font-weight: bold;
+            color: #d32f2f;
+        }
+
+        .status-details {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .status-item {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 6px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .status-date {
+            font-weight: bold;
+            color: #555;
+            white-space: nowrap;
+        }
+
+        .status-info {
+            flex: 1;
+        }
+
+        .status-location {
+            font-size: 13px;
+            color: #888;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 10px;
+            font-size: 14px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+<!-- resto do código permanece inalterado -->
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">BIKONFIG</div>
+            <div class="store-name">A BIKENOVA</div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="content-box">
+            <h2 class="section-title">ADQUIRIDOS</h2>
+
+            <!-- Product Info -->
+            <div class="product-info">
+                <div class="product-name">Quadro GiosBR CODE 26 Cromoly Ônico</div>
+                <div class="product-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Ref:</span>
+                        <span class="detail-value">7k19</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Anti Interface:</span>
+                        <span class="detail-value">1.0M</span>
+                    </div>
+                </div>
+                <div class="total-price">Total: R$ 1.500,00</div>
+            </div>
+
+            <!-- Tracking Section -->
+            <div class="tracking-section">
+                <h3 class="tracking-title">Rastreamento</h3>
+                <p class="tracking-description">Deseja acompanhar seu objeto?<br>Digite a referência única do seu objeto:</p>
+                <div class="tracking-input">
+                    <input type="text" id="trackingCode" placeholder=" " required>
+                    <label for="trackingCode">Digite a Referência</label>
+                </div>
+                <button class="track-btn" id="trackBtn">Rastrear <i class="fas fa-search-location"></i></button>
+            </div>
+
+            <!-- Tracking Status -->
+            <div class="tracking-status" id="trackingStatus">
+                <h3 class="status-title">Status do Pedido</h3>
+                <div class="status-steps">
+                    <div class="status-step">
+                        <div class="step-icon"><i class="fas fa-box"></i></div>
+                        <div class="step-label">Pedido Recebido</div>
+                    </div>
+                    <div class="status-step">
+                        <div class="step-icon"><i class="fas fa-cog"></i></div>
+                        <div class="step-label">Em Preparação</div>
+                    </div>
+                    <div class="status-step">
+                        <div class="step-icon"><i class="fas fa-shipping-fast"></i></div>
+                        <div class="step-label">Em Trânsito</div>
+                    </div>
+                    <div class="status-step">
+                        <div class="step-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="step-label">Entregue</div>
+                    </div>
+                </div>
+
+                <div class="status-details">
+                    <div class="status-item">
+                        <div class="status-date">04/08/2025<br>10:15</div>
+                        <div class="status-info">
+                            Pedido recebido e confirmado
+                            <div class="status-location">Centro de Distribuição - SP</div>
+                        </div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-date">05/08/2025<br>14:30</div>
+                        <div class="status-info">
+                            Produto em preparação
+                            <div class="status-location">Centro de Distribuição - SP</div>
+                        </div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-date">06/08/2025<br>09:00</div>
+                        <div class="status-info">
+                            Produto embalado e pronto para envio
+                            <div class="status-location">Centro de Distribuição - SP</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>© 2025 Bikenova - Todos os direitos reservados</p>
+        </footer>
+    </div>
+
+    <script>
+        const trackBtn = document.getElementById('trackBtn');
+        const trackingCode = document.getElementById('trackingCode');
+        const trackingStatus = document.getElementById('trackingStatus');
+        const stepIcons = document.querySelectorAll('.step-icon');
+        const stepLabels = document.querySelectorAll('.step-label');
+
+        trackBtn.addEventListener('click', () => {
+            const code = trackingCode.value.trim();
+            if (code === '') {
+                alert('Por favor, digite o código de rastreamento.');
+                return;
+            }
+            trackingStatus.style.display = 'block';
+            trackingStatus.scrollIntoView({ behavior: 'smooth' });
+            stepIcons.forEach(icon => icon.classList.remove('active'));
+            stepLabels.forEach(label => label.classList.remove('active'));
+
+            stepIcons.forEach((icon, index) => {
+                setTimeout(() => {
+                    icon.classList.add('active');
+                    stepLabels[index].classList.add('active');
+                }, index * 800);
+            });
+        });
+
+        trackingCode.addEventListener('input', function () {
+            const label = this.nextElementSibling;
+            if (this.value.trim() !== '') {
+                label.style.transform = 'translateY(-180%)';
+                label.style.fontSize = '14px';
+                label.style.color = '#d32f2f';
+            } else {
+                label.style.transform = 'translateY(-50%)';
+                label.style.fontSize = '18px';
+                label.style.color = '#888';
+            }
+        });
+    </script>
+</body>
+</html>
