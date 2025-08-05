@@ -123,7 +123,9 @@
 <body>
 
   <div class="container">
-    <h1>Finalizar Compra</h1>
+    <h1><p>Finalizar Compra</p>
+    <p>Será enviado um e-mail para progredir com o pedido.</p>
+    </h1>
 
     <form>
       <label for="nome">Nome Completo:</label>
@@ -155,14 +157,23 @@
   </div>
 
   <footer>
-    <p>© 2025 ova - Todos os direitos reservados</p>
+    <p>© 2025 Bikonfig - Todos os direitos reservados</p>
   </footer>
 
   <script>
+     // pega todos os elementos com a classe 'payment-method'
     const methods = document.querySelectorAll('.payment-method');
+   
+  // para cada método de pagamento encontrado
     methods.forEach(method => {
+       
+      // adiciona um clique que ativa esse método
       method.addEventListener('click', () => {
+        
+        // remove a classe 'active' de todos os métodos
         methods.forEach(m => m.classList.remove('active'));
+         
+        // adiciona a classe 'active' somente ao que foi clicado
         method.classList.add('active');
       });
     });

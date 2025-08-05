@@ -319,44 +319,63 @@
         </footer>
     </div>
 
-    <script>
-        const trackBtn = document.getElementById('trackBtn');
-        const trackingCode = document.getElementById('trackingCode');
-        const trackingStatus = document.getElementById('trackingStatus');
-        const stepIcons = document.querySelectorAll('.step-icon');
-        const stepLabels = document.querySelectorAll('.step-label');
+   <script>
+    // pega o botão de rastrear
+    const trackBtn = document.getElementById('trackBtn');
+    // pega o campo onde o usuário digita o código
+    const trackingCode = document.getElementById('trackingCode');
+    // pega a seção que mostra o status do rastreamento
+    const trackingStatus = document.getElementById('trackingStatus');
+    // pega todos os ícones das etapas do rastreamento
+    const stepIcons = document.querySelectorAll('.step-icon');
+    // pega todos os textos das etapas
+    const stepLabels = document.querySelectorAll('.step-label');
 
-        trackBtn.addEventListener('click', () => {
-            const code = trackingCode.value.trim();
-            if (code === '') {
-                alert('Por favor, digite o código de rastreamento.');
-                return;
-            }
-            trackingStatus.style.display = 'block';
-            trackingStatus.scrollIntoView({ behavior: 'smooth' });
-            stepIcons.forEach(icon => icon.classList.remove('active'));
-            stepLabels.forEach(label => label.classList.remove('active'));
+    // quando o botão de rastrear for clicado
+    trackBtn.addEventListener('click', () => {
+        // pega o valor do código digitado, sem espaços
+        const code = trackingCode.value.trim();
 
-            stepIcons.forEach((icon, index) => {
-                setTimeout(() => {
-                    icon.classList.add('active');
-                    stepLabels[index].classList.add('active');
-                }, index * 800);
-            });
+        // se estiver vazio, mostra alerta e para aqui
+        if (code === '') {
+            alert('Por favor, digite o código de rastreamento.');
+            return;
+        }
+
+        // mostra a seção de status e faz a rolagem até ela
+        trackingStatus.style.display = 'block';
+        trackingStatus.scrollIntoView({ behavior: 'smooth' });
+
+        // remove a classe 'active' de todos os ícones e textos
+        stepIcons.forEach(icon => icon.classList.remove('active'));
+        stepLabels.forEach(label => label.classList.remove('active'));
+
+        // ativa os ícones e textos um por um com atraso
+        stepIcons.forEach((icon, index) => {
+            setTimeout(() => {
+                icon.classList.add('active');
+                stepLabels[index].classList.add('active');
+            }, index * 800); // ativa a cada 800ms
         });
+    });
 
-        trackingCode.addEventListener('input', function () {
-            const label = this.nextElementSibling;
-            if (this.value.trim() !== '') {
-                label.style.transform = 'translateY(-180%)';
-                label.style.fontSize = '14px';
-                label.style.color = '#d32f2f';
-            } else {
-                label.style.transform = 'translateY(-50%)';
-                label.style.fontSize = '18px';
-                label.style.color = '#888';
-            }
-        });
-    </script>
+    // quando o usuário digita no campo de rastreamento
+    trackingCode.addEventListener('input', function () {
+        const label = this.nextElementSibling; // pega o label logo abaixo
+
+        // se tiver texto, move o label para cima e muda estilo
+        if (this.value.trim() !== '') {
+            label.style.transform = 'translateY(-180%)';
+            label.style.fontSize = '14px';
+            label.style.color = '#d32f2f';
+        } else {
+            // se o campo estiver vazio, volta o label para posição normal
+            label.style.transform = 'translateY(-50%)';
+            label.style.fontSize = '18px';
+            label.style.color = '#888';
+        }
+    });
+</script>
+
 </body>
 </html>
