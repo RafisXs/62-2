@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Finalizar Compra </title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background-color: #fff;
+      padding: 30px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      border-radius: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    .payment-methods {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .payment-method {
+      padding: 12px 18px;
+      background-color: #eee;
+      border: 2px solid transparent;
+      border-radius: 5px;
+      cursor: pointer;
+      flex: 1;
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .payment-method:hover {
+      background-color: #ddd;
+    }
+
+    .payment-method.active {
+      border: 2px solid #c62828;
+      background-color: #ffebee;
+    }
+
+    button {
+      margin-top: 30px;
+      width: 100%;
+      padding: 14px;
+      background-color: #e53935; /* vermelho principal */
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #c62828; /* vermelho escuro no hover */
+    }
+
+    footer {
+      margin-top: 50px;
+      padding: 20px;
+      text-align: center;
+      background-color: #222;
+      color: #fff;
+      border-radius: 0 0 10px 10px;
+    }
+
+    .rastreio-btn {
+      display: inline-block;
+      background-color: #d32f2f;
+      color: white;
+      padding: 14px 24px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      margin: 20px auto 0;
+      text-align: center;
+    }
+
+    .rastreio-btn:hover {
+      background-color: #b71c1c;
+    }
+
+    .center-btn {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1><p>Finalizar Compra</p>
+    <p>Será enviado um e-mail para progredir com o pedido.</p>
+    </h1>
+
+    <form>
+      <label for="nome">Nome Completo:</label>
+      <input type="text" id="nome" name="nome" required />
+
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="telefone">Telefone:</label>
+      <input type="tel" id="telefone" name="telefone" required />
+
+      <label for="endereco">Endereço de Entrega:</label>
+      <textarea id="endereco" name="endereco" rows="4" required></textarea>
+
+      <label>Forma de Pagamento:</label>
+      <div class="payment-methods">
+        <div class="payment-method" data-method="pix">PIX</div>
+        <div class="payment-method" data-method="boleto">Boleto</div>
+        <div class="payment-method" data-method="credito">Cartão de Crédito</div>
+        <div class="payment-method" data-method="debito">Cartão de Débito</div>
+      </div>
+
+      <button type="submit">Finalizar Pedido</button>
+    </form>
+
+    <div class="center-btn">
+      <a href="rastreio.html" target="_blank" class="rastreio-btn">Rastrear Pedido</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Bikonfig - Todos os direitos reservados</p>
+  </footer>
+
+  <script>
+     // pega todos os elementos com a classe 'payment-method'
+    const methods = document.querySelectorAll('.payment-method');
+   
+  // para cada método de pagamento encontrado
+    methods.forEach(method => {
+       
+      // adiciona um clique que ativa esse método
+      method.addEventListener('click', () => {
+        
+        // remove a classe 'active' de todos os métodos
+        methods.forEach(m => m.classList.remove('active'));
+         
+        // adiciona a classe 'active' somente ao que foi clicado
+        method.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

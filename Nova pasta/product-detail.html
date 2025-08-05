@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BIKONFIG - Detalhes do Produto</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+    }
+
+    header.header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: white;
+      color: black;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-link {
+      color: black;
+      text-decoration: none;
+    }
+
+    .search-container {
+      position: relative;
+    }
+
+    .search-input {
+      padding: 6px 30px 6px 10px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 8px;
+      top: 6px;
+      width: 16px;
+      height: 16px;
+    }
+
+    .profile-img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .hero-banner {
+      background-size: cover;
+      background-position: center;
+      height: 300px;
+      position: relative;
+    }
+
+    .hero-banner > div {
+      position: absolute;
+      top: 50%;
+      left: 5%;
+      transform: translateY(-50%);
+      color: white;
+    }
+
+    .product-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      padding: 40px;
+      background-color: white;
+    }
+
+    .product-thumbnails {
+      flex: 1;
+    }
+
+    .thumbnail {
+      width: 100px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    .main-product {
+      flex: 2;
+      text-align: center;
+    }
+
+    .main-product img {
+      max-width: 100%;
+      height: 600px;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+
+    .product-specs {
+      flex: 2;
+    }
+
+    .product-specs h2 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .price-info {
+      font-size: 24px;
+      font-weight: bold;
+      color: #c0392b;
+    }
+
+    .payment-info,
+    .shipping-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .payment-icon {
+      width: 24px;
+      height: 16px;
+      object-fit: contain;
+    }
+
+    .shipping-image {
+      width: 24px;
+      height: 20px;
+      object-fit: contain;
+    }
+
+    .separator {
+      height: 4px;
+      background-color: #ccc;
+      margin: 40px 0;
+    }
+
+    .geometry-section {
+      padding: 40px;
+      background-color: #fff;
+    }
+
+    .geometry-title {
+      font-size: 22px;
+      margin-bottom: 15px;
+    }
+
+    .geometry-image {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .specifications {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .purchase-button {
+      text-align: center;
+      background-color: #fff;
+      padding: 40px;
+    }
+
+    .btn-primary {
+      background-color: #e53935;
+      color: white;
+      padding: 14px 30px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+      background-color: #c62828;
+    }
+
+    .variant-options,
+    .product-rating {
+      margin-top: 20px;
+    }
+
+    .product-rating span {
+      color: gold;
+    }
+  </style>
+</head>
+<body>
+  <!-- Cabeçalho -->
+  <header class="header">
+    <div class="logo">BIKONFIG</div>
+    <nav class="nav-container">
+      <a href="contact.html" class="nav-link">Fale Conosco</a>
+      <a href="about.html" class="nav-link">Sobre Nós</a>
+      <a href="login.html" class="nav-link">Log In</a>
+   
+      <div class="search-container">
+        <input type="text" class="search-input" placeholder="Pesquisar" />
+        <svg class="search-icon" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+      </div>
+      <img class="profile-img" src="fotos/perfil.jpg" alt="Foto de perfil">
+    </nav>
+  </header>
+
+  <!-- Banner -->
+  <section class="hero-banner" style="background-image: url('fotos/banner.jpg');">
+    <div>
+      <h1 style="font-size: 48px;">GiosBR CODE</h1>
+      <p style="font-size: 24px;">Performance e estilo para quem vive o pedal</p>
+    </div>
+  </section>
+
+  <!-- Área de produto -->
+  <section class="product-details">
+    <div class="product-thumbnails">
+      <img class="thumbnail" src="fotos/download.png" alt="Miniatura do produto">
+    </div>
+
+    <div class="main-product">
+      <img src="fotos/c775ccd1e3a444bc19e361704d581ffd-975efb136454b9492a17405171676235-480-0.jpg" alt="Imagem principal do produto">
+    </div>
+
+    <div class="product-specs">
+      <h2>Quadro GiosBR CODE</h2>
+      <p class="price-info">R$ 1.500,00</p>
+
+      <div class="payment-info">
+        <img class="payment-icon" src="fotos/cartao.png" alt="Cartão">
+        <span>ou 12x de R$125,00 sem juros</span>
+      </div>
+
+      <div class="shipping-card">
+        <img class="shipping-image" src="fotos/gbn13am.png" alt="Frete grátis">
+        <span class="shipping-text">Entrega gratuita para todo Brasil</span>
+      </div>
+
+      <div class="variant-options">
+        <label for="cor">Cor:</label>
+        <select id="cor">
+          <option>Preto</option>
+          <option>Vermelho</option>
+          <option>Azul</option>
+        </select>
+
+        <label for="tamanho">Tamanho:</label>
+        <select id="tamanho">
+          <option>15"</option>
+          <option>17"</option>
+          <option>19"</option>
+        </select>
+      </div>
+
+      <div class="product-rating">
+        <p>Avaliações:</p>
+        <span>★★★★★ 4.8 (112 avaliações)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Separador -->
+  <div class="separator"></div>
+
+  <!-- Geometria -->
+  <section class="geometry-section">
+    <h3 class="geometry-title">Geometria do Quadro</h3>
+    <img class="geometry-image" src="fotos/frame-1687976735.jpg" alt="Geometria do quadro">
+    <div class="specifications">
+      <p>Seguindo a mesma linha do DJ, o quadro Giosbr CODE 26 foi projetado para o street e dirt, ruas e parques. Sua geometria foi pensada para manobras, com suporte a garfos rígidos ou suspensões de até 100 mm. Ideal para single-speed e freios a disco de até 160 mm, é ágil e resistente.</p>
+    </div>
+  </section>
+
+  <!-- Botão de compra -->
+  <div class="purchase-button">
+    <a href="checkout.html" target="_blank" class="btn btn-primary">Comprar Agora</a>
+  </div>
+</body>
+</html>
