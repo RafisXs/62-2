@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - Caroneiro</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .chat-container {
+            display: flex;
+            height: calc(100vh - 140px);
+            max-width: 1200px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .conversations-sidebar {
+            width: 350px;
+            border-right: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .conversations-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            background: var(--light);
+        }
+        
+        .conversations-header h2 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .conversations-search {
+            margin-top: 15px;
+        }
+        
+        .conversations-search input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .conversations-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .conversation-item {
+            display: flex;
+            padding: 15px;
+            border-bottom: 1px solid #f5f5f5;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .conversation-item:hover {
+            background: #f9f9f9;
+        }
+        
+        .conversation-item.active {
+            background: var(--light);
+        }
+        
+        /* CORREÇÃO DAS FOTOS DE PERFIL - CONVERSATION AVATAR */
+        .conversation-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .conversation-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        .conversation-info {
+            flex: 1;
+            min-width: 0; /* Permite que o texto seja truncado corretamente */
+        }
+        
+        .conversation-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .conversation-name {
+            font-weight: 600;
+            color: var(--dark);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .conversation-time {
+            font-size: 0.8rem;
+            color: #777;
+            flex-shrink: 0;
+            margin-left: 10px;
+        }
+        
+        .conversation-preview {
+            font-size: 0.9rem;
+            color: #777;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .chat-user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        /* CORREÇÃO DAS FOTOS DE PERFIL - CHAT USER AVATAR */
+        .chat-user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 15px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .chat-user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        .chat-user-details h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--dark);
+        }
+        
+        .chat-user-details p {
+            margin: 0;
+            font-size: 0.8rem;
+            color: #777;
+        }
+        
+        .chat-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .messages-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            position: relative;
+            animation: messageAppear 0.3s ease-out;
+        }
+        
+        @keyframes messageAppear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .my-message {
+            align-self: flex-end;
+            background: var(--primary);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .other-message {
+            align-self: flex-start;
+            background: #f0f0f0;
+            color: var(--dark);
+            border-bottom-left-radius: 4px;
+        }
+        
+        .message-text {
+            margin-bottom: 5px;
+            word-wrap: break-word;
+        }
+        
+        .message-time {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            text-align: right;
+        }
+        
+        .message-input-area {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+        
+        .message-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 1rem;
+            resize: none;
+            height: 45px;
+            max-height: 120px;
+            font-family: inherit;
+        }
+        
+        .send-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+        
+        .send-button:hover {
+            background: #2a75f0;
+        }
+        
+        .send-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .action-button {
+            background: transparent;
+            border: none;
+            color: #777;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+        
+        .action-button:hover {
+            background: #f0f0f0;
+        }
+        
+        .empty-chat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #777;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .empty-chat-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .typing-dots {
+            display: flex;
+            margin-left: 8px;
+        }
+        
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #777;
+            margin: 0 2px;
+            animation: typingAnimation 1.4s infinite ease-in-out;
+        }
+        
+        .typing-dot:nth-child(1) { animation-delay: 0s; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes typingAnimation {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.4;
+            }
+            30% {
+                transform: translateY(-5px);
+                opacity: 1;
+            }
+        }
+        
+        .message-status {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            font-size: 0.7rem;
+            margin-top: 5px;
+            opacity: 0.7;
+        }
+        
+        .unread-badge {
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            margin-left: 8px;
+            flex-shrink: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .chat-container {
+                flex-direction: column;
+                height: calc(100vh - 80px);
+            }
+            
+            .conversations-sidebar {
+                width: 100%;
+                height: 40%;
+            }
+            
+            .chat-area {
+                height: 60%;
+            }
+            
+            .message {
+                max-width: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navegação -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <a href="index.html" class="logo">Caroneiro<span>.</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="index.html#destinos">Destinos</a></li>
+                        <li><a href="index.html#viajantes">Viajantes</a></li>
+                        <li><a href="grupos.html">Grupos</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <a href="perfil.html" class="btn btn-secondary">Meu Perfil</a>
+                    <a href="#" class="btn btn-primary" id="logout-btn">Sair</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Área de Chat -->
+    <div class="chat-container">
+        <div class="conversations-sidebar">
+            <div class="conversations-header">
+                <h2>Conversas</h2>
+                <div class="conversations-search">
+                    <input type="text" id="conversation-search" placeholder="Buscar conversa...">
+                </div>
+            </div>
+            <div class="conversations-list" id="conversations-list">
+                <!-- As conversas serão carregadas via JavaScript -->
+            </div>
+        </div>
+        
+        <div class="chat-area">
+            <div class="chat-header" id="chat-header" style="display: none;">
+                <div class="chat-user-info">
+                    <div class="chat-user-avatar" id="chat-user-avatar">M</div>
+                    <div class="chat-user-details">
+                        <h3 id="chat-user-name">Maria Silva</h3>
+                        <p id="chat-user-status">Online</p>
+                    </div>
+                </div>
+                <div class="chat-actions">
+                    <button class="action-button" title="Informações do contato" id="user-info-btn">ℹ️</button>
+                    <button class="action-button" title="Opções da conversa" id="chat-options-btn">⋯</button>
+                </div>
+            </div>
+            
+            <div class="messages-container" id="messages-container">
+                <div class="empty-chat" id="empty-chat">
+                    <div class="empty-chat-icon">💬</div>
+                    <h3>Selecione uma conversa</h3>
+                    <p>Escolha uma conversa da lista para começar a trocar mensagens</p>
+                </div>
+            </div>
+            
+            <div class="message-input-area" id="message-input-area" style="display: none;">
+                <button class="action-button" title="Anexar arquivo" id="attach-file-btn">📎</button>
+                <textarea class="message-input" id="message-input" placeholder="Digite sua mensagem..." rows="1"></textarea>
+                <button class="send-button" id="send-button" title="Enviar mensagem" disabled>
+                    ➤
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Caroneiro</h3>
+                    <p>Conectando viajantes desde 2023</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">FB</a>
+                        <a href="#" class="social-icon">IG</a>
+                        <a href="#" class="social-icon">TW</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="sobre.html">Sobre o Projeto</a></li>
+                        <li><a href="perfil.html">Meu Perfil</a></li>
+                        <li><a href="chat.html">Chat</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Suporte</h3>
+                    <ul>
+                        <li><a href="#">Ajuda</a></li>
+                        <li><a href="#">Contato</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Caroneiro. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dados do chat
+        let conversations = JSON.parse(localStorage.getItem('caroneiro-conversations')) || [
+            {
+                id: 1,
+                name: "Maria Silva",
+                avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                status: "Online",
+                lastSeen: "10:30",
+                unread: 0,
+                messages: [
+                    {
+                        id: 1,
+                        text: "Olá! Vi que você também vai para Florianópolis em julho",
+                        sender: "other",
+                        time: "10:30",
+                        status: "delivered"
+                    },
+                    {
+                        id: 2,
+                        text: "Sim! Estou planejando ficar 10 dias. E você?",
+                        sender: "me",
+                        time: "10:32",
+                        status: "read"
+                    },
+                    {
+                        id: 3,
+                        text: "Vou ficar 15 dias. Talvez possamos combinar algum passeio juntos!",
+                        sender: "other",
+                        time: "10:35",
+                        status: "delivered"
+                    },
+                    {
+                        id: 4,
+                        text: "Adoraria! Qual é o seu itinerário?",
+                        sender: "me",
+                        time: "10:37",
+                        status: "read"
+                    }
+                ],
+                isTyping: false
+            },
+            {
+                id: 2,
+                name: "João Santos",
+                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                status: "Online",
+                lastSeen: "09:15",
+                unread: 2,
+                messages: [
+                    {
+                        id: 1,
+                        text: "Oi! Você já foi para Bonito?",
+                        sender: "other",
+                        time: "09:15",
+                        status: "delivered"
+                    },
+                    {
+                        id: 2,
+                        text: "Ainda não, mas está na minha lista!",
+                        sender: "me",
+                        time: "09:20",
+                        status: "read"
+                    },
+                    {
+                        id: 3,
+                        text: "É incrível! As águas são cristalinas. Vou em outubro, se quiser dicas...",
+                        sender: "other",
+                        time: "09:22",
+                        status: "delivered"
+                    }
+                ],
+                isTyping: false
+            },
+            {
+                id: 3,
+                name: "Ana Costa",
+                avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                status: "Offline",
+                lastSeen: "Ontem",
+                unread: 0,
+                messages: [
+                    {
+                        id: 1,
+                        text: "Obrigada pela companhia na viagem para a Serra Gaúcha!",
+                        sender: "other",
+                        time: "Ontem 18:30",
+                        status: "read"
+                    },
+                    {
+                        id: 2,
+                        text: "Eu que agradeço! Foi uma viagem incrível. Vamos repetir!",
+                        sender: "me",
+                        time: "Ontem 18:45",
+                        status: "read"
+                    }
+                ],
+                isTyping: false
+            },
+            {
+                id: 4,
+                name: "Grupo: Aventura Carioca",
+                avatar: "👥",
+                status: "4 membros",
+                lastSeen: "11:20",
+                unread: 0,
+                isGroup: true,
+                messages: [
+                    {
+                        id: 1,
+                        text: "Pessoal, confirmando: encontro no aeroporto às 8h",
+                        sender: "other",
+                        time: "11:20",
+                        status: "read",
+                        senderName: "Carlos"
+                    },
+                    {
+                        id: 2,
+                        text: "Confirmado! Levo o guia de trilhas",
+                        sender: "me",
+                        time: "11:22",
+                        status: "read"
+                    },
+                    {
+                        id: 3,
+                        text: "Alguém sabe se precisa de visto para alguma atração?",
+                        sender: "other",
+                        time: "11:25",
+                        status: "read",
+                        senderName: "Juliana"
+                    }
+                ],
+                isTyping: false
+            }
+        ];
+
+        // Elementos do DOM
+        const conversationsList = document.getElementById('conversations-list');
+        const messagesContainer = document.getElementById('messages-container');
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+        const chatHeader = document.getElementById('chat-header');
+        const messageInputArea = document.getElementById('message-input-area');
+        const emptyChat = document.getElementById('empty-chat');
+        const conversationSearch = document.getElementById('conversation-search');
+        const attachFileBtn = document.getElementById('attach-file-btn');
+        const userInfoBtn = document.getElementById('user-info-btn');
+        const chatOptionsBtn = document.getElementById('chat-options-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        // Variáveis de estado
+        let currentConversationId = null;
+        let currentUser = null;
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar se o usuário está logado
+            currentUser = JSON.parse(localStorage.getItem('usuarioLogado'));
+            
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Configurar eventos
+            setupEventListeners();
+            
+            // Carregar conversas
+            loadConversations();
+            
+            // Configurar logout
+            logoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('usuarioLogado');
+                window.location.href = 'index.html';
+            });
+        });
+
+        // Configurar eventos
+        function setupEventListeners() {
+            // Envio de mensagem
+            sendButton.addEventListener('click', sendMessage);
+            
+            // Envio com Enter
+            messageInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+            
+            // Auto-resize do textarea
+            messageInput.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+                
+                // Habilitar/desabilitar botão de enviar
+                sendButton.disabled = this.value.trim() === '';
+            });
+            
+            // Busca de conversas
+            conversationSearch.addEventListener('input', filterConversations);
+            
+            // Botão de anexar arquivo
+            attachFileBtn.addEventListener('click', function() {
+                alert('Funcionalidade de anexar arquivo seria implementada aqui!');
+            });
+            
+            // Botão de informações do usuário
+            userInfoBtn.addEventListener('click', function() {
+                if (currentConversationId) {
+                    const conversation = conversations.find(c => c.id === currentConversationId);
+                    if (conversation) {
+                        alert(`Informações de ${conversation.name}\nStatus: ${conversation.status}`);
+                    }
+                }
+            });
+            
+            // Botão de opções do chat
+            chatOptionsBtn.addEventListener('click', function() {
+                if (currentConversationId) {
+                    alert('Opções da conversa:\n- Limpar conversa\n- Silenciar notificações\n- Sair da conversa');
+                }
+            });
+        }
+
+        // Carregar lista de conversas
+        function loadConversations() {
+            conversationsList.innerHTML = '';
+            
+            if (conversations.length === 0) {
+                conversationsList.innerHTML = `
+                    <div class="empty-chat">
+                        <div class="empty-chat-icon">💬</div>
+                        <h3>Nenhuma conversa</h3>
+                        <p>Comece uma nova conversa com outros viajantes</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            conversations.forEach(conversation => {
+                const lastMessage = conversation.messages[conversation.messages.length - 1];
+                const conversationItem = document.createElement('div');
+                conversationItem.className = 'conversation-item';
+                conversationItem.setAttribute('data-conversation-id', conversation.id);
+                
+                // CORREÇÃO: Verificar se o avatar é uma imagem ou um emoji
+                let avatarContent = '';
+                if (conversation.avatar.startsWith('http')) {
+                    avatarContent = `<img src="${conversation.avatar}" alt="${conversation.name}">`;
+                } else {
+                    avatarContent = conversation.avatar;
+                }
+                
+                conversationItem.innerHTML = `
+                    <div class="conversation-avatar">
+                        ${avatarContent}
+                    </div>
+                    <div class="conversation-info">
+                        <div class="conversation-header">
+                            <div class="conversation-name">${conversation.name}</div>
+                            <div class="conversation-time">${lastMessage.time}</div>
+                        </div>
+                        <div class="conversation-preview">
+                            ${lastMessage.sender === 'me' ? 'Você: ' : ''}${lastMessage.text}
+                        </div>
+                    </div>
+                    ${conversation.unread > 0 ? `<div class="unread-badge">${conversation.unread}</div>` : ''}
+                `;
+                
+                conversationItem.addEventListener('click', function() {
+                    openConversation(conversation.id);
+                });
+                
+                conversationsList.appendChild(conversationItem);
+            });
+        }
+
+        // Filtrar conversas
+        function filterConversations() {
+            const searchTerm = conversationSearch.value.toLowerCase();
+            const conversationItems = document.querySelectorAll('.conversation-item');
+            
+            conversationItems.forEach(item => {
+                const conversationName = item.querySelector('.conversation-name').textContent.toLowerCase();
+                const conversationPreview = item.querySelector('.conversation-preview').textContent.toLowerCase();
+                
+                if (conversationName.includes(searchTerm) || conversationPreview.includes(searchTerm)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Abrir conversa
+        function openConversation(conversationId) {
+            currentConversationId = conversationId;
+            const conversation = conversations.find(c => c.id === conversationId);
+            
+            if (!conversation) return;
+            
+            // Atualizar header do chat
+            // CORREÇÃO: Verificar se o avatar é uma imagem ou um emoji
+            let avatarContent = '';
+            if (conversation.avatar.startsWith('http')) {
+                avatarContent = `<img src="${conversation.avatar}" alt="${conversation.name}">`;
+            } else {
+                avatarContent = conversation.avatar;
+            }
+            
+            document.getElementById('chat-user-avatar').innerHTML = avatarContent;
+            document.getElementById('chat-user-name').textContent = conversation.name;
+            document.getElementById('chat-user-status').textContent = conversation.status;
+            
+            // Mostrar elementos do chat
+            chatHeader.style.display = 'flex';
+            messageInputArea.style.display = 'flex';
+            emptyChat.style.display = 'none';
+            
+            // Carregar mensagens
+            loadMessages(conversation);
+            
+            // Marcar como lida
+            if (conversation.unread > 0) {
+                conversation.unread = 0;
+                saveConversations();
+                loadConversations();
+            }
+            
+            // Ativar item na lista
+            document.querySelectorAll('.conversation-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector(`[data-conversation-id="${conversationId}"]`).classList.add('active');
+            
+            // Focar no input
+            messageInput.focus();
+        }
+
+        // Carregar mensagens
+        function loadMessages(conversation) {
+            messagesContainer.innerHTML = '';
+            
+            conversation.messages.forEach(message => {
+                const messageElement = createMessageElement(message, conversation);
+                messagesContainer.appendChild(messageElement);
+            });
+            
+            // Adicionar indicador de digitação se necessário
+            if (conversation.isTyping) {
+                addTypingIndicator(conversation);
+            }
+            
+            // Rolar para a última mensagem
+            scrollToBottom();
+        }
+
+        // Criar elemento de mensagem
+        function createMessageElement(message, conversation) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${message.sender === 'me' ? 'my-message' : 'other-message'}`;
+            
+            let senderName = '';
+            if (message.sender === 'other' && conversation.isGroup && message.senderName) {
+                senderName = `<div class="message-sender">${message.senderName}</div>`;
+            }
+            
+            messageDiv.innerHTML = `
+                ${senderName}
+                <div class="message-text">${message.text}</div>
+                <div class="message-time">${message.time}</div>
+                ${message.sender === 'me' ? 
+                    `<div class="message-status">${message.status === 'read' ? '✓✓' : '✓'}</div>` : 
+                    ''}
+            `;
+            
+            return messageDiv;
+        }
+
+        // Adicionar indicador de digitação
+        function addTypingIndicator(conversation) {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.innerHTML = `
+                <span>${conversation.name} está digitando</span>
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            `;
+            
+            messagesContainer.appendChild(typingDiv);
+            scrollToBottom();
+        }
+
+        // Enviar mensagem
+        function sendMessage() {
+            const messageText = messageInput.value.trim();
+            
+            if (!messageText || !currentConversationId) return;
+            
+            const conversation = conversations.find(c => c.id === currentConversationId);
+            if (!conversation) return;
+            
+            // Criar nova mensagem
+            const newMessage = {
+                id: Date.now(),
+                text: messageText,
+                sender: 'me',
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                status: 'sent'
+            };
+            
+            // Adicionar à conversa
+            conversation.messages.push(newMessage);
+            
+            // Atualizar última mensagem e tempo
+            conversation.lastSeen = newMessage.time;
+            
+            // Salvar no localStorage
+            saveConversations();
+            
+            // Atualizar interface
+            const messageElement = createMessageElement(newMessage, conversation);
+            messagesContainer.appendChild(messageElement);
+            
+            // Limpar input
+            messageInput.value = '';
+            messageInput.style.height = 'auto';
+            sendButton.disabled = true;
+            
+            // Rolar para baixo
+            scrollToBottom();
+            
+            // Simular resposta após um tempo
+            simulateReply(conversation);
+            
+            // Atualizar lista de conversas
+            loadConversations();
+        }
+
+        // Simular resposta
+        function simulateReply(conversation) {
+            // Apenas para demonstração - em um sistema real isso viria do servidor
+            const possibleReplies = [
+                "Que legal! Quando você chega?",
+                "Interessante! Vou verificar minha agenda",
+                "Ótima ideia! Vamos combinar os detalhes",
+                "Perfeito! Estou ansioso para essa viagem",
+                "Vou consultar com o grupo e te aviso"
+            ];
+            
+            // 70% de chance de resposta
+            if (Math.random() < 0.7) {
+                // Mostrar indicador de digitação
+                conversation.isTyping = true;
+                loadMessages(conversation);
+                
+                // Responder após 2-5 segundos
+                setTimeout(() => {
+                    conversation.isTyping = false;
+                    
+                    const replyText = possibleReplies[Math.floor(Math.random() * possibleReplies.length)];
+                    const replyMessage = {
+                        id: Date.now(),
+                        text: replyText,
+                        sender: 'other',
+                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                        status: 'delivered'
+                    };
+                    
+                    if (conversation.isGroup) {
+                        replyMessage.senderName = conversation.name.split(': ')[1] || conversation.name;
+                    }
+                    
+                    conversation.messages.push(replyMessage);
+                    conversation.lastSeen = replyMessage.time;
+                    
+                    saveConversations();
+                    loadMessages(conversation);
+                    loadConversations();
+                }, 2000 + Math.random() * 3000);
+            }
+        }
+
+        // Rolar para a última mensagem
+        function scrollToBottom() {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Salvar conversas no localStorage
+        function saveConversations() {
+            localStorage.setItem('caroneiro-conversations', JSON.stringify(conversations));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil - Caroneiro</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .profile-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 30px;
+            border: 5px solid var(--primary);
+        }
+        
+        .profile-info h1 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .profile-bio {
+            color: #666;
+            margin-bottom: 20px;
+            max-width: 600px;
+        }
+        
+        .profile-stats {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .profile-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .profile-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .profile-section h2 {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            color: var(--dark);
+        }
+        
+        .trip-list, .destination-list {
+            list-style: none;
+        }
+        
+        .trip-item, .destination-item {
+            padding: 15px;
+            border-bottom: 1px solid #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .trip-item:last-child, .destination-item:last-child {
+            border-bottom: none;
+        }
+        
+        .trip-icon, .destination-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--primary);
+        }
+        
+        .trip-info h3, .destination-info h3 {
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+        
+        .trip-info p, .destination-info p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .trip-actions, .destination-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .btn-small {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            border-radius: 4px;
+        }
+        
+        .reviews-container {
+            margin-top: 20px;
+        }
+        
+        .review-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .review-item:last-child {
+            border-bottom: none;
+        }
+        
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .review-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+        
+        .review-author {
+            font-weight: 600;
+        }
+        
+        .review-date {
+            color: #777;
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+        
+        .review-text {
+            color: #555;
+            line-height: 1.5;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .add-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-avatar {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .profile-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1001;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            animation: modalFade 0.3s;
+        }
+        
+        @keyframes modalFade {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: border 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .avatar-upload {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .avatar-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+        
+        .upload-btn {
+            background: var(--light);
+            border: 1px dashed #ddd;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        @media (max-width: 576px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navegação -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <a href="index.html" class="logo">Caroneiro<span>.</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="index.html#destinos">Destinos</a></li>
+                        <li><a href="index.html#viajantes">Viajantes</a></li>
+                        <li><a href="grupos.html">Grupos</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <a href="perfil.html" class="btn btn-secondary">Meu Perfil</a>
+                    <a href="#" class="btn btn-primary" id="logout-btn">Sair</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo do Perfil -->
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Foto do perfil" class="profile-avatar" id="profile-avatar">
+            <div class="profile-info">
+                <h1 id="profile-name">Carolina Silva</h1>
+                <p class="profile-bio" id="profile-bio">Aventureira de plantão! Amo conhecer novos lugares, culturas e pessoas. Já visitei 15 países e não pretendo parar por aí. Buscando companhia para explorar a América do Sul.</p>
+                
+                <div class="profile-stats">
+                    <div class="stat">
+                        <div class="stat-value" id="trips-count">8</div>
+                        <div class="stat-label">Viagens</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="friends-count">24</div>
+                        <div class="stat-label">Amigos</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="reviews-count">12</div>
+                        <div class="stat-label">Avaliações</div>
+                    </div>
+                </div>
+                
+                <div class="profile-actions">
+                    <button class="btn btn-primary" id="edit-profile-btn">Editar Perfil</button>
+                    <button class="btn btn-secondary" id="add-trip-btn">Adicionar Viagem</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-content">
+            <div class="profile-section">
+                <div class="section-header">
+                    <h2>Próximas Viagens</h2>
+                    <button class="add-btn" id="add-upcoming-trip-btn" title="Adicionar viagem">+</button>
+                </div>
+                <ul class="trip-list" id="upcoming-trips">
+                    <li class="trip-item">
+                        <div class="trip-content">
+                            <div class="trip-icon">✈️</div>
+                            <div class="trip-info">
+                                <h3>Florianópolis - SC</h3>
+                                <p>15 a 22 de Julho, 2023 • Buscando companhia</p>
+                            </div>
+                        </div>
+                        <div class="trip-actions">
+                            <button class="btn btn-primary btn-small edit-trip-btn">Editar</button>
+                            <button class="btn btn-secondary btn-small remove-trip-btn">Remover</button>
+                        </div>
+                    </li>
+                    <li class="trip-item">
+                        <div class="trip-content">
+                            <div class="trip-icon">🏔️</div>
+                            <div class="trip-info">
+                                <h3>Chapada Diamantina - BA</h3>
+                                <p>10 a 18 de Setembro, 2023 • Grupo formado</p>
+                            </div>
+                        </div>
+                        <div class="trip-actions">
+                            <button class="btn btn-primary btn-small edit-trip-btn">Editar</button>
+                            <button class="btn btn-secondary btn-small remove-trip-btn">Remover</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="profile-section">
+                <div class="section-header">
+                    <h2>Destinos Desejados</h2>
+                    <button class="add-btn" id="add-destination-btn" title="Adicionar destino">+</button>
+                </div>
+                <ul class="destination-list" id="wishlist-destinations">
+                    <li class="destination-item">
+                        <div class="destination-content">
+                            <div class="destination-icon">🏝️</div>
+                            <div class="destination-info">
+                                <h3>Fernando de Noronha - PE</h3>
+                                <p>Planejando para 2024</p>
+                            </div>
+                        </div>
+                        <div class="destination-actions">
+                            <button class="btn btn-secondary btn-small remove-destination-btn">Remover</button>
+                        </div>
+                    </li>
+                    <li class="destination-item">
+                        <div class="destination-content">
+                            <div class="destination-icon">🏜️</div>
+                            <div class="destination-info">
+                                <h3>Jericoacoara - CE</h3>
+                                <p>Interesse em visitar</p>
+                            </div>
+                        </div>
+                        <div class="destination-actions">
+                            <button class="btn btn-secondary btn-small remove-destination-btn">Remover</button>
+                        </div>
+                    </li>
+                    <li class="destination-item">
+                        <div class="destination-content">
+                            <div class="destination-icon">🗺️</div>
+                            <div class="destination-info">
+                                <h3>Patagônia Argentina</h3>
+                                <p>Sonho de viagem</p>
+                            </div>
+                        </div>
+                        <div class="destination-actions">
+                            <button class="btn btn-secondary btn-small remove-destination-btn">Remover</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="profile-section" style="grid-column: 1 / -1;">
+                <h2>Viagens Realizadas</h2>
+                <ul class="trip-list" id="past-trips">
+                    <li class="trip-item">
+                        <div class="trip-content">
+                            <div class="trip-icon">🏖️</div>
+                            <div class="trip-info">
+                                <h3>Rio de Janeiro - RJ</h3>
+                                <p>Março, 2023 • 7 dias • Com 2 companheiros</p>
+                            </div>
+                        </div>
+                        <div class="trip-actions">
+                            <button class="btn btn-primary btn-small edit-trip-btn">Editar</button>
+                            <button class="btn btn-secondary btn-small remove-trip-btn">Remover</button>
+                        </div>
+                    </li>
+                    <li class="trip-item">
+                        <div class="trip-content">
+                            <div class="trip-icon">🌄</div>
+                            <div class="trip-info">
+                                <h3>Serra Gaúcha - RS</h3>
+                                <p>Dezembro, 2022 • 5 dias • Com 3 companheiros</p>
+                            </div>
+                        </div>
+                        <div class="trip-actions">
+                            <button class="btn btn-primary btn-small edit-trip-btn">Editar</button>
+                            <button class="btn btn-secondary btn-small remove-trip-btn">Remover</button>
+                        </div>
+                    </li>
+                    <li class="trip-item">
+                        <div class="trip-content">
+                            <div class="trip-icon">🏛️</div>
+                            <div class="trip-info">
+                                <h3>Minas Gerais - MG</h3>
+                                <p>Agosto, 2022 • 4 dias • Com 1 companheiro</p>
+                            </div>
+                        </div>
+                        <div class="trip-actions">
+                            <button class="btn btn-primary btn-small edit-trip-btn">Editar</button>
+                            <button class="btn btn-secondary btn-small remove-trip-btn">Remover</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="profile-section" style="grid-column: 1 / -1;">
+                <h2>Avaliações</h2>
+                <div class="reviews-container">
+                    <div class="review-item">
+                        <div class="review-header">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="João" class="review-avatar">
+                            <div class="review-author">João Mendes</div>
+                            <div class="review-date">15/06/2023</div>
+                        </div>
+                        <div class="review-text">
+                            Viajar com a Carolina foi uma experiência incrível! Ela é muito organizada, divertida e conhece os melhores lugares. Super recomendo!
+                        </div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-header">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Ana" class="review-avatar">
+                            <div class="review-author">Ana Paula</div>
+                            <div class="review-date">02/05/2023</div>
+                        </div>
+                        <div class="review-text">
+                            Companheira de viagem perfeita! Sempre com bom humor e disposta a novas aventuras. Já estamos planejando nossa próxima viagem juntas.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Caroneiro</h3>
+                    <p>Conectando viajantes desde 2023</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">FB</a>
+                        <a href="#" class="social-icon">IG</a>
+                        <a href="#" class="social-icon">TW</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="sobre.html">Sobre o Projeto</a></li>
+                        <li><a href="perfil.html">Meu Perfil</a></li>
+                        <li><a href="chat.html">Chat</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Suporte</h3>
+                    <ul>
+                        <li><a href="#">Ajuda</a></li>
+                        <li><a href="#">Contato</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Caroneiro. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal de Edição de Perfil -->
+    <div id="edit-profile-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Editar Perfil</h2>
+                <button class="close-modal" id="close-edit-profile-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-profile-form">
+                    <div class="form-group">
+                        <label for="edit-name">Nome</label>
+                        <input type="text" id="edit-name" class="form-control" placeholder="Seu nome completo">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-bio">Biografia</label>
+                        <textarea id="edit-bio" class="form-control" placeholder="Conte um pouco sobre você e seus interesses de viagem"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Foto do Perfil</label>
+                        <div class="avatar-upload">
+                            <img id="avatar-preview" src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Preview" class="avatar-preview">
+                            <div>
+                                <button type="button" class="upload-btn" id="upload-avatar-btn">Alterar Foto</button>
+                                <input type="file" id="avatar-input" accept="image/*" style="display: none;">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-interests">Interesses de Viagem</label>
+                        <select id="edit-interests" class="form-control" multiple>
+                            <option value="aventura">Aventura e Esportes</option>
+                            <option value="cultura">Cultura e História</option>
+                            <option value="praia">Praia e Relaxamento</option>
+                            <option value="gastronomia">Gastronomia</option>
+                            <option value="natureza">Natureza e Ecoturismo</option>
+                            <option value="cidade">Turismo Urbano</option>
+                        </select>
+                        <small>Segure Ctrl para selecionar múltiplas opções</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-edit-profile">Cancelar</button>
+                <button class="btn btn-primary" id="save-profile-btn">Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Adicionar Viagem -->
+    <div id="add-trip-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Adicionar Viagem</h2>
+                <button class="close-modal" id="close-add-trip-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-trip-form">
+                    <div class="form-group">
+                        <label for="trip-destination">Destino</label>
+                        <input type="text" id="trip-destination" class="form-control" placeholder="Ex: Florianópolis - SC" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="trip-start-date">Data de Início</label>
+                            <input type="date" id="trip-start-date" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="trip-end-date">Data de Término</label>
+                            <input type="date" id="trip-end-date" class="form-control" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="trip-description">Descrição</label>
+                        <textarea id="trip-description" class="form-control" placeholder="Descreva sua viagem, objetivos, etc."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="trip-status">Status</label>
+                        <select id="trip-status" class="form-control">
+                            <option value="planning">Planejando</option>
+                            <option value="searching">Buscando companhia</option>
+                            <option value="group-formed">Grupo formado</option>
+                            <option value="completed">Concluída</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="trip-type">Tipo de Viagem</label>
+                        <select id="trip-type" class="form-control">
+                            <option value="upcoming">Próxima Viagem</option>
+                            <option value="past">Viagem Realizada</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-add-trip">Cancelar</button>
+                <button class="btn btn-primary" id="save-trip-btn">Salvar Viagem</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Adicionar Destino -->
+    <div id="add-destination-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Adicionar Destino Desejado</h2>
+                <button class="close-modal" id="close-add-destination-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-destination-form">
+                    <div class="form-group">
+                        <label for="destination-name">Destino</label>
+                        <input type="text" id="destination-name" class="form-control" placeholder="Ex: Fernando de Noronha - PE" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="destination-description">Descrição</label>
+                        <textarea id="destination-description" class="form-control" placeholder="Por que você quer visitar este lugar?"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="destination-plan">Plano de Visita</label>
+                        <input type="text" id="destination-plan" class="form-control" placeholder="Ex: Planejando para 2024">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-add-destination">Cancelar</button>
+                <button class="btn btn-primary" id="save-destination-btn">Salvar Destino</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Dados do usuário
+        let userProfile = {
+            name: "Carolina Silva",
+            bio: "Aventureira de plantão! Amo conhecer novos lugares, culturas e pessoas. Já visitei 15 países e não pretendo parar por aí. Buscando companhia para explorar a América do Sul.",
+            avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+            trips: {
+                upcoming: [
+                    {
+                        id: 1,
+                        destination: "Florianópolis - SC",
+                        dates: "15 a 22 de Julho, 2023",
+                        description: "Buscando companhia",
+                        icon: "✈️"
+                    },
+                    {
+                        id: 2,
+                        destination: "Chapada Diamantina - BA",
+                        dates: "10 a 18 de Setembro, 2023",
+                        description: "Grupo formado",
+                        icon: "🏔️"
+                    }
+                ],
+                past: [
+                    {
+                        id: 3,
+                        destination: "Rio de Janeiro - RJ",
+                        dates: "Março, 2023",
+                        description: "7 dias • Com 2 companheiros",
+                        icon: "🏖️"
+                    },
+                    {
+                        id: 4,
+                        destination: "Serra Gaúcha - RS",
+                        dates: "Dezembro, 2022",
+                        description: "5 dias • Com 3 companheiros",
+                        icon: "🌄"
+                    },
+                    {
+                        id: 5,
+                        destination: "Minas Gerais - MG",
+                        dates: "Agosto, 2022",
+                        description: "4 dias • Com 1 companheiro",
+                        icon: "🏛️"
+                    }
+                ]
+            },
+            wishlist: [
+                {
+                    id: 1,
+                    destination: "Fernando de Noronha - PE",
+                    description: "Planejando para 2024",
+                    icon: "🏝️"
+                },
+                {
+                    id: 2,
+                    destination: "Jericoacoara - CE",
+                    description: "Interesse em visitar",
+                    icon: "🏜️"
+                },
+                {
+                    id: 3,
+                    destination: "Patagônia Argentina",
+                    description: "Sonho de viagem",
+                    icon: "🗺️"
+                }
+            ]
+        };
+
+        // Elementos do DOM
+        const editProfileModal = document.getElementById('edit-profile-modal');
+        const addTripModal = document.getElementById('add-trip-modal');
+        const addDestinationModal = document.getElementById('add-destination-modal');
+        
+        // Botões para abrir modais
+        const editProfileBtn = document.getElementById('edit-profile-btn');
+        const addTripBtn = document.getElementById('add-trip-btn');
+        const addUpcomingTripBtn = document.getElementById('add-upcoming-trip-btn');
+        const addDestinationBtn = document.getElementById('add-destination-btn');
+        
+        // Botões para fechar modais
+        const closeEditProfileModal = document.getElementById('close-edit-profile-modal');
+        const closeAddTripModal = document.getElementById('close-add-trip-modal');
+        const closeAddDestinationModal = document.getElementById('close-add-destination-modal');
+        
+        // Botões de cancelar
+        const cancelEditProfile = document.getElementById('cancel-edit-profile');
+        const cancelAddTrip = document.getElementById('cancel-add-trip');
+        const cancelAddDestination = document.getElementById('cancel-add-destination');
+        
+        // Botões de salvar
+        const saveProfileBtn = document.getElementById('save-profile-btn');
+        const saveTripBtn = document.getElementById('save-trip-btn');
+        const saveDestinationBtn = document.getElementById('save-destination-btn');
+        
+        // Formulários
+        const editProfileForm = document.getElementById('edit-profile-form');
+        const addTripForm = document.getElementById('add-trip-form');
+        const addDestinationForm = document.getElementById('add-destination-form');
+        
+        // Elementos de preview
+        const avatarPreview = document.getElementById('avatar-preview');
+        const avatarInput = document.getElementById('avatar-input');
+        const uploadAvatarBtn = document.getElementById('upload-avatar-btn');
+
+        // Inicialização da página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar se o usuário está logado
+            const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+            
+            if (!usuarioLogado) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Carregar dados do perfil
+            carregarPerfil(usuarioLogado);
+            
+            // Configurar eventos
+            configurarEventos();
+            
+            // Configurar logout
+            document.getElementById('logout-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('usuarioLogado');
+                window.location.href = 'index.html';
+            });
+        });
+
+        // Carregar dados do perfil
+        function carregarPerfil(usuario) {
+            // Carregar dados do usuário
+            if (usuario.nome) {
+                document.getElementById('profile-name').textContent = usuario.nome;
+                userProfile.name = usuario.nome;
+            }
+            
+            if (usuario.bio) {
+                document.getElementById('profile-bio').textContent = usuario.bio;
+                userProfile.bio = usuario.bio;
+            }
+            
+            if (usuario.foto) {
+                document.getElementById('profile-avatar').src = usuario.foto;
+                userProfile.avatar = usuario.foto;
+            }
+            
+            // Carregar viagens
+            carregarViagens();
+            
+            // Carregar destinos desejados
+            carregarDestinos();
+            
+            // Atualizar estatísticas
+            atualizarEstatisticas();
+        }
+
+        // Carregar lista de viagens
+        function carregarViagens() {
+            const upcomingTripsList = document.getElementById('upcoming-trips');
+            const pastTripsList = document.getElementById('past-trips');
+            
+            // Limpar listas
+            upcomingTripsList.innerHTML = '';
+            pastTripsList.innerHTML = '';
+            
+            // Adicionar viagens futuras
+            userProfile.trips.upcoming.forEach(trip => {
+                const tripItem = criarElementoViagem(trip, 'upcoming');
+                upcomingTripsList.appendChild(tripItem);
+            });
+            
+            // Adicionar viagens passadas
+            userProfile.trips.past.forEach(trip => {
+                const tripItem = criarElementoViagem(trip, 'past');
+                pastTripsList.appendChild(tripItem);
+            });
+        }
+
+        // Carregar lista de destinos desejados
+        function carregarDestinos() {
+            const destinationsList = document.getElementById('wishlist-destinations');
+            
+            // Limpar lista
+            destinationsList.innerHTML = '';
+            
+            // Adicionar destinos
+            userProfile.wishlist.forEach(destination => {
+                const destinationItem = criarElementoDestino(destination);
+                destinationsList.appendChild(destinationItem);
+            });
+        }
+
+        // Criar elemento de viagem
+        function criarElementoViagem(trip, type) {
+            const li = document.createElement('li');
+            li.className = 'trip-item';
+            li.setAttribute('data-trip-id', trip.id);
+            
+            li.innerHTML = `
+                <div class="trip-content">
+                    <div class="trip-icon">${trip.icon}</div>
+                    <div class="trip-info">
+                        <h3>${trip.destination}</h3>
+                        <p>${trip.dates} • ${trip.description}</p>
+                    </div>
+                </div>
+                <div class="trip-actions">
+                    <button class="btn btn-primary btn-small edit-trip-btn">Editar</button>
+                    <button class="btn btn-secondary btn-small remove-trip-btn">Remover</button>
+                </div>
+            `;
+            
+            // Adicionar eventos aos botões
+            const editBtn = li.querySelector('.edit-trip-btn');
+            const removeBtn = li.querySelector('.remove-trip-btn');
+            
+            editBtn.addEventListener('click', function() {
+                editarViagem(trip.id, type);
+            });
+            
+            removeBtn.addEventListener('click', function() {
+                removerViagem(trip.id, type);
+            });
+            
+            return li;
+        }
+
+        // Criar elemento de destino
+        function criarElementoDestino(destination) {
+            const li = document.createElement('li');
+            li.className = 'destination-item';
+            li.setAttribute('data-destination-id', destination.id);
+            
+            li.innerHTML = `
+                <div class="destination-content">
+                    <div class="destination-icon">${destination.icon}</div>
+                    <div class="destination-info">
+                        <h3>${destination.destination}</h3>
+                        <p>${destination.description}</p>
+                    </div>
+                </div>
+                <div class="destination-actions">
+                    <button class="btn btn-secondary btn-small remove-destination-btn">Remover</button>
+                </div>
+            `;
+            
+            // Adicionar evento ao botão de remover
+            const removeBtn = li.querySelector('.remove-destination-btn');
+            removeBtn.addEventListener('click', function() {
+                removerDestino(destination.id);
+            });
+            
+            return li;
+        }
+
+        // Atualizar estatísticas
+        function atualizarEstatisticas() {
+            document.getElementById('trips-count').textContent = 
+                userProfile.trips.upcoming.length + userProfile.trips.past.length;
+            document.getElementById('friends-count').textContent = '24'; // Valor fixo por enquanto
+            document.getElementById('reviews-count').textContent = '12'; // Valor fixo por enquanto
+        }
+
+        // Configurar eventos
+        function configurarEventos() {
+            // Abrir modais
+            editProfileBtn.addEventListener('click', abrirModalEditarPerfil);
+            addTripBtn.addEventListener('click', abrirModalAdicionarViagem);
+            addUpcomingTripBtn.addEventListener('click', abrirModalAdicionarViagem);
+            addDestinationBtn.addEventListener('click', abrirModalAdicionarDestino);
+            
+            // Fechar modais
+            closeEditProfileModal.addEventListener('click', fecharModalEditarPerfil);
+            closeAddTripModal.addEventListener('click', fecharModalAdicionarViagem);
+            closeAddDestinationModal.addEventListener('click', fecharModalAdicionarDestino);
+            
+            // Cancelar ações
+            cancelEditProfile.addEventListener('click', fecharModalEditarPerfil);
+            cancelAddTrip.addEventListener('click', fecharModalAdicionarViagem);
+            cancelAddDestination.addEventListener('click', fecharModalAdicionarDestino);
+            
+            // Salvar ações
+            saveProfileBtn.addEventListener('click', salvarPerfil);
+            saveTripBtn.addEventListener('click', salvarViagem);
+            saveDestinationBtn.addEventListener('click', salvarDestino);
+            
+            // Upload de avatar
+            uploadAvatarBtn.addEventListener('click', function() {
+                avatarInput.click();
+            });
+            
+            avatarInput.addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        avatarPreview.src = e.target.result;
+                    };
+                    
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+            });
+            
+            // Fechar modais ao clicar fora
+            window.addEventListener('click', function(event) {
+                if (event.target === editProfileModal) {
+                    fecharModalEditarPerfil();
+                }
+                if (event.target === addTripModal) {
+                    fecharModalAdicionarViagem();
+                }
+                if (event.target === addDestinationModal) {
+                    fecharModalAdicionarDestino();
+                }
+            });
+            
+            // Fechar modais com a tecla ESC
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    fecharModalEditarPerfil();
+                    fecharModalAdicionarViagem();
+                    fecharModalAdicionarDestino();
+                }
+            });
+        }
+
+        // Funções para abrir modais
+        function abrirModalEditarPerfil() {
+            // Preencher formulário com dados atuais
+            document.getElementById('edit-name').value = userProfile.name;
+            document.getElementById('edit-bio').value = userProfile.bio;
+            avatarPreview.src = userProfile.avatar;
+            
+            editProfileModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function abrirModalAdicionarViagem() {
+            // Limpar formulário
+            addTripForm.reset();
+            
+            // Definir data mínima como hoje
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('trip-start-date').min = today;
+            document.getElementById('trip-end-date').min = today;
+            
+            addTripModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function abrirModalAdicionarDestino() {
+            // Limpar formulário
+            addDestinationForm.reset();
+            
+            addDestinationModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Funções para fechar modais
+        function fecharModalEditarPerfil() {
+            editProfileModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function fecharModalAdicionarViagem() {
+            addTripModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function fecharModalAdicionarDestino() {
+            addDestinationModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Funções para salvar dados
+        function salvarPerfil() {
+            // Obter dados do formulário
+            const newName = document.getElementById('edit-name').value;
+            const newBio = document.getElementById('edit-bio').value;
+            const newAvatar = avatarPreview.src;
+            
+            // Atualizar perfil
+            userProfile.name = newName;
+            userProfile.bio = newBio;
+            userProfile.avatar = newAvatar;
+            
+            // Atualizar interface
+            document.getElementById('profile-name').textContent = newName;
+            document.getElementById('profile-bio').textContent = newBio;
+            document.getElementById('profile-avatar').src = newAvatar;
+            
+            // Atualizar usuário no localStorage
+            const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+            if (usuarioLogado) {
+                usuarioLogado.nome = newName;
+                usuarioLogado.bio = newBio;
+                usuarioLogado.foto = newAvatar;
+                localStorage.setItem('usuarioLogado', JSON.stringify(usuarioLogado));
+            }
+            
+            // Fechar modal
+            fecharModalEditarPerfil();
+            
+            // Mostrar mensagem de sucesso
+            alert('Perfil atualizado com sucesso!');
+        }
+
+        function salvarViagem() {
+            // Obter dados do formulário
+            const destination = document.getElementById('trip-destination').value;
+            const startDate = document.getElementById('trip-start-date').value;
+            const endDate = document.getElementById('trip-end-date').value;
+            const description = document.getElementById('trip-description').value;
+            const status = document.getElementById('trip-status').value;
+            const type = document.getElementById('trip-type').value;
+            
+            // Validar dados
+            if (!destination || !startDate || !endDate) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
+            
+            // Formatar datas
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            const formattedDates = `${start.getDate()} a ${end.getDate()} de ${start.toLocaleString('pt-BR', { month: 'long' })}, ${start.getFullYear()}`;
+            
+            // Criar objeto de viagem
+            const newTrip = {
+                id: Date.now(), // ID único baseado no timestamp
+                destination: destination,
+                dates: formattedDates,
+                description: description || getStatusDescription(status),
+                icon: getTripIcon(destination)
+            };
+            
+            // Adicionar à lista apropriada
+            if (type === 'upcoming') {
+                userProfile.trips.upcoming.push(newTrip);
+            } else {
+                userProfile.trips.past.push(newTrip);
+            }
+            
+            // Atualizar interface
+            carregarViagens();
+            atualizarEstatisticas();
+            
+            // Fechar modal
+            fecharModalAdicionarViagem();
+            
+            // Mostrar mensagem de sucesso
+            alert('Viagem adicionada com sucesso!');
+        }
+
+        function salvarDestino() {
+            // Obter dados do formulário
+            const destination = document.getElementById('destination-name').value;
+            const description = document.getElementById('destination-description').value;
+            const plan = document.getElementById('destination-plan').value;
+            
+            // Validar dados
+            if (!destination) {
+                alert('Por favor, informe o destino.');
+                return;
+            }
+            
+            // Criar objeto de destino
+            const newDestination = {
+                id: Date.now(), // ID único baseado no timestamp
+                destination: destination,
+                description: plan || 'Interesse em visitar',
+                icon: getDestinationIcon(destination)
+            };
+            
+            // Adicionar à lista
+            userProfile.wishlist.push(newDestination);
+            
+            // Atualizar interface
+            carregarDestinos();
+            
+            // Fechar modal
+            fecharModalAdicionarDestino();
+            
+            // Mostrar mensagem de sucesso
+            alert('Destino adicionado com sucesso!');
+        }
+
+        // Funções auxiliares
+        function getStatusDescription(status) {
+            const statusMap = {
+                'planning': 'Planejando',
+                'searching': 'Buscando companhia',
+                'group-formed': 'Grupo formado',
+                'completed': 'Concluída'
+            };
+            return statusMap[status] || 'Planejando';
+        }
+
+        function getTripIcon(destination) {
+            // Mapear destinos para ícones (simplificado)
+            if (destination.toLowerCase().includes('praia') || destination.toLowerCase().includes('noronha')) {
+                return '🏖️';
+            } else if (destination.toLowerCase().includes('serra') || destination.toLowerCase().includes('montanha')) {
+                return '🏔️';
+            } else if (destination.toLowerCase().includes('cidade') || destination.toLowerCase().includes('rio') || destination.toLowerCase().includes('são paulo')) {
+                return '🏙️';
+            } else {
+                return '✈️';
+            }
+        }
+
+        function getDestinationIcon(destination) {
+            // Mapear destinos para ícones (simplificado)
+            if (destination.toLowerCase().includes('praia') || destination.toLowerCase().includes('noronha') || destination.toLowerCase().includes('jericoacoara')) {
+                return '🏝️';
+            } else if (destination.toLowerCase().includes('deserto') || destination.toLowerCase().includes('dunas')) {
+                return '🏜️';
+            } else if (destination.toLowerCase().includes('patagônia') || destination.toLowerCase().includes('internacional')) {
+                return '🗺️';
+            } else {
+                return '📍';
+            }
+        }
+
+        function editarViagem(tripId, type) {
+            // Encontrar a viagem
+            const trips = type === 'upcoming' ? userProfile.trips.upcoming : userProfile.trips.past;
+            const trip = trips.find(t => t.id === tripId);
+            
+            if (!trip) return;
+            
+            // Preencher formulário com dados da viagem
+            document.getElementById('trip-destination').value = trip.destination;
+            document.getElementById('trip-description').value = trip.description;
+            document.getElementById('trip-type').value = type === 'upcoming' ? 'upcoming' : 'past';
+            
+            // Abrir modal de edição
+            abrirModalAdicionarViagem();
+            
+            // Configurar o botão de salvar para editar em vez de adicionar
+            saveTripBtn.textContent = 'Salvar Alterações';
+            saveTripBtn.onclick = function() {
+                // Atualizar viagem
+                trip.destination = document.getElementById('trip-destination').value;
+                trip.description = document.getElementById('trip-description').value;
+                
+                // Atualizar interface
+                carregarViagens();
+                
+                // Fechar modal
+                fecharModalAdicionarViagem();
+                
+                // Restaurar comportamento padrão do botão
+                saveTripBtn.textContent = 'Salvar Viagem';
+                saveTripBtn.onclick = salvarViagem;
+                
+                // Mostrar mensagem de sucesso
+                alert('Viagem atualizada com sucesso!');
+            };
+        }
+
+        function removerViagem(tripId, type) {
+            if (!confirm('Tem certeza que deseja remover esta viagem?')) {
+                return;
+            }
+            
+            // Encontrar e remover a viagem
+            const trips = type === 'upcoming' ? userProfile.trips.upcoming : userProfile.trips.past;
+            const tripIndex = trips.findIndex(t => t.id === tripId);
+            
+            if (tripIndex !== -1) {
+                trips.splice(tripIndex, 1);
+                
+                // Atualizar interface
+                carregarViagens();
+                atualizarEstatisticas();
+                
+                // Mostrar mensagem de sucesso
+                alert('Viagem removida com sucesso!');
+            }
+        }
+
+        function removerDestino(destinationId) {
+            if (!confirm('Tem certeza que deseja remover este destino?')) {
+                return;
+            }
+            
+            // Encontrar e remover o destino
+            const destinationIndex = userProfile.wishlist.findIndex(d => d.id === destinationId);
+            
+            if (destinationIndex !== -1) {
+                userProfile.wishlist.splice(destinationIndex, 1);
+                
+                // Atualizar interface
+                carregarDestinos();
+                
+                // Mostrar mensagem de sucesso
+                alert('Destino removido com sucesso!');
+            }
+        }
+    </script>
+</body>
+</html>

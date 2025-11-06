@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupos de Viagem - Caroneiro</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .groups-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .page-title {
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        
+        .page-description {
+            color: #666;
+            max-width: 600px;
+        }
+        
+        .groups-filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-select {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            font-size: 0.9rem;
+            min-width: 150px;
+        }
+        
+        .search-box {
+            flex: 1;
+            max-width: 300px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .group-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .group-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .group-header {
+            padding: 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .group-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .group-destination {
+            display: flex;
+            align-items: center;
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .group-destination-icon {
+            margin-right: 8px;
+        }
+        
+        .group-dates {
+            display: flex;
+            align-items: center;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .group-dates-icon {
+            margin-right: 8px;
+        }
+        
+        .group-body {
+            padding: 20px;
+        }
+        
+        .group-description {
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .group-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .group-detail {
+            text-align: center;
+        }
+        
+        .detail-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .detail-label {
+            font-size: 0.8rem;
+            color: #777;
+        }
+        
+        .group-members {
+            margin-bottom: 20px;
+        }
+        
+        .members-title {
+            font-size: 0.9rem;
+            color: #777;
+            margin-bottom: 10px;
+        }
+        
+        .members-list {
+            display: flex;
+        }
+        
+        .member-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            margin-left: -8px;
+        }
+        
+        .member-avatar:first-child {
+            margin-left: 0;
+        }
+        
+        .more-members {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #777;
+            margin-left: -8px;
+        }
+        
+        .group-footer {
+            padding: 15px 20px;
+            background: var(--light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .group-status {
+            display: flex;
+            align-items: center;
+        }
+        
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-open {
+            background: var(--success);
+        }
+        
+        .status-closed {
+            background: var(--secondary);
+        }
+        
+        .status-upcoming {
+            background: var(--warning);
+        }
+        
+        .status-text {
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            grid-column: 1 / -1;
+        }
+        
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        .empty-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .empty-description {
+            color: #777;
+            max-width: 500px;
+            margin: 0 auto 30px;
+        }
+        
+        .create-group-section {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .create-group-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .create-group-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .create-group-description {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .groups-filters {
+                flex-direction: column;
+            }
+            
+            .search-box {
+                max-width: 100%;
+            }
+            
+            .groups-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Modal para detalhes do grupo */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1001;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            animation: modalFade 0.3s;
+        }
+        
+        @keyframes modalFade {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .group-hero {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .group-info-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+        
+        .group-detail-section h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .detail-list {
+            list-style: none;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--primary);
+        }
+        
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .member-card {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            background: var(--light);
+        }
+        
+        .member-avatar-large {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 10px;
+            border: 3px solid var(--primary);
+        }
+        
+        .member-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .member-role {
+            font-size: 0.8rem;
+            color: #777;
+        }
+        
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        /* Modal de criação de grupo */
+        .create-group-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: border 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-actions {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .group-info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .members-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .create-group-form {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navegação -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <a href="index.html" class="logo">Caroneiro<span>.</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="index.html#destinos">Destinos</a></li>
+                        <li><a href="index.html#viajantes">Viajantes</a></li>
+                        <li><a href="grupos.html">Grupos</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-secondary">Entrar</a>
+                    <a href="cadastro.html" class="btn btn-primary">Cadastrar</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <div class="groups-container">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Grupos de Viagem</h1>
+                <p class="page-description">Encontre grupos de viajantes com interesses similares e junte-se a aventuras incríveis!</p>
+            </div>
+            <button class="btn btn-primary" id="open-create-group-modal">Criar Grupo</button>
+        </div>
+        
+        <div class="groups-filters">
+            <select class="filter-select" id="filter-destination">
+                <option value="">Todos os destinos</option>
+                <option value="rio">Rio de Janeiro</option>
+                <option value="florianopolis">Florianópolis</option>
+                <option value="gramado">Gramado</option>
+                <option value="bonito">Bonito</option>
+                <option value="noronha">Fernando de Noronha</option>
+                <option value="chapada">Chapada Diamantina</option>
+            </select>
+            
+            <select class="filter-select" id="filter-date">
+                <option value="">Qualquer data</option>
+                <option value="soon">Próximos 30 dias</option>
+                <option value="month">Próximos 3 meses</option>
+                <option value="year">Próximos 6 meses</option>
+            </select>
+            
+            <select class="filter-select" id="filter-size">
+                <option value="">Qualquer tamanho</option>
+                <option value="small">2-4 pessoas</option>
+                <option value="medium">5-8 pessoas</option>
+                <option value="large">9+ pessoas</option>
+            </select>
+            
+            <div class="search-box">
+                <input type="text" placeholder="Buscar grupos..." id="group-search">
+            </div>
+        </div>
+        
+        <div class="groups-grid" id="groups-container">
+            <!-- Os grupos serão carregados via JavaScript -->
+        </div>
+        
+        <div class="create-group-section">
+            <div class="create-group-icon">👥</div>
+            <h2 class="create-group-title">Não encontrou o grupo ideal?</h2>
+            <p class="create-group-description">Crie seu próprio grupo de viagem e convide outros viajantes para se juntarem a você. É fácil, rápido e você define todas as regras!</p>
+            <button class="btn btn-primary" id="open-create-group-modal-bottom">Criar Grupo Agora</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Caroneiro</h3>
+                    <p>Conectando viajantes desde 2023</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">FB</a>
+                        <a href="#" class="social-icon">IG</a>
+                        <a href="#" class="social-icon">TW</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="sobre.html">Sobre o Projeto</a></li>
+                        <li><a href="perfil.html">Meu Perfil</a></li>
+                        <li><a href="chat.html">Chat</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Suporte</h3>
+                    <ul>
+                        <li><a href="#">Ajuda</a></li>
+                        <li><a href="#">Contato</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Caroneiro. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal para Detalhes do Grupo -->
+    <div id="group-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-group-title">Aventura no Rio de Janeiro</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="group-hero" class="group-hero"></div>
+                
+                <div class="group-info-grid">
+                    <div>
+                        <div class="group-detail-section">
+                            <h3>Descrição do Grupo</h3>
+                            <p id="modal-group-description">Grupo de viajantes buscando explorar as maravilhas do Rio de Janeiro juntos.</p>
+                        </div>
+                        
+                        <div class="group-detail-section">
+                            <h3>Detalhes da Viagem</h3>
+                            <ul class="detail-list">
+                                <li class="detail-item">
+                                    <div class="detail-icon">📍</div>
+                                    <div>
+                                        <strong>Destino:</strong>
+                                        <span id="modal-group-destination">Rio de Janeiro, Brasil</span>
+                                    </div>
+                                </li>
+                                <li class="detail-item">
+                                    <div class="detail-icon">📅</div>
+                                    <div>
+                                        <strong>Datas:</strong>
+                                        <span id="modal-group-dates">15 a 22 de Julho, 2023</span>
+                                    </div>
+                                </li>
+                                <li class="detail-item">
+                                    <div class="detail-icon">💰</div>
+                                    <div>
+                                        <strong>Orçamento estimado:</strong>
+                                        <span id="modal-group-budget">R$ 1.200 - R$ 1.800</span>
+                                    </div>
+                                </li>
+                                <li class="detail-item">
+                                    <div class="detail-icon">🏨</div>
+                                    <div>
+                                        <strong>Acomodação:</strong>
+                                        <span id="modal-group-accommodation">Hostel compartilhado</span>
+                                    </div>
+                                </li>
+                                <li class="detail-item">
+                                    <div class="detail-icon">🚗</div>
+                                    <div>
+                                        <strong>Transporte:</strong>
+                                        <span id="modal-group-transport">Transporte público e passeios organizados</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="group-detail-section">
+                            <h3>Atividades Planejadas</h3>
+                            <ul id="modal-group-activities">
+                                <!-- Atividades serão preenchidas via JavaScript -->
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="group-detail-section">
+                            <h3>Membros do Grupo</h3>
+                            <div class="members-grid" id="modal-group-members">
+                                <!-- Membros serão preenchidos via JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <div class="group-detail-section">
+                            <h3>Informações</h3>
+                            <ul class="detail-list">
+                                <li class="detail-item">
+                                    <div class="detail-icon">👥</div>
+                                    <div>
+                                        <strong>Tamanho:</strong>
+                                        <span id="modal-group-size">4/6 membros</span>
+                                    </div>
+                                </li>
+                                <li class="detail-item">
+                                    <div class="detail-icon">🔒</div>
+                                    <div>
+                                        <strong>Privacidade:</strong>
+                                        <span id="modal-group-privacy">Grupo aberto</span>
+                                    </div>
+                                </li>
+                                <li class="detail-item">
+                                    <div class="detail-icon">📝</div>
+                                    <div>
+                                        <strong>Requisitos:</strong>
+                                        <span id="modal-group-requirements">Nenhum requisito específico</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="close-modal-btn">Fechar</button>
+                <button class="btn btn-primary" id="join-group-btn">Entrar no Grupo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Criar Grupo -->
+    <div id="create-group-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Criar Novo Grupo</h2>
+                <button class="close-modal" id="close-create-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="create-group-form" class="create-group-form">
+                    <div class="form-group">
+                        <label for="group-name">Nome do Grupo</label>
+                        <input type="text" id="group-name" class="form-control" placeholder="Ex: Aventura Carioca" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="group-destination">Destino</label>
+                        <select id="group-destination" class="form-control" required>
+                            <option value="">Selecione um destino</option>
+                            <option value="rio">Rio de Janeiro</option>
+                            <option value="florianopolis">Florianópolis</option>
+                            <option value="gramado">Gramado</option>
+                            <option value="bonito">Bonito</option>
+                            <option value="noronha">Fernando de Noronha</option>
+                            <option value="chapada">Chapada Diamantina</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="group-dates">Datas da Viagem</label>
+                        <input type="text" id="group-dates" class="form-control" placeholder="Ex: 15 a 22 de Julho, 2023" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="group-max-members">Número Máximo de Membros</label>
+                        <input type="number" id="group-max-members" class="form-control" min="2" max="20" value="6" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="group-budget">Orçamento Estimado (por pessoa)</label>
+                        <input type="text" id="group-budget" class="form-control" placeholder="Ex: R$ 1.200 - R$ 1.800" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="group-accommodation">Tipo de Acomodação</label>
+                        <input type="text" id="group-accommodation" class="form-control" placeholder="Ex: Hostel compartilhado" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="group-transport">Transporte</label>
+                        <input type="text" id="group-transport" class="form-control" placeholder="Ex: Transporte público e passeios organizados" required>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="group-description">Descrição do Grupo</label>
+                        <textarea id="group-description" class="form-control" rows="3" placeholder="Descreva o propósito do grupo, o que vocês planejam fazer, etc." required></textarea>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="group-activities">Atividades Planejadas (separadas por vírgula)</label>
+                        <textarea id="group-activities" class="form-control" rows="3" placeholder="Ex: Visita ao Cristo Redentor, Passeio de bondinho no Pão de Açúcar, Dia de praia em Copacabana"></textarea>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="group-requirements">Requisitos para Participar</label>
+                        <input type="text" id="group-requirements" class="form-control" placeholder="Ex: Nenhum requisito específico">
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancel-create-group">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Criar Grupo</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Dados dos grupos (carregados do localStorage ou padrão)
+        let groups = JSON.parse(localStorage.getItem('caroneiro-groups')) || [
+            {
+                id: 1,
+                title: "Aventura Carioca",
+                destination: "Rio de Janeiro",
+                destinationId: "rio",
+                image: "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                dates: "15 a 22 de Julho, 2023",
+                description: "Grupo formado para explorar as maravilhas do Rio de Janeiro. Vamos visitar pontos turísticos icônicos e descobrir lugares secretos que só os locais conhecem.",
+                members: 4,
+                maxMembers: 6,
+                status: "open",
+                budget: "R$ 1.200 - R$ 1.800",
+                accommodation: "Hostel compartilhado",
+                transport: "Transporte público e passeios organizados",
+                privacy: "Grupo aberto",
+                requirements: "Nenhum requisito específico",
+                activities: [
+                    "Visita ao Cristo Redentor",
+                    "Passeio de bondinho no Pão de Açúcar",
+                    "Dia de praia em Copacabana e Ipanema",
+                    "Trilha na Floresta da Tijuca",
+                    "Noite na Lapa"
+                ],
+                memberAvatars: [
+                    "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                ],
+                membersDetails: [
+                    { name: "Carolina Silva", avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", role: "Líder do grupo" },
+                    { name: "Rafael Costa", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", role: "Fotógrafo" },
+                    { name: "Juliana Mendes", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", role: "Membro" },
+                    { name: "Carlos Lima", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", role: "Membro" }
+                ]
+            },
+            {
+                id: 2,
+                title: "Exploradores da Ilha",
+                destination: "Florianópolis",
+                destinationId: "florianopolis",
+                image: "https://images.unsplash.com/photo-1541336032412-2048a678540d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                dates: "10 a 17 de Agosto, 2023",
+                description: "Grupo para explorar as praias e trilhas de Florianópolis. Vamos conhecer as praias mais bonitas e fazer trilhas com vistas incríveis.",
+                members: 3,
+                maxMembers: 8,
+                status: "open",
+                budget: "R$ 800 - R$ 1.200",
+                accommodation: "Airbnb compartilhado",
+                transport: "Aluguel de carro",
+                privacy: "Grupo aberto",
+                requirements: "Gostar de trilhas e praias",
+                activities: [
+                    "Trilha na Lagoinha do Leste",
+                    "Dia nas praias do Norte (Ingleses, Canasvieiras)",
+                    "Passeio de barco pela Lagoa da Conceição",
+                    "Visita ao Centro Histórico",
+                    "Pôr do sol na Praia da Joaquina"
+                ],
+                memberAvatars: [
+                    "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                    "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                ],
+                membersDetails: [
+                    { name: "Amanda Costa", avatar: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", role: "Líder do grupo" },
+                    { name: "Fernanda Oliveira", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", role: "Membro" },
+                    { name: "João Silva", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", role: "Membro" }
+                ]
+            },
+            {
+                id: 3,
+                title: "Romance na Serra",
+                destination: "Gramado",
+                destinationId: "gramado",
+                image: "https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                dates: "5 a 9 de Setembro, 2023",
+                description: "Grupo para curtir o clima europeu de Gramado e Canela. Focamos em experiências românticas e gastronômicas.",
+                members: 5,
+                maxMembers: 5,
+                status: "closed",
+                budget: "R$ 1.500 - R$ 2.000",
+                accommodation: "Hotel aconchegante",
+                transport: "Transporte privativo para passeios",
+                privacy: "Grupo fechado",
+                requirements: "Interesse em gastronomia e paisagens",
+                activities: [
+                    "Visita ao Mini Mundo",
+                    "Jantar típico alemão",
+                    "Passeio de charrete",
+                    "Tour pelas vinícolas da região",
+                    "Compras no Natal Luz (se for a época)"
+                ],
+                memberAvatars: [
+                    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                    "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                    "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                ],
+                membersDetails: [
+                    { name: "Ricardo Nunes", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", role: "Líder do grupo" },
+                    { name: "Patrícia Alves", avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", role: "Membro" },
+                    { name: "Mariana Costa", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", role: "Membro" },
+                    { name: "Amanda Costa", avatar: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", role: "Membro" },
+                    { name: "João Silva", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", role: "Membro" }
+                ]
+            }
+        ];
+
+        // Elementos do DOM
+        const groupsContainer = document.getElementById('groups-container');
+        const modal = document.getElementById('group-modal');
+        const modalTitle = document.getElementById('modal-group-title');
+        const modalDescription = document.getElementById('modal-group-description');
+        const modalDestination = document.getElementById('modal-group-destination');
+        const modalDates = document.getElementById('modal-group-dates');
+        const modalBudget = document.getElementById('modal-group-budget');
+        const modalAccommodation = document.getElementById('modal-group-accommodation');
+        const modalTransport = document.getElementById('modal-group-transport');
+        const modalPrivacy = document.getElementById('modal-group-privacy');
+        const modalRequirements = document.getElementById('modal-group-requirements');
+        const modalSize = document.getElementById('modal-group-size');
+        const modalActivities = document.getElementById('modal-group-activities');
+        const modalMembers = document.getElementById('modal-group-members');
+        const groupHero = document.getElementById('group-hero');
+        const closeModal = document.querySelector('.close-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const joinGroupBtn = document.getElementById('join-group-btn');
+
+        // Elementos do modal de criação
+        const createGroupModal = document.getElementById('create-group-modal');
+        const openCreateModalBtn = document.getElementById('open-create-group-modal');
+        const openCreateModalBottomBtn = document.getElementById('open-create-group-modal-bottom');
+        const closeCreateModal = document.getElementById('close-create-modal');
+        const cancelCreateGroup = document.getElementById('cancel-create-group');
+        const createGroupForm = document.getElementById('create-group-form');
+
+        // Filtros
+        const filterDestination = document.getElementById('filter-destination');
+        const filterDate = document.getElementById('filter-date');
+        const filterSize = document.getElementById('filter-size');
+        const groupSearch = document.getElementById('group-search');
+
+        // Variável para controlar o grupo atual sendo visualizado
+        let currentGroupId = null;
+
+        // Função para salvar grupos no localStorage
+        function saveGroups() {
+            localStorage.setItem('caroneiro-groups', JSON.stringify(groups));
+        }
+
+        // Carregar grupos na página
+        function loadGroups(groupsToLoad = groups) {
+            groupsContainer.innerHTML = '';
+            
+            if (groupsToLoad.length === 0) {
+                groupsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🔍</div>
+                        <h2 class="empty-title">Nenhum grupo encontrado</h2>
+                        <p class="empty-description">Tente ajustar seus filtros de busca ou criar um novo grupo.</p>
+                        <button class="btn btn-primary" id="open-create-group-modal-empty">Criar Grupo</button>
+                    </div>
+                `;
+                
+                // Adicionar evento ao botão no estado vazio
+                document.getElementById('open-create-group-modal-empty').addEventListener('click', openCreateGroupModal);
+                return;
+            }
+            
+            groupsToLoad.forEach(group => {
+                const groupCard = document.createElement('div');
+                groupCard.className = 'group-card';
+                groupCard.setAttribute('data-group-id', group.id);
+                
+                // Determinar classe de status
+                let statusClass = '';
+                let statusText = '';
+                if (group.status === 'open') {
+                    statusClass = 'status-open';
+                    statusText = 'Aberto para novos membros';
+                } else if (group.status === 'closed') {
+                    statusClass = 'status-closed';
+                    statusText = 'Grupo fechado';
+                } else {
+                    statusClass = 'status-upcoming';
+                    statusText = 'Em formação';
+                }
+                
+                groupCard.innerHTML = `
+                    <div class="group-header">
+                        <h3 class="group-title">${group.title}</h3>
+                        <div class="group-destination">
+                            <span class="group-destination-icon">📍</span>
+                            <span>${group.destination}</span>
+                        </div>
+                        <div class="group-dates">
+                            <span class="group-dates-icon">📅</span>
+                            <span>${group.dates}</span>
+                        </div>
+                    </div>
+                    <div class="group-body">
+                        <p class="group-description">${group.description}</p>
+                        
+                        <div class="group-details">
+                            <div class="group-detail">
+                                <div class="detail-value">${group.members}/${group.maxMembers}</div>
+                                <div class="detail-label">Membros</div>
+                            </div>
+                            <div class="group-detail">
+                                <div class="detail-value">${group.budget.split(' - ')[0]}</div>
+                                <div class="detail-label">Orçamento</div>
+                            </div>
+                            <div class="group-detail">
+                                <div class="detail-value">${group.dates.split(' ')[2]}</div>
+                                <div class="detail-label">Duração</div>
+                            </div>
+                        </div>
+                        
+                        <div class="group-members">
+                            <div class="members-title">Membros do grupo:</div>
+                            <div class="members-list">
+                                ${group.memberAvatars.map(avatar => 
+                                    `<img src="${avatar}" alt="Membro" class="member-avatar">`
+                                ).join('')}
+                                ${group.members < group.maxMembers ? 
+                                    `<div class="more-members">+${group.maxMembers - group.members}</div>` : ''
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-footer">
+                        <div class="group-status">
+                            <div class="status-indicator ${statusClass}"></div>
+                            <div class="status-text">${statusText}</div>
+                        </div>
+                        <button class="btn btn-primary view-group-btn">Ver Detalhes</button>
+                    </div>
+                `;
+                
+                groupsContainer.appendChild(groupCard);
+            });
+            
+            // Adicionar eventos aos botões "Ver Detalhes"
+            document.querySelectorAll('.view-group-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const groupCard = this.closest('.group-card');
+                    const groupId = parseInt(groupCard.getAttribute('data-group-id'));
+                    openGroupModal(groupId);
+                });
+            });
+        }
+
+        // Abrir modal com detalhes do grupo
+        function openGroupModal(groupId) {
+            const group = groups.find(g => g.id === groupId);
+            
+            if (!group) return;
+            
+            currentGroupId = groupId;
+            
+            // Preencher os dados no modal
+            modalTitle.textContent = group.title;
+            modalDescription.textContent = group.description;
+            modalDestination.textContent = group.destination;
+            modalDates.textContent = group.dates;
+            modalBudget.textContent = group.budget;
+            modalAccommodation.textContent = group.accommodation;
+            modalTransport.textContent = group.transport;
+            modalPrivacy.textContent = group.privacy;
+            modalRequirements.textContent = group.requirements;
+            modalSize.textContent = `${group.members}/${group.maxMembers} membros`;
+            groupHero.style.backgroundImage = `url('${group.image}')`;
+            
+            // Preencher atividades
+            modalActivities.innerHTML = '';
+            group.activities.forEach(activity => {
+                const li = document.createElement('li');
+                li.textContent = activity;
+                modalActivities.appendChild(li);
+            });
+            
+            // Preencher membros
+            modalMembers.innerHTML = '';
+            group.membersDetails.forEach(member => {
+                const memberCard = document.createElement('div');
+                memberCard.className = 'member-card';
+                memberCard.innerHTML = `
+                    <img src="${member.avatar}" alt="${member.name}" class="member-avatar-large">
+                    <div class="member-name">${member.name}</div>
+                    <div class="member-role">${member.role}</div>
+                `;
+                modalMembers.appendChild(memberCard);
+            });
+            
+            // Configurar botão de entrar no grupo
+            if (group.status === 'open' && group.members < group.maxMembers) {
+                joinGroupBtn.textContent = 'Entrar no Grupo';
+                joinGroupBtn.disabled = false;
+                joinGroupBtn.classList.remove('btn-secondary');
+                joinGroupBtn.classList.add('btn-primary');
+            } else {
+                joinGroupBtn.textContent = 'Grupo Lotado';
+                joinGroupBtn.disabled = true;
+                joinGroupBtn.classList.remove('btn-primary');
+                joinGroupBtn.classList.add('btn-secondary');
+            }
+            
+            // Exibir o modal
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Fechar modal de detalhes do grupo
+        function closeGroupModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            currentGroupId = null;
+        }
+
+        // Entrar em um grupo
+        function joinGroup(groupId) {
+            const user = getLoggedInUser();
+            
+            if (!user) {
+                alert('Você precisa estar logado para entrar em um grupo!');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const group = groups.find(g => g.id === groupId);
+            
+            if (!group) {
+                alert('Grupo não encontrado!');
+                return;
+            }
+            
+            // Verificar se o usuário já está no grupo
+            const userAlreadyInGroup = group.membersDetails.some(member => 
+                member.name === user.nome
+            );
+            
+            if (userAlreadyInGroup) {
+                alert('Você já está neste grupo!');
+                return;
+            }
+            
+            // Verificar se há vagas disponíveis
+            if (group.members >= group.maxMembers) {
+                alert('Este grupo já está lotado!');
+                return;
+            }
+            
+            // Adicionar usuário ao grupo
+            group.members++;
+            group.memberAvatars.push(user.foto || 'https://via.placeholder.com/150');
+            group.membersDetails.push({
+                name: user.nome,
+                avatar: user.foto || 'https://via.placeholder.com/150',
+                role: 'Novo membro'
+            });
+            
+            // Se o grupo atingiu o limite de membros, fechar
+            if (group.members >= group.maxMembers) {
+                group.status = 'closed';
+            }
+            
+            // Salvar no localStorage
+            saveGroups();
+            
+            // Recarregar a lista de grupos
+            loadGroups();
+            
+            // Fechar o modal
+            closeGroupModal();
+            
+            alert(`Você entrou no grupo "${group.title}" com sucesso!`);
+        }
+
+        // Abrir modal de criação de grupo
+        function openCreateGroupModal() {
+            createGroupModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Fechar modal de criação de grupo
+        function closeCreateGroupModal() {
+            createGroupModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            createGroupForm.reset();
+        }
+
+        // Criar um novo grupo
+        function createGroup(groupData) {
+            // Gerar ID único
+            const newGroupId = groups.length > 0 ? Math.max(...groups.map(g => g.id)) + 1 : 1;
+            
+            // Obter o usuário logado
+            const user = getLoggedInUser();
+            
+            if (!user) {
+                alert('Você precisa estar logado para criar um grupo!');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Mapear destino para imagem
+            const destinationImages = {
+                rio: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                florianopolis: 'https://images.unsplash.com/photo-1541336032412-2048a678540d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                gramado: 'https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                bonito: 'https://images.unsplash.com/photo-1620228885847-3b68f56c4cc0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                noronha: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                chapada: 'https://images.unsplash.com/photo-1621359440164-b7405876fd7a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+            };
+            
+            // Mapear destino para nome completo
+            const destinationNames = {
+                rio: 'Rio de Janeiro',
+                florianopolis: 'Florianópolis',
+                gramado: 'Gramado',
+                bonito: 'Bonito - MS',
+                noronha: 'Fernando de Noronha',
+                chapada: 'Chapada Diamantina'
+            };
+            
+            // Criar novo grupo
+            const newGroup = {
+                id: newGroupId,
+                title: groupData.title,
+                destination: destinationNames[groupData.destination],
+                destinationId: groupData.destination,
+                image: destinationImages[groupData.destination] || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
+                dates: groupData.dates,
+                description: groupData.description,
+                members: 1,
+                maxMembers: groupData.maxMembers,
+                status: 'open',
+                budget: groupData.budget,
+                accommodation: groupData.accommodation,
+                transport: groupData.transport,
+                privacy: 'Grupo aberto',
+                requirements: groupData.requirements || 'Nenhum requisito específico',
+                activities: groupData.activities ? groupData.activities.split(',').map(a => a.trim()) : [],
+                memberAvatars: [user.foto || 'https://via.placeholder.com/150'],
+                membersDetails: [
+                    {
+                        name: user.nome,
+                        avatar: user.foto || 'https://via.placeholder.com/150',
+                        role: 'Líder do grupo'
+                    }
+                ]
+            };
+            
+            // Adicionar o grupo à lista
+            groups.push(newGroup);
+            
+            // Salvar no localStorage
+            saveGroups();
+            
+            // Recarregar a lista de grupos
+            loadGroups();
+            
+            // Fechar o modal
+            closeCreateGroupModal();
+            
+            alert(`Grupo "${newGroup.title}" criado com sucesso!`);
+        }
+
+        // Obter usuário logado
+        function getLoggedInUser() {
+            return JSON.parse(localStorage.getItem('usuarioLogado'));
+        }
+
+        // Filtrar grupos
+        function filterGroups() {
+            const destinationFilter = filterDestination.value;
+            const dateFilter = filterDate.value;
+            const sizeFilter = filterSize.value;
+            const searchTerm = groupSearch.value.toLowerCase();
+            
+            const filteredGroups = groups.filter(group => {
+                // Filtro por destino
+                if (destinationFilter && group.destinationId !== destinationFilter) {
+                    return false;
+                }
+                
+                // Filtro por tamanho
+                if (sizeFilter) {
+                    if (sizeFilter === 'small' && group.maxMembers > 4) return false;
+                    if (sizeFilter === 'medium' && (group.maxMembers < 5 || group.maxMembers > 8)) return false;
+                    if (sizeFilter === 'large' && group.maxMembers < 9) return false;
+                }
+                
+                // Filtro por busca
+                if (searchTerm && !group.title.toLowerCase().includes(searchTerm) && 
+                    !group.destination.toLowerCase().includes(searchTerm) &&
+                    !group.description.toLowerCase().includes(searchTerm)) {
+                    return false;
+                }
+                
+                return true;
+            });
+            
+            loadGroups(filteredGroups);
+        }
+
+        // Event Listeners
+        closeModal.addEventListener('click', closeGroupModal);
+        closeModalBtn.addEventListener('click', closeGroupModal);
+        
+        joinGroupBtn.addEventListener('click', function() {
+            if (currentGroupId) {
+                joinGroup(currentGroupId);
+            }
+        });
+        
+        // Filtros
+        filterDestination.addEventListener('change', filterGroups);
+        filterDate.addEventListener('change', filterGroups);
+        filterSize.addEventListener('change', filterGroups);
+        groupSearch.addEventListener('input', filterGroups);
+        
+        // Modal de criação de grupo
+        openCreateModalBtn.addEventListener('click', openCreateGroupModal);
+        openCreateModalBottomBtn.addEventListener('click', openCreateGroupModal);
+        closeCreateModal.addEventListener('click', closeCreateGroupModal);
+        cancelCreateGroup.addEventListener('click', closeCreateGroupModal);
+        
+        // Formulário de criação de grupo
+        createGroupForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                title: document.getElementById('group-name').value,
+                destination: document.getElementById('group-destination').value,
+                dates: document.getElementById('group-dates').value,
+                description: document.getElementById('group-description').value,
+                maxMembers: parseInt(document.getElementById('group-max-members').value),
+                budget: document.getElementById('group-budget').value,
+                accommodation: document.getElementById('group-accommodation').value,
+                transport: document.getElementById('group-transport').value,
+                requirements: document.getElementById('group-requirements').value,
+                activities: document.getElementById('group-activities').value
+            };
+            
+            createGroup(formData);
+        });
+        
+        // Fechar modais quando clicar fora do conteúdo
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                closeGroupModal();
+            }
+            if (event.target === createGroupModal) {
+                closeCreateGroupModal();
+            }
+        });
+        
+        // Fechar modais com a tecla ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                if (modal.style.display === 'block') {
+                    closeGroupModal();
+                }
+                if (createGroupModal.style.display === 'block') {
+                    closeCreateGroupModal();
+                }
+            }
+        });
+
+        // Inicializar a página
+        loadGroups();
+    </script>
+</body>
+</html>
