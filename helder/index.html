@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caroneiro - Encontre sua companhia de viagem</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilos específicos para a página inicial */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1001;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            animation: modalFade 0.3s;
+        }
+        
+        @keyframes modalFade {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .close-modal:hover {
+            color: var(--dark);
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .destination-hero {
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .destination-info {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .destination-description h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .destination-details {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .detail-item {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .detail-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: white;
+            font-size: 0.8rem;
+        }
+        
+        .travelers-section {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        
+        .travelers-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .traveler-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .traveler-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .traveler-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 10px;
+            border: 3px solid var(--primary);
+        }
+        
+        .traveler-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .traveler-date {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .card {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        @media (max-width: 768px) {
+            .destination-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .travelers-list {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navegação -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <a href="index.html" class="logo">Caroneiro<span>.</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="#destinos">Destinos</a></li>
+                        <li><a href="#viajantes">Viajantes</a></li>
+                        <li><a href="grupos.html">Grupos</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-secondary">Entrar</a>
+                    <a href="cadastro.html" class="btn btn-primary">Cadastrar</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Banner Principal -->
+    <section class="hero">
+        <div class="container">
+            <h1>Viajar é melhor com companhia</h1>
+            <p>Encontre seu parceiro de viagem ideal e compartilhe experiências inesquecíveis</p>
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" placeholder="Buscar destino, cidade ou viajante...">
+                    <button class="btn btn-primary">Buscar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destinos em Destaque -->
+    <section class="destinations" id="destinos">
+        <div class="container">
+            <h2 class="section-title">Destinos em Destaque</h2>
+            <div class="cards-container">
+                <!-- Card 1 - Rio de Janeiro -->
+                <div class="card" data-destination="rio">
+                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="card-content">
+                        <h3>Rio de Janeiro</h3>
+                        <p>Encontre companhia para explorar as maravilhas da Cidade Maravilhosa</p>
+                        <a href="#" class="btn btn-primary">Ver viajantes</a>
+                    </div>
+                </div>
+                
+                <!-- Card 2 - Florianópolis -->
+                <div class="card" data-destination="florianopolis">
+                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1541336032412-2048a678540d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="card-content">
+                        <h3>Florianópolis</h3>
+                        <p>Compartilhe as praias mais belas da ilha da magia</p>
+                        <a href="#" class="btn btn-primary">Ver viajantes</a>
+                    </div>
+                </div>
+                
+                <!-- Card 3 - Gramado -->
+                <div class="card" data-destination="gramado">
+                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="card-content">
+                        <h3>Gramado</h3>
+                        <p>Encontre companhia para o clima europeu no Brasil</p>
+                        <a href="#" class="btn btn-primary">Ver viajantes</a>
+                    </div>
+                </div>
+                
+                <!-- Card 4 - Bonito -->
+                <div class="card" data-destination="bonito">
+                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1620228885847-3b68f56c4cc0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="card-content">
+                        <h3>Bonito - MS</h3>
+                        <p>Aventuras em meio à natureza intocada</p>
+                        <a href="#" class="btn btn-primary">Ver viajantes</a>
+                    </div>
+                </div>
+                
+                <!-- Card 5 - Fernando de Noronha -->
+                <div class="card" data-destination="noronha">
+                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="card-content">
+                        <h3>Fernando de Noronha</h3>
+                        <p>Paraíso preservado no Atlântico</p>
+                        <a href="#" class="btn btn-primary">Ver viajantes</a>
+                    </div>
+                </div>
+                
+                <!-- Card 6 - Chapada Diamantina -->
+                <div class="card" data-destination="chapada">
+                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1621359440164-b7405876fd7a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="card-content">
+                        <h3>Chapada Diamantina</h3>
+                        <p>Cachoeiras e trilhas em cenários deslumbrantes</p>
+                        <a href="#" class="btn btn-primary">Ver viajantes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Como Funciona -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">Como Funciona</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">1</div>
+                    <h3>Crie seu perfil</h3>
+                    <p>Conte sobre você, seus interesses e destinos desejados</p>
+                    <a href="cadastro.html" class="btn btn-secondary">Cadastrar</a>
+                </div>
+                <div class="step">
+                    <div class="step-icon">2</div>
+                    <h3>Encontre companheiros</h3>
+                    <p>Busque viajantes com interesses similares aos seus</p>
+                    <a href="#destinos" class="btn btn-secondary">Explorar destinos</a>
+                </div>
+                <div class="step">
+                    <div class="step-icon">3</div>
+                    <h3>Parta para a viagem!</h3>
+                    <p>Converse, planeje e embarque na aventura dos sonhos</p>
+                    <a href="chat.html" class="btn btn-secondary">Iniciar conversas</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Viajantes em Destaque -->
+    <section class="destinations" id="viajantes">
+        <div class="container">
+            <h2 class="section-title">Viajantes destaques do mês</h2>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></div>
+                    <div class="card-content">
+                        <h3>Carolina Silva</h3>
+                        <p>Aventureira de plantão! Já visitei 15 países e não pretendo parar.</p>
+                  </div>
+                </div>
+                <div class="card">
+                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></div>
+                    <div class="card-content">
+                        <h3>Rafael Costa</h3>
+                        <p>Fotógrafo e mochileiro. Adoro explorar lugares fora do comum.</p>
+            
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></div>
+                    <div class="card-content">
+                        <h3>Juliana Mendes</h3>
+                        <p>Viajante cultural, buscando conhecer a história de cada lugar.</p>
+                       
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="cadastro.html" class="btn btn-primary">Junte-se a nossa comunidade</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Caroneiro</h3>
+                    <p>Conectando viajantes desde 2023</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">FB</a>
+                        <a href="#" class="social-icon">IG</a>
+                        <a href="#" class="social-icon">TW</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="sobre.html">Sobre o Projeto</a></li>
+                        <li><a href="perfil.html">Meu Perfil</a></li>
+                        <li><a href="chat.html">Chat</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Suporte</h3>
+                    <ul>
+                        <li><a href="#">Ajuda</a></li>
+                        <li><a href="#">Contato</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Caroneiro. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal para Detalhes do Destino -->
+    <div id="destination-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Rio de Janeiro</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="destination-hero" class="destination-hero"></div>
+                
+                <div class="destination-info">
+                    <div class="destination-description">
+                        <h3>Sobre este destino</h3>
+                        <p id="destination-full-description">O Rio de Janeiro é uma grande cidade brasileira à beira-mar, famosa pelas praias de Copacabana e Ipanema, pela estátua de 38 metros de altura do Cristo Redentor, no topo do Corcovado, e pelo Pão de Açúcar, um pico de granito com teleféricos até seu cume.</p>
+                        
+                        <div class="travelers-section">
+                            <h3>Viajantes para este destino</h3>
+                            <p>Encontre companhia para sua viagem ao Rio de Janeiro:</p>
+                            
+                            <div class="travelers-list" id="travelers-list">
+                                <!-- Lista de viajantes será preenchida via JavaScript -->
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: 20px;">
+                                <a href="cadastro.html" class="btn btn-primary">Cadastre-se para conectar</a>
+                                <a href="chat.html" class="btn btn-secondary">Iniciar conversas</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="destination-details">
+                        <h3>Detalhes</h3>
+                        
+                        <div class="detail-item">
+                            <div class="detail-icon">🌡️</div>
+                            <div>
+                                <strong>Clima</strong>
+                                <p id="destination-clima">Tropical</p>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-icon">💰</div>
+                            <div>
+                                <strong>Custo Médio</strong>
+                                <p id="destination-custo">Moderado a Alto</p>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-icon">⏱️</div>
+                            <div>
+                                <strong>Melhor Época</strong>
+                                <p id="destination-epoca">Abril a Outubro</p>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <div class="detail-icon">🎯</div>
+                            <div>
+                                <strong>Atrações Principais</strong>
+                                <p id="destination-atracoes">Cristo Redentor, Pão de Açúcar, Copacabana</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Dados dos destinos
+        const destinations = {
+            rio: {
+                title: "Rio de Janeiro",
+                image: "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                description: "O Rio de Janeiro é uma grande cidade brasileira à beira-mar, famosa pelas praias de Copacabana e Ipanema, pela estátua de 38 metros de altura do Cristo Redentor, no topo do Corcovado, e pelo Pão de Açúcar, um pico de granito com teleféricos até seu cume. A cidade também é conhecida pelos grandes favelas. O empolgante Carnaval, com carros alegóricos, fantasias extravagantes e sambistas, é considerado o maior do mundo.",
+                clima: "Tropical",
+                custo: "Moderado a Alto",
+                epoca: "Abril a Outubro",
+                atracoes: "Cristo Redentor, Pão de Açúcar, Copacabana, Ipanema, Jardim Botânico",
+                travelers: [
+                    { name: "Ana Santos", avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "15 a 22 de Julho" },
+                    { name: "Pedro Almeida", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "10 a 18 de Agosto" },
+                    { name: "Mariana Costa", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "5 a 12 de Setembro" }
+                ]
+            },
+            florianopolis: {
+                title: "Florianópolis",
+                image: "https://images.unsplash.com/photo-1541336032412-2048a678540d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                description: "Florianópolis, a capital do estado de Santa Catarina, no sul do Brasil, é maioritariamente constituída pela Ilha de Santa Catarina, com 54 km de comprimento. É famosa pelas suas praias, incluindo estâncias turísticas populares como a Praia dos Ingleses na extremidade norte da ilha. A Lagoa da Conceição, um duto de água salgada, é popular para a prática de windsurf e para excursões de barco. A Ponte Hercílio Luz, uma ponte pênsil de aço desativada, é um marco da cidade.",
+                clima: "Subtropical",
+                custo: "Moderado",
+                epoca: "Dezembro a Março",
+                atracoes: "Praia dos Ingleses, Lagoa da Conceição, Ponte Hercílio Luz, Joaquina",
+                travelers: [
+                    { name: "Carlos Lima", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "20 a 27 de Janeiro" },
+                    { name: "Beatriz Rocha", avatar: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "15 a 22 de Fevereiro" }
+                ]
+            },
+            gramado: {
+                title: "Gramado",
+                image: "https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                description: "Gramado é uma cidade com uma estância de montanha situada no estado mais a sul do Brasil, Rio Grande do Sul. Influenciada pelos colonos alemães do século XIX, a cidade possui um toque bávaro com chalés alpinos, chocolates e lojas de artesanato. Gramado é também conhecida pelas suas exibições de luzes de Natal e pelas hortênsias em flor na primavera. O Lago Negro disponibiliza alugueres de barcos e caminhos florestais, enquanto o Hollywood Dream Cars exibe veículos clássicos.",
+                clima: "Subtropical de Altitude",
+                custo: "Moderado a Alto",
+                epoca: "Março a Junho e Setembro a Novembro",
+                atracoes: "Lago Negro, Rua Coberta, Mini Mundo, Snowland",
+                travelers: [
+                    { name: "João Silva", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "10 a 17 de Junho" },
+                    { name: "Fernanda Oliveira", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "5 a 12 de Julho" }
+                ]
+            },
+            bonito: {
+                title: "Bonito - MS",
+                image: "https://images.unsplash.com/photo-1620228885847-3b68f56c4cc0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                description: "Bonito é uma cidade no estado de Mato Grosso do Sul, Brasil, conhecida pelos rios de águas transparentes repletos de peixes, como o Abismo Anhumas, um abismo com um lago subterrâneo. Nas proximidades, a Gruta do Lago Azul possui formações de calcário e um lago de águas azul-turquesa. O Aquário Natural é uma parte do rio Baía Bonita, onde os visitantes podem fazer snorkel em meio a peixes. A cidade serve de base para ecoturismo na região do cerrado.",
+                clima: "Tropical",
+                custo: "Moderado",
+                epoca: "Abril a Outubro",
+                atracoes: "Gruta do Lago Azul, Rio da Prata, Abismo Anhumas, Aquário Natural",
+                travelers: [
+                    { name: "Ricardo Nunes", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "15 a 22 de Maio" },
+                    { name: "Patrícia Alves", avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "10 a 17 de Agosto" }
+                ]
+            },
+            noronha: {
+                title: "Fernando de Noronha",
+                image: "https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                description: "Fernando de Noronha é um arquipélago vulcânico situado a cerca de 350 quilómetros ao largo da costa nordeste do Brasil. É considerado como um dos melhores locais de mergulho e snorkeling do Brasil, com uma fauna marinha que inclui tartarugas, golfinhos, tubarões e uma grande variedade de peixes tropicais. A praia do Sancho, com águas profundas e protegidas, é acessível através de escadas íngremes e é regularmente classificada como uma das melhores praias do mundo. O Parque Nacional Marinho de Fernando de Noronha protege a maioria das ilhas e do oceano circundante.",
+                clima: "Tropical",
+                custo: "Alto",
+                epoca: "Agosto a Janeiro",
+                atracoes: "Baía do Sancho, Praia do Leão, Dolphin Bay, Morro Dois Irmãos",
+                travelers: [
+                    { name: "Sofia Martins", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "20 a 27 de Novembro" },
+                    { name: "Lucas Ferreira", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "15 a 22 de Dezembro" }
+                ]
+            },
+            chapada: {
+                title: "Chapada Diamantina",
+                image: "https://images.unsplash.com/photo-1621359440164-b7405876fd7a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+                description: "A Chapada Diamantina é uma região de serras, situada no centro do estado brasileiro da Bahia, onde antigamente havia extração de diamantes. Hoje é uma área protegida na forma de parque nacional, conhecida pela sua paisagem de morros, cavernas e cachoeiras de águas claras. A Cachoeira da Fumaça, com 340 metros de altura, é uma das suas quedas de água mais altas. A Gruta da Lapa Doce é uma extensa caverna de calcário com corredores e formações rochosas. A cidade de Lençóis, na base da serra, serve de ponto de partida para excursões.",
+                clima: "Tropical de Altitude",
+                custo: "Baixo a Moderado",
+                epoca: "Abril a Setembro",
+                atracoes: "Cachoeira da Fumaça, Vale do Pati, Poço Azul, Morro do Pai Inácio",
+                travelers: [
+                    { name: "Gabriela Santos", avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "10 a 17 de Junho" },
+                    { name: "Diego Ramos", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "5 a 12 de Agosto" },
+                    { name: "Camila Lima", avatar: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "20 a 27 de Setembro" }
+                ]
+            }
+        };
+
+        // Elementos do DOM
+        const modal = document.getElementById('destination-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const destinationHero = document.getElementById('destination-hero');
+        const destinationDescription = document.getElementById('destination-full-description');
+        const destinationClima = document.getElementById('destination-clima');
+        const destinationCusto = document.getElementById('destination-custo');
+        const destinationEpoca = document.getElementById('destination-epoca');
+        const destinationAtracoes = document.getElementById('destination-atracoes');
+        const travelersList = document.getElementById('travelers-list');
+        const closeModal = document.querySelector('.close-modal');
+
+        // Adicionar eventos de clique aos cards de destino
+        document.querySelectorAll('.card[data-destination]').forEach(card => {
+            card.addEventListener('click', function() {
+                const destinationKey = this.getAttribute('data-destination');
+                openDestinationModal(destinationKey);
+            });
+        });
+
+        // Função para abrir o modal com os dados do destino
+        function openDestinationModal(destinationKey) {
+            const destination = destinations[destinationKey];
+            
+            if (!destination) return;
+            
+            // Preencher os dados no modal
+            modalTitle.textContent = destination.title;
+            destinationHero.style.backgroundImage = `url('${destination.image}')`;
+            destinationDescription.textContent = destination.description;
+            destinationClima.textContent = destination.clima;
+            destinationCusto.textContent = destination.custo;
+            destinationEpoca.textContent = destination.epoca;
+            destinationAtracoes.textContent = destination.atracoes;
+            
+            // Preencher a lista de viajantes
+            travelersList.innerHTML = '';
+            destination.travelers.forEach(traveler => {
+                const travelerCard = document.createElement('div');
+                travelerCard.className = 'traveler-card';
+                travelerCard.innerHTML = `
+                    <img src="${traveler.avatar}" alt="${traveler.name}" class="traveler-avatar">
+                    <div class="traveler-name">${traveler.name}</div>
+                    <div class="traveler-date">${traveler.date}</div>
+                    <a href="perfil.html" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.8rem;">Ver perfil</a>
+                `;
+                travelersList.appendChild(travelerCard);
+            });
+            
+            // Exibir o modal
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Fechar modal quando clicar no X
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        // Fechar modal quando clicar fora do conteúdo
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Fechar modal com a tecla ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && modal.style.display === 'block') {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>

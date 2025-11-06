@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar - Caroneiro</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .auth-page {
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .auth-container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .auth-header h1 {
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        
+        .auth-header p {
+            color: #666;
+        }
+        
+        .auth-logo {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .btn-auth {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn-auth:hover {
+            background: #2a75f0;
+        }
+        
+        .auth-divider {
+            text-align: center;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .auth-divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #eee;
+        }
+        
+        .auth-divider span {
+            background: white;
+            padding: 0 15px;
+            color: #777;
+        }
+        
+        .social-auth {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .social-btn:hover {
+            background: #f9f9f9;
+        }
+        
+        .social-icon {
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .alert {
+            padding: 12px 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .alert-error {
+            background: #ffeaea;
+            color: #d63031;
+            border: 1px solid #ffcccc;
+        }
+        
+        .alert-success {
+            background: #eaffea;
+            color: #00b894;
+            border: 1px solid #ccffcc;
+        }
+        
+        .terms {
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .terms a {
+            color: var(--primary);
+        }
+        
+        @media (max-width: 576px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navegação -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <a href="index.html" class="logo">Caroneiro<span>.</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="index.html#destinos">Destinos</a></li>
+                        <li><a href="index.html#viajantes">Viajantes</a></li>
+                        <li><a href="index.html#grupos">Grupos</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-secondary">Entrar</a>
+                    <a href="cadastro.html" class="btn btn-primary">Cadastrar</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Página de Cadastro -->
+    <div class="auth-page">
+        <div class="auth-container">
+            <div class="auth-header">
+                <div class="auth-logo">🚗</div>
+                <h1>Criar Conta</h1>
+                <p>Junte-se à comunidade de viajantes</p>
+            </div>
+            
+            <div class="alert alert-error" id="error-alert">
+                As senhas não coincidem. Tente novamente.
+            </div>
+            
+            <div class="alert alert-success" id="success-alert">
+                Cadastro realizado com sucesso! Redirecionando...
+            </div>
+            
+            <form id="cadastro-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nome">Nome</label>
+                        <input type="text" id="nome" class="form-control" placeholder="Seu nome completo" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="apelido">Apelido</label>
+                        <input type="text" id="apelido" class="form-control" placeholder="Como quer ser chamado">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" class="form-control" placeholder="seu@email.com" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="senha">Senha</label>
+                        <input type="password" id="senha" class="form-control" placeholder="Sua senha" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmar-senha">Confirmar Senha</label>
+                        <input type="password" id="confirmar-senha" class="form-control" placeholder="Digite novamente" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="interesses">Interesses de Viagem</label>
+                    <select id="interesses" class="form-control" multiple>
+                        <option value="aventura">Aventura e Esportes</option>
+                        <option value="cultura">Cultura e História</option>
+                        <option value="praia">Praia e Relaxamento</option>
+                        <option value="gastronomia">Gastronomia</option>
+                        <option value="natureza">Natureza e Ecoturismo</option>
+                        <option value="cidade">Turismo Urbano</option>
+                    </select>
+                    <small>Segure Ctrl para selecionar múltiplas opções</small>
+                </div>
+                
+                <div class="terms">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">Concordo com os <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a></label>
+                </div>
+                
+                <button type="submit" class="btn-auth">Criar Conta</button>
+            </form>
+            
+            <div class="auth-divider">
+                <span>Ou cadastre-se com</span>
+            </div>
+            
+            <div class="social-auth">
+                <button class="social-btn" id="google-signup">
+                    <span class="social-icon">🔍</span>
+                    <span>Google</span>
+                </button>
+                <button class="social-btn" id="facebook-signup">
+                    <span class="social-icon">f</span>
+                    <span>Facebook</span>
+                </button>
+            </div>
+            
+            <div class="auth-footer">
+                <p>Já tem uma conta? <a href="login.html">Entre aqui</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Caroneiro</h3>
+                    <p>Conectando viajantes desde 2023</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">FB</a>
+                        <a href="#" class="social-icon">IG</a>
+                        <a href="#" class="social-icon">TW</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="sobre.html">Sobre o Projeto</a></li>
+                        <li><a href="perfil.html">Meu Perfil</a></li>
+                        <li><a href="chat.html">Chat</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Suporte</h3>
+                    <ul>
+                        <li><a href="#">Ajuda</a></li>
+                        <li><a href="#">Contato</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                        <li><a href="#">Termos de Uso</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Caroneiro. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>
