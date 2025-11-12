@@ -68,8 +68,6 @@
             background: var(--light);
         }
         
-    
-
         .conversation-avatar {
             width: 50px;
             height: 50px;
@@ -94,7 +92,7 @@
         
         .conversation-info {
             flex: 1;
-            min-width: 0; 
+            min-width: 0;
         }
         
         .conversation-header {
@@ -145,7 +143,6 @@
             align-items: center;
         }
         
-       
         .chat-user-avatar {
             width: 40px;
             height: 40px;
@@ -379,6 +376,77 @@
             flex-shrink: 0;
         }
         
+        /* Media preview styles */
+        .media-preview {
+            padding: 10px 20px;
+            background: #f9f9f9;
+            border-top: 1px solid #eee;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .preview-image {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 8px;
+        }
+        
+        .preview-video {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 8px;
+        }
+        
+        .cancel-preview {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        /* Loading spinner */
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Media messages */
+        .chat-image {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
+        
+        .chat-video {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
+        
+        .media-caption {
+            margin-top: 5px;
+            font-size: 0.9rem;
+        }
+        
         @media (max-width: 768px) {
             .chat-container {
                 flex-direction: column;
@@ -401,7 +469,6 @@
     </style>
 </head>
 <body>
-   
     <header>
         <div class="container">
             <div class="header-container">
@@ -422,7 +489,6 @@
         </div>
     </header>
 
-  
     <div class="chat-container">
         <div class="conversations-sidebar">
             <div class="conversations-header">
@@ -432,7 +498,7 @@
                 </div>
             </div>
             <div class="conversations-list" id="conversations-list">
-             
+                <!-- Conversas serão carregadas aqui -->
             </div>
         </div>
         
@@ -459,7 +525,16 @@
                 </div>
             </div>
             
+            <!-- Media preview area -->
+            <div class="media-preview" id="media-preview">
+                <button class="cancel-preview" id="cancel-preview">X</button>
+                <img id="preview-image" class="preview-image" style="display: none;">
+                <video id="preview-video" class="preview-video" style="display: none;" controls></video>
+                <span id="file-name"></span>
+            </div>
+            
             <div class="message-input-area" id="message-input-area" style="display: none;">
+                <input type="file" id="file-input" accept="image/*,video/*" style="display: none;">
                 <button class="action-button" title="Anexar arquivo" id="attach-file-btn">📎</button>
                 <textarea class="message-input" id="message-input" placeholder="Digite sua mensagem..." rows="1"></textarea>
                 <button class="send-button" id="send-button" title="Enviar mensagem" disabled>
@@ -468,33 +543,7 @@
             </div>
         </div>
     </div>
-   
-<div class="chat-container">
-   
-    <div id="chatMessages" class="chat-messages"></div>
 
-   
-    <div id="mediaPreview" class="media-preview" style="display: none;">
-        <button id="cancelPreview" class="cancel-preview">X</button>
-        <img id="previewImage" src="#" alt="Preview" style="display: none; max-width: 200px; max-height: 200px;">
-        <video id="previewVideo" src="#" controls style="display: none; max-width: 200px; max-height: 200px;"></video>
-    </div>
-
-    
-    <form id="chatForm" class="chat-form">
-        <div class="input-group">
-            <input type="text" id="messageInput" placeholder="Digite sua mensagem..." autocomplete="off">
-           
-            <input type="file" id="fileInput" accept="image/*,video/*" style="display: none;">
-            
-            <button type="button" id="attachButton" class="attach-button">📎</button>
-           
-            <button type="submit">Enviar</button>
-        </div>
-    </form>
-</div>
-
- 
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -533,7 +582,7 @@
     </footer>
 
     <script>
-       
+        // Dados das conversas
         let conversations = JSON.parse(localStorage.getItem('caroneiro-conversations')) || [
             {
                 id: 1,
@@ -668,7 +717,7 @@
             }
         ];
 
-       
+        // Elementos da interface
         const conversationsList = document.getElementById('conversations-list');
         const messagesContainer = document.getElementById('messages-container');
         const messageInput = document.getElementById('message-input');
@@ -678,17 +727,24 @@
         const emptyChat = document.getElementById('empty-chat');
         const conversationSearch = document.getElementById('conversation-search');
         const attachFileBtn = document.getElementById('attach-file-btn');
+        const fileInput = document.getElementById('file-input');
         const userInfoBtn = document.getElementById('user-info-btn');
         const chatOptionsBtn = document.getElementById('chat-options-btn');
         const logoutBtn = document.getElementById('logout-btn');
+        const mediaPreview = document.getElementById('media-preview');
+        const previewImage = document.getElementById('preview-image');
+        const previewVideo = document.getElementById('preview-video');
+        const fileName = document.getElementById('file-name');
+        const cancelPreview = document.getElementById('cancel-preview');
 
-        
+        // Estado da aplicação
         let currentConversationId = null;
         let currentUser = null;
+        let currentFile = null;
 
-        
+        // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
-            
+            // Verificar se o usuário está logado
             currentUser = JSON.parse(localStorage.getItem('usuarioLogado'));
             
             if (!currentUser) {
@@ -696,13 +752,13 @@
                 return;
             }
             
-        
+            // Configurar event listeners
             setupEventListeners();
             
-          
+            // Carregar conversas
             loadConversations();
             
-            
+            // Configurar logout
             logoutBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 localStorage.removeItem('usuarioLogado');
@@ -710,12 +766,12 @@
             });
         });
 
-       
+        // Configurar event listeners
         function setupEventListeners() {
-           
+            // Enviar mensagem
             sendButton.addEventListener('click', sendMessage);
             
-         
+            // Enviar com Enter
             messageInput.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
@@ -723,24 +779,41 @@
                 }
             });
             
-            
+            // Ajustar altura do textarea
             messageInput.addEventListener('input', function() {
                 this.style.height = 'auto';
                 this.style.height = (this.scrollHeight) + 'px';
-                
-                
-                sendButton.disabled = this.value.trim() === '';
+                sendButton.disabled = this.value.trim() === '' && !currentFile;
             });
             
-           
+            // Buscar conversas
             conversationSearch.addEventListener('input', filterConversations);
             
-          
+            // Anexar arquivo
             attachFileBtn.addEventListener('click', function() {
-                alert('Funcionalidade de anexar arquivo seria implementada aqui!');
+                fileInput.click();
             });
             
+            // Selecionar arquivo
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    // Verificar tamanho (limite de 10MB)
+                    if (file.size > 10 * 1024 * 1024) {
+                        alert('Arquivo muito grande. Tamanho máximo: 10MB');
+                        return;
+                    }
+                    
+                    currentFile = file;
+                    showMediaPreview(file);
+                    sendButton.disabled = messageInput.value.trim() === '' && !currentFile;
+                }
+            });
             
+            // Cancelar preview
+            cancelPreview.addEventListener('click', cancelMediaPreview);
+            
+            // Informações do usuário
             userInfoBtn.addEventListener('click', function() {
                 if (currentConversationId) {
                     const conversation = conversations.find(c => c.id === currentConversationId);
@@ -750,7 +823,7 @@
                 }
             });
             
-            
+            // Opções da conversa
             chatOptionsBtn.addEventListener('click', function() {
                 if (currentConversationId) {
                     alert('Opções da conversa:\n- Limpar conversa\n- Silenciar notificações\n- Sair da conversa');
@@ -758,7 +831,7 @@
             });
         }
 
-       
+        // Carregar lista de conversas
         function loadConversations() {
             conversationsList.innerHTML = '';
             
@@ -779,7 +852,7 @@
                 conversationItem.className = 'conversation-item';
                 conversationItem.setAttribute('data-conversation-id', conversation.id);
                 
-            
+                // Avatar
                 let avatarContent = '';
                 if (conversation.avatar.startsWith('http')) {
                     avatarContent = `<img src="${conversation.avatar}" alt="${conversation.name}">`;
@@ -811,7 +884,7 @@
             });
         }
 
-      
+        // Filtrar conversas
         function filterConversations() {
             const searchTerm = conversationSearch.value.toLowerCase();
             const conversationItems = document.querySelectorAll('.conversation-item');
@@ -828,14 +901,14 @@
             });
         }
 
-     
+        // Abrir conversa
         function openConversation(conversationId) {
             currentConversationId = conversationId;
             const conversation = conversations.find(c => c.id === conversationId);
             
             if (!conversation) return;
             
-          
+            // Atualizar header
             let avatarContent = '';
             if (conversation.avatar.startsWith('http')) {
                 avatarContent = `<img src="${conversation.avatar}" alt="${conversation.name}">`;
@@ -847,32 +920,32 @@
             document.getElementById('chat-user-name').textContent = conversation.name;
             document.getElementById('chat-user-status').textContent = conversation.status;
             
-         
+            // Mostrar elementos do chat
             chatHeader.style.display = 'flex';
             messageInputArea.style.display = 'flex';
             emptyChat.style.display = 'none';
             
-        
+            // Carregar mensagens
             loadMessages(conversation);
             
-          
+            // Marcar como lida
             if (conversation.unread > 0) {
                 conversation.unread = 0;
                 saveConversations();
                 loadConversations();
             }
             
-           
+            // Destacar conversa ativa
             document.querySelectorAll('.conversation-item').forEach(item => {
                 item.classList.remove('active');
             });
             document.querySelector(`[data-conversation-id="${conversationId}"]`).classList.add('active');
             
-           
+            // Focar no input
             messageInput.focus();
         }
 
-       
+        // Carregar mensagens
         function loadMessages(conversation) {
             messagesContainer.innerHTML = '';
             
@@ -881,16 +954,16 @@
                 messagesContainer.appendChild(messageElement);
             });
             
-           
+            // Indicador de digitação
             if (conversation.isTyping) {
                 addTypingIndicator(conversation);
             }
             
-          
+            // Rolar para o final
             scrollToBottom();
         }
 
-      
+        // Criar elemento de mensagem
         function createMessageElement(message, conversation) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${message.sender === 'me' ? 'my-message' : 'other-message'}`;
@@ -900,9 +973,27 @@
                 senderName = `<div class="message-sender">${message.senderName}</div>`;
             }
             
+            // Verificar se é uma mensagem de mídia
+            let messageContent = '';
+            if (message.type === 'image') {
+                messageContent = `
+                    <img src="${message.mediaUrl}" alt="${message.text || 'Imagem'}" class="chat-image">
+                    ${message.text ? `<div class="media-caption">${message.text}</div>` : ''}
+                `;
+            } else if (message.type === 'video') {
+                messageContent = `
+                    <video controls class="chat-video">
+                        <source src="${message.mediaUrl}" type="${message.mediaType}">
+                    </video>
+                    ${message.text ? `<div class="media-caption">${message.text}</div>` : ''}
+                `;
+            } else {
+                messageContent = `<div class="message-text">${message.text}</div>`;
+            }
+            
             messageDiv.innerHTML = `
                 ${senderName}
-                <div class="message-text">${message.text}</div>
+                ${messageContent}
                 <div class="message-time">${message.time}</div>
                 ${message.sender === 'me' ? 
                     `<div class="message-status">${message.status === 'read' ? '✓✓' : '✓'}</div>` : 
@@ -912,7 +1003,7 @@
             return messageDiv;
         }
 
-      
+        // Adicionar indicador de digitação
         function addTypingIndicator(conversation) {
             const typingDiv = document.createElement('div');
             typingDiv.className = 'typing-indicator';
@@ -929,53 +1020,135 @@
             scrollToBottom();
         }
 
-        
+        // Mostrar preview de mídia
+        function showMediaPreview(file) {
+            fileName.textContent = file.name;
+            
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                    previewVideo.style.display = 'none';
+                }
+                reader.readAsDataURL(file);
+            } else if (file.type.startsWith('video/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    previewVideo.src = e.target.result;
+                    previewVideo.style.display = 'block';
+                    previewImage.style.display = 'none';
+                }
+                reader.readAsDataURL(file);
+            }
+            
+            mediaPreview.style.display = 'flex';
+        }
+
+        // Cancelar preview de mídia
+        function cancelMediaPreview() {
+            fileInput.value = '';
+            currentFile = null;
+            mediaPreview.style.display = 'none';
+            previewImage.style.display = 'none';
+            previewVideo.style.display = 'none';
+            previewImage.src = '#';
+            previewVideo.src = '';
+            sendButton.disabled = messageInput.value.trim() === '';
+        }
+
+        // Enviar mensagem
         function sendMessage() {
             const messageText = messageInput.value.trim();
             
-            if (!messageText || !currentConversationId) return;
+            if ((!messageText && !currentFile) || !currentConversationId) return;
             
             const conversation = conversations.find(c => c.id === currentConversationId);
             if (!conversation) return;
             
-            const newMessage = {
-                id: Date.now(),
-                text: messageText,
-                sender: 'me',
-                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                status: 'sent'
-            };
+            let newMessage;
             
-         
-            conversation.messages.push(newMessage);
-            
-            
-            conversation.lastSeen = newMessage.time;
-            
-            
-            saveConversations();
-            
-          
-            const messageElement = createMessageElement(newMessage, conversation);
-            messagesContainer.appendChild(messageElement);
-            
-         
-            messageInput.value = '';
-            messageInput.style.height = 'auto';
-            sendButton.disabled = true;
-         
-            scrollToBottom();
-            
-           
-            simulateReply(conversation);
-            
-    
-            loadConversations();
+            if (currentFile) {
+                // Mensagem de mídia
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    newMessage = {
+                        id: Date.now(),
+                        text: messageText,
+                        sender: 'me',
+                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                        status: 'sent',
+                        type: currentFile.type.startsWith('image/') ? 'image' : 'video',
+                        mediaUrl: e.target.result,
+                        mediaType: currentFile.type
+                    };
+                    
+                    // Adicionar à conversa
+                    conversation.messages.push(newMessage);
+                    conversation.lastSeen = newMessage.time;
+                    
+                    // Salvar
+                    saveConversations();
+                    
+                    // Atualizar UI
+                    const messageElement = createMessageElement(newMessage, conversation);
+                    messagesContainer.appendChild(messageElement);
+                    
+                    // Limpar
+                    messageInput.value = '';
+                    cancelMediaPreview();
+                    messageInput.style.height = 'auto';
+                    sendButton.disabled = true;
+                    
+                    // Rolar para o final
+                    scrollToBottom();
+                    
+                    // Simular resposta
+                    simulateReply(conversation);
+                    
+                    // Atualizar lista de conversas
+                    loadConversations();
+                };
+                reader.readAsDataURL(currentFile);
+            } else {
+                // Mensagem de texto
+                newMessage = {
+                    id: Date.now(),
+                    text: messageText,
+                    sender: 'me',
+                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    status: 'sent'
+                };
+                
+                // Adicionar à conversa
+                conversation.messages.push(newMessage);
+                conversation.lastSeen = newMessage.time;
+                
+                // Salvar
+                saveConversations();
+                
+                // Atualizar UI
+                const messageElement = createMessageElement(newMessage, conversation);
+                messagesContainer.appendChild(messageElement);
+                
+                // Limpar
+                messageInput.value = '';
+                messageInput.style.height = 'auto';
+                sendButton.disabled = true;
+                
+                // Rolar para o final
+                scrollToBottom();
+                
+                // Simular resposta
+                simulateReply(conversation);
+                
+                // Atualizar lista de conversas
+                loadConversations();
+            }
         }
 
-        
+        // Simular resposta
         function simulateReply(conversation) {
-           
             const possibleReplies = [
                 "Que legal! Quando você chega?",
                 "Interessante! Vou verificar minha agenda",
@@ -984,13 +1157,13 @@
                 "Vou consultar com o grupo e te aviso"
             ];
             
-            
+            // 70% de chance de resposta
             if (Math.random() < 0.7) {
-          
+                // Mostrar indicador de digitação
                 conversation.isTyping = true;
                 loadMessages(conversation);
                 
-              
+                // Simular tempo de digitação
                 setTimeout(() => {
                     conversation.isTyping = false;
                     
@@ -1017,12 +1190,12 @@
             }
         }
 
-      
+        // Rolar para o final do chat
         function scrollToBottom() {
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-      
+        // Salvar conversas no localStorage
         function saveConversations() {
             localStorage.setItem('caroneiro-conversations', JSON.stringify(conversations));
         }
