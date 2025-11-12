@@ -1,10 +1,10 @@
-// Script principal do Caroneiro
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Verificar se o usuário está logado
+  
     const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
     
     if (usuarioLogado) {
-        // Atualizar botões de autenticação
+       
         const authButtons = document.querySelector('.auth-buttons');
         if (authButtons) {
             authButtons.innerHTML = `
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Funcionalidade de busca
+  
     const searchBox = document.querySelector('.search-box');
     if (searchBox) {
         const searchInput = searchBox.querySelector('input');
@@ -29,9 +29,9 @@ document.addEventListener('DOMContentLoaded', function() {
         searchButton.addEventListener('click', function() {
             const termo = searchInput.value.trim();
             if (termo) {
-                // Em uma implementação completa, isso redirecionaria para uma página de resultados
+              
                 alert(`Buscando por: ${termo}`);
-                // Aqui você implementaria a lógica de busca real
+                
             }
         });
         
@@ -42,11 +42,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Inicialização de componentes comuns
+    
     inicializarComponentes();
 });
 
 function inicializarComponentes() {
-    // Inicializar tooltips, modais, etc.
+  
     console.log('Componentes inicializados');
 }

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ana Santos - Caroneiro</title>
+    <link rel="stylesheet" href="perfis.css">
+</head>
+<body>
+    <!-- Header/Navegação -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <a href="index.html" class="logo">Caroneiro<span>.</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="index.html#destinos">Destinos</a></li>
+                        <li><a href="index.html#viajantes">Viajantes</a></li>
+                        <li><a href="grupos.html">Grupos</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-secondary">Entrar</a>
+                    <a href="cadastro.html" class="btn btn-primary">Cadastrar</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Perfil do Viajante -->
+    <section class="profile-hero">
+        <div class="container">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Ana Santos">
+                </div>
+                <div class="profile-info">
+                    <h1>Ana Santos</h1>
+                    <p class="profile-location">São Paulo, SP</p>
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <span class="stat-number">12</span>
+                            <span class="stat-label">Países</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">24</span>
+                            <span class="stat-label">Viagens</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="followers-count">18</span>
+                            <span class="stat-label">Seguidores</span>
+                        </div>
+                    </div>
+                    <div class="profile-actions">
+                        <a href="chat.html?user=ana" class="btn btn-primary">Enviar Mensagem</a>
+                        <button class="btn btn-secondary" id="follow-btn">Seguir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="profile-content">
+        <div class="container">
+            <div class="profile-grid">
+                <div class="profile-main">
+                    <div class="profile-section">
+                        <h2>Sobre Mim</h2>
+                        <p>Apaixonada por praias e montanhas, sempre em busca de novas aventuras e culturas. Já visitei 12 países e adoro compartilhar experiências. Sou formada em Turismo e trabalho como consultora de viagens, então conheço os melhores destinos e truques para economizar!</p>
+                        <p>Minha filosofia de viagem é: "O melhor da jornada não é o destino, mas as pessoas que conhecemos pelo caminho".</p>
+                    </div>
+
+                    <div class="profile-section">
+                        <h2>Próximas Viagens</h2>
+                        <div class="trip-cards">
+                            <div class="trip-card">
+                                <div class="trip-image" style="background-image: url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');"></div>
+                                <div class="trip-info">
+                                    <h3>Rio de Janeiro</h3>
+                                    <p class="trip-date">15 a 22 de Julho, 2025</p>
+                                    <p class="trip-description">Explorando as praias e trilhas da Cidade Maravilhosa. Procurando companhia para aventuras!</p>
+                                    <div class="trip-status">
+                                        <span class="status open">Aceitando companhia</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trip-card">
+                                <div class="trip-image" style="background-image: url('https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');"></div>
+                                <div class="trip-info">
+                                    <h3>Fernando de Noronha</h3>
+                                    <p class="trip-date">10 a 18 de Novembro, 2025</p>
+                                    <p class="trip-description">Mergulho e ecoturismo no paraíso preservado. Vagas limitadas!</p>
+                                    <div class="trip-status">
+                                        <span class="status limited">Vagas limitadas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-section">
+                        <h2>Interesses de Viagem</h2>
+                        <div class="interests">
+                            <span class="interest-tag">Praias</span>
+                            <span class="interest-tag">Trilhas</span>
+                            <span class="interest-tag">Cultura Local</span>
+                            <span class="interest-tag">Fotografia</span>
+                            <span class="interest-tag">Gastronomia</span>
+                            <span class="interest-tag">Ecoturismo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-sidebar">
+                    <div class="sidebar-section">
+                        <h3>Detalhes</h3>
+                        <div class="detail-item">
+                            <strong>Idade:</strong> 28 anos
+                        </div>
+                        <div class="detail-item">
+                            <strong>Profissão:</strong> Consultora de Turismo
+                        </div>
+                        <div class="detail-item">
+                            <strong>Idiomas:</strong> Português, Inglês, Espanhol
+                        </div>
+                        <div class="detail-item">
+                            <strong>Estilo de Viagem:</strong> Aventura/Conforto
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>Destinos Favoritos</h3>
+                        <ul class="destinations-list">
+                            <li>Chapada Diamantina - BA</li>
+                            <li>Jericoacoara - CE</li>
+                            <li>Bonito - MS</li>
+                            <li>Lençóis Maranhenses - MA</li>
+                            <li>Paraty - RJ</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>Avaliações</h3>
+                        <div class="rating">
+                            <div class="stars">★★★★★</div>
+                            <div class="rating-count">4.9 (24 avaliações)</div>
+                        </div>
+                        <div class="review">
+                            <p>"Ana foi uma companheira incrível! Conhecia todos os melhores lugares e tornou a viagem inesquecível."</p>
+                            <div class="review-author">- Carlos M.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Caroneiro</h3>
+                    <p>Conectando viajantes desde 2025</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">FB</a>
+                        <a href="#" class="social-icon">IG</a>
+                        <a href="#" class="social-icon">TW</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="sobre.html">Sobre o Projeto</a></li>
+                        <li><a href="perfil.html">Meu Perfil</a></li>
+                        <li><a href="chat.html">Chat</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Suporte</h3>
+                    <ul>
+                        <li><a href="ajuda.html">Ajuda</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                        <li><a href="privacidade.html">Política de Privacidade</a></li>
+                        <li><a href="termos.html">Termos de Uso</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Caroneiro. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notificação -->
+    <div id="notification" class="notification">
+        <span id="notification-text"></span>
+    </div>
+
+    <script>
+        // Sistema de Seguir/Deixar de Seguir
+        document.addEventListener('DOMContentLoaded', function() {
+            const followBtn = document.getElementById('follow-btn');
+            const followersCount = document.getElementById('followers-count');
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notification-text');
+            
+            // Verificar se já está seguindo (do localStorage)
+            let isFollowing = localStorage.getItem('following-ana') === 'true';
+            let followers = 18; // Contador inicial
+            
+            // Atualizar estado do botão
+            function updateFollowButton() {
+                if (isFollowing) {
+                    followBtn.textContent = 'Seguindo';
+                    followBtn.classList.remove('btn-secondary');
+                    followBtn.classList.add('btn-following');
+                } else {
+                    followBtn.textContent = 'Seguir';
+                    followBtn.classList.remove('btn-following');
+                    followBtn.classList.add('btn-secondary');
+                }
+                followersCount.textContent = followers;
+            }
+            
+            // Mostrar notificação
+            function showNotification(message) {
+                notificationText.textContent = message;
+                notification.classList.add('show');
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+            
+            // Evento de clique no botão Seguir
+            followBtn.addEventListener('click', function() {
+                if (isFollowing) {
+                    // Deixar de seguir
+                    isFollowing = false;
+                    followers--;
+                    localStorage.setItem('following-ana', 'false');
+                    showNotification('Você deixou de seguir Ana Santos');
+                } else {
+                    // Seguir
+                    isFollowing = true;
+                    followers++;
+                    localStorage.setItem('following-ana', 'true');
+                    showNotification('Você começou a seguir Ana Santos');
+                }
+                updateFollowButton();
+            });
+            
+            // Inicializar botão
+            updateFollowButton();
+        });
+    </script>
+</body>
+</html>

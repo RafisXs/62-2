@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Caroneiro - Encontre sua companhia de viagem</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="index.css">
     <style>
-        /* Estilos específicos para a página inicial */
+        
         .modal {
             display: none;
             position: fixed;
@@ -37,7 +37,7 @@
         
         .modal-header {
             padding: 20px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #e2e8f0;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -53,7 +53,7 @@
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
-            color: #777;
+            color: var(--secondary);
         }
         
         .close-modal:hover {
@@ -87,6 +87,7 @@
             background: var(--light);
             padding: 20px;
             border-radius: 8px;
+            border: 2px solid #e2e8f0;
         }
         
         .detail-item {
@@ -108,9 +109,19 @@
             font-size: 0.8rem;
         }
         
+        .detail-item strong {
+            color: var(--dark);
+            display: block;
+        }
+        
+        .detail-item p {
+            color: var(--secondary);
+            margin: 0;
+        }
+        
         .travelers-section {
             margin-top: 30px;
-            border-top: 1px solid #eee;
+            border-top: 1px solid #e2e8f0;
             padding-top: 20px;
         }
         
@@ -128,10 +139,12 @@
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
             text-align: center;
             transition: transform 0.3s;
+            border: 1px solid #e2e8f0;
         }
         
         .traveler-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
         .traveler-avatar {
@@ -146,12 +159,30 @@
         .traveler-name {
             font-weight: 600;
             margin-bottom: 5px;
+            color: var(--dark);
         }
         
         .traveler-date {
-            color: #777;
+            color: var(--secondary);
             font-size: 0.9rem;
             margin-bottom: 10px;
+        }
+
+        .traveler-description {
+            font-size: 0.85rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+            line-height: 1.4;
+            height: 60px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
         }
         
         .card {
@@ -172,11 +203,16 @@
             .travelers-list {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
+
+            .traveler-description {
+                height: auto;
+                -webkit-line-clamp: unset;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header/Navegação -->
+   
     <header>
         <div class="container">
             <div class="header-container">
@@ -197,7 +233,7 @@
         </div>
     </header>
 
-    <!-- Banner Principal -->
+
     <section class="hero">
         <div class="container">
             <h1>Viajar é melhor com companhia</h1>
@@ -211,14 +247,14 @@
         </div>
     </section>
 
-    <!-- Destinos em Destaque -->
+
     <section class="destinations" id="destinos">
         <div class="container">
             <h2 class="section-title">Destinos em Destaque</h2>
             <div class="cards-container">
-                <!-- Card 1 - Rio de Janeiro -->
+             
                 <div class="card" data-destination="rio">
-                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="card-img" style="background-image: url('fotos/rio-de-janeiro-rj.jpg');"></div>
                     <div class="card-content">
                         <h3>Rio de Janeiro</h3>
                         <p>Encontre companhia para explorar as maravilhas da Cidade Maravilhosa</p>
@@ -226,9 +262,9 @@
                     </div>
                 </div>
                 
-                <!-- Card 2 - Florianópolis -->
+               
                 <div class="card" data-destination="florianopolis">
-                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1541336032412-2048a678540d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="card-img" style="background-image: url('fotos/shutterstock_2304644691-scaled.jpg');"></div>
                     <div class="card-content">
                         <h3>Florianópolis</h3>
                         <p>Compartilhe as praias mais belas da ilha da magia</p>
@@ -236,9 +272,9 @@
                     </div>
                 </div>
                 
-                <!-- Card 3 - Gramado -->
+               
                 <div class="card" data-destination="gramado">
-                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="card-img" style="background-image: url('fotos/gramado-e1639009521617.jpg');"></div>
                     <div class="card-content">
                         <h3>Gramado</h3>
                         <p>Encontre companhia para o clima europeu no Brasil</p>
@@ -246,9 +282,9 @@
                     </div>
                 </div>
                 
-                <!-- Card 4 - Bonito -->
+                
                 <div class="card" data-destination="bonito">
-                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1620228885847-3b68f56c4cc0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="card-img" style="background-image: url('fotos/gruta-lago-azul-bonito-ms-012.jpg');"></div>
                     <div class="card-content">
                         <h3>Bonito - MS</h3>
                         <p>Aventuras em meio à natureza intocada</p>
@@ -256,9 +292,9 @@
                     </div>
                 </div>
                 
-                <!-- Card 5 - Fernando de Noronha -->
+                
                 <div class="card" data-destination="noronha">
-                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="card-img" style="background-image: url('fotos/passeio-barco-fernando-de-noronha.jpg');"></div>
                     <div class="card-content">
                         <h3>Fernando de Noronha</h3>
                         <p>Paraíso preservado no Atlântico</p>
@@ -266,9 +302,9 @@
                     </div>
                 </div>
                 
-                <!-- Card 6 - Chapada Diamantina -->
+          
                 <div class="card" data-destination="chapada">
-                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1621359440164-b7405876fd7a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                    <div class="card-img" style="background-image: url('fotos/chapada-diamantina.jpg');"> </div>
                     <div class="card-content">
                         <h3>Chapada Diamantina</h3>
                         <p>Cachoeiras e trilhas em cenários deslumbrantes</p>
@@ -279,7 +315,6 @@
         </div>
     </section>
 
-    <!-- Como Funciona -->
     <section class="how-it-works">
         <div class="container">
             <h2 class="section-title">Como Funciona</h2>
@@ -306,24 +341,18 @@
         </div>
     </section>
 
-    <!-- Viajantes em Destaque -->
+    
     <section class="destinations" id="viajantes">
         <div class="container">
             <h2 class="section-title">Viajantes destaques do mês</h2>
             <div class="cards-container">
-                <div class="card">
-                    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></div>
-                    <div class="card-content">
-                        <h3>Carolina Silva</h3>
-                        <p>Aventureira de plantão! Já visitei 15 países e não pretendo parar.</p>
-                  </div>
-                </div>
+               
                 <div class="card">
                     <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></div>
                     <div class="card-content">
                         <h3>Rafael Costa</h3>
                         <p>Fotógrafo e mochileiro. Adoro explorar lugares fora do comum.</p>
-            
+                        <a href="perfil-rafael.html" class="btn btn-secondary btn-sm">Ver Perfil</a>
                     </div>
                 </div>
                 <div class="card">
@@ -331,7 +360,7 @@
                     <div class="card-content">
                         <h3>Juliana Mendes</h3>
                         <p>Viajante cultural, buscando conhecer a história de cada lugar.</p>
-                       
+                        <a href="perfil-juliana.html" class="btn btn-secondary btn-sm">Ver Perfil</a>
                     </div>
                 </div>
             </div>
@@ -341,13 +370,13 @@
         </div>
     </section>
 
-    <!-- Footer -->
+   
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>Caroneiro</h3>
-                    <p>Conectando viajantes desde 2023</p>
+                    <p>Conectando viajantes desde 2025</p>
                     <div class="social-icons">
                         <a href="#" class="social-icon">FB</a>
                         <a href="#" class="social-icon">IG</a>
@@ -366,20 +395,20 @@
                 <div class="footer-column">
                     <h3>Suporte</h3>
                     <ul>
-                        <li><a href="#">Ajuda</a></li>
-                        <li><a href="#">Contato</a></li>
-                        <li><a href="#">Política de Privacidade</a></li>
-                        <li><a href="#">Termos de Uso</a></li>
+                        <li><a href="ajuda.html">Ajuda</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                        <li><a href="privacidade.html">Política de Privacidade</a></li>
+                        <li><a href="termos.html">Termos de Uso</a></li>
                     </ul>
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2023 Caroneiro. Todos os direitos reservados.</p>
+                <p>&copy; 2025 Caroneiro. Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Modal para Detalhes do Destino -->
+ 
     <div id="destination-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -399,7 +428,7 @@
                             <p>Encontre companhia para sua viagem ao Rio de Janeiro:</p>
                             
                             <div class="travelers-list" id="travelers-list">
-                                <!-- Lista de viajantes será preenchida via JavaScript -->
+                              
                             </div>
                             
                             <div style="text-align: center; margin-top: 20px;">
@@ -449,9 +478,8 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
     <script>
-        // Dados dos destinos
+       
         const destinations = {
             rio: {
                 title: "Rio de Janeiro",
@@ -462,9 +490,21 @@
                 epoca: "Abril a Outubro",
                 atracoes: "Cristo Redentor, Pão de Açúcar, Copacabana, Ipanema, Jardim Botânico",
                 travelers: [
-                    { name: "Ana Santos", avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "15 a 22 de Julho" },
-                    { name: "Pedro Almeida", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "10 a 18 de Agosto" },
-                    { name: "Mariana Costa", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "5 a 12 de Setembro" }
+                   
+                    { 
+                        name: "Pedro Almeida", 
+                        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", 
+                        date: "10 a 18 de Agosto",
+                        description: "Mochileiro experiente, adoro trilhas e ecoturismo. Sempre disposto a ajudar com planejamento de rotas e dicas locais.",
+                        profileLink: "perfil-pedro.html"
+                    },
+                    { 
+                        name: "Mariana Costa", 
+                        avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", 
+                        date: "5 a 12 de Setembro",
+                        description: "Fotógrafa profissional que busca capturar a essência de cada lugar. Adoro compartilhar momentos únicos e histórias de viagem.",
+                        profileLink: "perfil-mariana.html"
+                    }
                 ]
             },
             florianopolis: {
@@ -476,21 +516,45 @@
                 epoca: "Dezembro a Março",
                 atracoes: "Praia dos Ingleses, Lagoa da Conceição, Ponte Hercílio Luz, Joaquina",
                 travelers: [
-                    { name: "Carlos Lima", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "20 a 27 de Janeiro" },
-                    { name: "Beatriz Rocha", avatar: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "15 a 22 de Fevereiro" }
+                    { 
+                        name: "Carlos Lima", 
+                        avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", 
+                        date: "20 a 27 de Janeiro",
+                        description: "Surfista amador em busca das melhores ondas do Brasil. Conheço todos os pontos de surf de Florianópolis e adoro mostrar para iniciantes.",
+                        profileLink: "perfil-carlos.html"
+                    },
+                    { 
+                        name: "Beatriz Rocha", 
+                        avatar: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", 
+                        date: "15 a 22 de Fevereiro",
+                        description: "Aventureira que adora explorar trilhas e praias desertas. Sempre com uma câmera na mão para registrar os melhores momentos.",
+                        profileLink: "perfil-beatriz.html"
+                    }
                 ]
             },
             gramado: {
                 title: "Gramado",
                 image: "https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-                description: "Gramado é uma cidade com uma estância de montanha situada no estado mais a sul do Brasil, Rio Grande do Sul. Influenciada pelos colonos alemães do século XIX, a cidade possui um toque bávaro com chalés alpinos, chocolates e lojas de artesanato. Gramado é também conhecida pelas suas exibições de luzes de Natal e pelas hortênsias em flor na primavera. O Lago Negro disponibiliza alugueres de barcos e caminhos florestais, enquanto o Hollywood Dream Cars exibe veículos clássicos.",
+                description: "Gramado é uma cidade com uma estância de montanha situada no estado mais a sul do Brasil, Rio Grande do Sul. Influenciada pelos colonos alemães do século XIX, a city possui um toque bávaro com chalés alpinos, chocolates e lojas de artesanato. Gramado é também conhecida pelas suas exibições de luzes de Natal e pelas hortênsias em flor na primavera. O Lago Negro disponibiliza alugueres de barcos e caminhos florestais, enquanto o Hollywood Dream Cars exibe veículos clássicos.",
                 clima: "Subtropical de Altitude",
                 custo: "Moderado a Alto",
                 epoca: "Março a Junho e Setembro a Novembro",
                 atracoes: "Lago Negro, Rua Coberta, Mini Mundo, Snowland",
                 travelers: [
-                    { name: "João Silva", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "10 a 17 de Junho" },
-                    { name: "Fernanda Oliveira", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "5 a 12 de Julho" }
+                    { 
+                        name: "João Silva", 
+                        avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", 
+                        date: "10 a 17 de Junho",
+                        description: "Amante do clima frio e da gastronomia local. Conheço todos os melhores restaurantes e cafés de Gramado e região.",
+                        profileLink: "perfil-joao.html"
+                    },
+                    { 
+                        name: "Fernanda Oliveira", 
+                        avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", 
+                        date: "5 a 12 de Julho",
+                        description: "Viajante romântica em busca de experiências únicas a dois. Adoro compartilhar dicas de passeios e hospedagens charmosas.",
+                        profileLink: "perfil-fernanda.html"
+                    }
                 ]
             },
             bonito: {
@@ -502,8 +566,20 @@
                 epoca: "Abril a Outubro",
                 atracoes: "Gruta do Lago Azul, Rio da Prata, Abismo Anhumas, Aquário Natural",
                 travelers: [
-                    { name: "Ricardo Nunes", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "15 a 22 de Maio" },
-                    { name: "Patrícia Alves", avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "10 a 17 de Agosto" }
+                    { 
+                        name: "Ricardo Nunes", 
+                        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", 
+                        date: "15 a 22 de Maio",
+                        description: "Biólogo e guia de ecoturismo. Especialista em fauna e flora do Pantanal, adoro compartilhar conhecimento sobre a natureza.",
+                        profileLink: "perfil-ricardo.html"
+                    },
+                    { 
+                        name: "Patrícia Alves", 
+                        avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", 
+                        date: "10 a 17 de Agosto",
+                        description: "Aventureira que não dispensa um bom mergulho em águas cristalinas. Conheço todos os melhores pontos de flutuação em Bonito.",
+                        profileLink: "perfil-patricia.html"
+                    }
                 ]
             },
             noronha: {
@@ -515,8 +591,20 @@
                 epoca: "Agosto a Janeiro",
                 atracoes: "Baía do Sancho, Praia do Leão, Dolphin Bay, Morro Dois Irmãos",
                 travelers: [
-                    { name: "Sofia Martins", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "20 a 27 de Novembro" },
-                    { name: "Lucas Ferreira", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "15 a 22 de Dezembro" }
+                    { 
+                        name: "Sofia Martins", 
+                        avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", 
+                        date: "20 a 27 de Novembro",
+                        description: "Instrutora de mergulho certificada. Já explorei todos os pontos de mergulho de Noronha e adoro compartilhar essa paixão.",
+                        profileLink: "perfil-sofia.html"
+                    },
+                    { 
+                        name: "Lucas Ferreira", 
+                        avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", 
+                        date: "15 a 22 de Dezembro",
+                        description: "Fotógrafo subaquático em busca das melhores imagens da vida marinha. Conheço os melhores horários para cada ponto de observação.",
+                        profileLink: "perfil-lucas.html"
+                    }
                 ]
             },
             chapada: {
@@ -528,14 +616,32 @@
                 epoca: "Abril a Setembro",
                 atracoes: "Cachoeira da Fumaça, Vale do Pati, Poço Azul, Morro do Pai Inácio",
                 travelers: [
-                    { name: "Gabriela Santos", avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "10 a 17 de Junho" },
-                    { name: "Diego Ramos", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "5 a 12 de Agosto" },
-                    { name: "Camila Lima", avatar: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", date: "20 a 27 de Setembro" }
+                    { 
+                        name: "Gabriela Santos", 
+                        avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", 
+                        date: "10 a 17 de Junho",
+                        description: "Guia de trekking experiente, conheço todas as trilhas da Chapada. Adoro compartilhar histórias sobre a região.",
+                        profileLink: "perfil-gabriela.html"
+                    },
+                    { 
+                        name: "Diego Ramos", 
+                        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", 
+                        date: "5 a 12 de Agosto",
+                        description: "Aventureiro que já percorreu todos os vales da Chapada. Especialista em acampamento e sobrevivência na natureza.",
+                        profileLink: "perfil-diego.html"
+                    },
+                    { 
+                        name: "Camila Lima", 
+                        avatar: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", 
+                        date: "20 a 27 de Setembro",
+                        description: "Geóloga amadora fascinada pelas formações rochosas da Chapada. Adoro explicar a história geológica dos lugares que visito.",
+                        profileLink: "perfil-camila.html"
+                    }
                 ]
             }
         };
 
-        // Elementos do DOM
+       
         const modal = document.getElementById('destination-modal');
         const modalTitle = document.getElementById('modal-title');
         const destinationHero = document.getElementById('destination-hero');
@@ -547,7 +653,7 @@
         const travelersList = document.getElementById('travelers-list');
         const closeModal = document.querySelector('.close-modal');
 
-        // Adicionar eventos de clique aos cards de destino
+        
         document.querySelectorAll('.card[data-destination]').forEach(card => {
             card.addEventListener('click', function() {
                 const destinationKey = this.getAttribute('data-destination');
@@ -555,13 +661,13 @@
             });
         });
 
-        // Função para abrir o modal com os dados do destino
+       
         function openDestinationModal(destinationKey) {
             const destination = destinations[destinationKey];
             
             if (!destination) return;
             
-            // Preencher os dados no modal
+           
             modalTitle.textContent = destination.title;
             destinationHero.style.backgroundImage = `url('${destination.image}')`;
             destinationDescription.textContent = destination.description;
@@ -570,7 +676,7 @@
             destinationEpoca.textContent = destination.epoca;
             destinationAtracoes.textContent = destination.atracoes;
             
-            // Preencher a lista de viajantes
+          
             travelersList.innerHTML = '';
             destination.travelers.forEach(traveler => {
                 const travelerCard = document.createElement('div');
@@ -579,23 +685,23 @@
                     <img src="${traveler.avatar}" alt="${traveler.name}" class="traveler-avatar">
                     <div class="traveler-name">${traveler.name}</div>
                     <div class="traveler-date">${traveler.date}</div>
-                    <a href="perfil.html" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.8rem;">Ver perfil</a>
+                    <div class="traveler-description">${traveler.description}</div>
+                    <a href="${traveler.profileLink}" class="btn btn-secondary btn-sm">Ver Perfil</a>
                 `;
                 travelersList.appendChild(travelerCard);
             });
             
-            // Exibir o modal
+          
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden';
         }
-
-        // Fechar modal quando clicar no X
+        
         closeModal.addEventListener('click', function() {
             modal.style.display = 'none';
             document.body.style.overflow = 'auto';
         });
 
-        // Fechar modal quando clicar fora do conteúdo
+        
         window.addEventListener('click', function(event) {
             if (event.target === modal) {
                 modal.style.display = 'none';
@@ -603,7 +709,7 @@
             }
         });
 
-        // Fechar modal com a tecla ESC
+      
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape' && modal.style.display === 'block') {
                 modal.style.display = 'none';

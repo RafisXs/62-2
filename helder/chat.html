@@ -68,7 +68,8 @@
             background: var(--light);
         }
         
-        /* CORREÇÃO DAS FOTOS DE PERFIL - CONVERSATION AVATAR */
+    
+
         .conversation-avatar {
             width: 50px;
             height: 50px;
@@ -93,7 +94,7 @@
         
         .conversation-info {
             flex: 1;
-            min-width: 0; /* Permite que o texto seja truncado corretamente */
+            min-width: 0; 
         }
         
         .conversation-header {
@@ -144,7 +145,7 @@
             align-items: center;
         }
         
-        /* CORREÇÃO DAS FOTOS DE PERFIL - CHAT USER AVATAR */
+       
         .chat-user-avatar {
             width: 40px;
             height: 40px;
@@ -400,7 +401,7 @@
     </style>
 </head>
 <body>
-    <!-- Header/Navegação -->
+   
     <header>
         <div class="container">
             <div class="header-container">
@@ -421,7 +422,7 @@
         </div>
     </header>
 
-    <!-- Área de Chat -->
+  
     <div class="chat-container">
         <div class="conversations-sidebar">
             <div class="conversations-header">
@@ -431,7 +432,7 @@
                 </div>
             </div>
             <div class="conversations-list" id="conversations-list">
-                <!-- As conversas serão carregadas via JavaScript -->
+             
             </div>
         </div>
         
@@ -467,14 +468,39 @@
             </div>
         </div>
     </div>
+   
+<div class="chat-container">
+   
+    <div id="chatMessages" class="chat-messages"></div>
 
-    <!-- Footer -->
+   
+    <div id="mediaPreview" class="media-preview" style="display: none;">
+        <button id="cancelPreview" class="cancel-preview">X</button>
+        <img id="previewImage" src="#" alt="Preview" style="display: none; max-width: 200px; max-height: 200px;">
+        <video id="previewVideo" src="#" controls style="display: none; max-width: 200px; max-height: 200px;"></video>
+    </div>
+
+    
+    <form id="chatForm" class="chat-form">
+        <div class="input-group">
+            <input type="text" id="messageInput" placeholder="Digite sua mensagem..." autocomplete="off">
+           
+            <input type="file" id="fileInput" accept="image/*,video/*" style="display: none;">
+            
+            <button type="button" id="attachButton" class="attach-button">📎</button>
+           
+            <button type="submit">Enviar</button>
+        </div>
+    </form>
+</div>
+
+ 
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>Caroneiro</h3>
-                    <p>Conectando viajantes desde 2023</p>
+                    <p>Conectando viajantes desde 2025</p>
                     <div class="social-icons">
                         <a href="#" class="social-icon">FB</a>
                         <a href="#" class="social-icon">IG</a>
@@ -493,21 +519,21 @@
                 <div class="footer-column">
                     <h3>Suporte</h3>
                     <ul>
-                        <li><a href="#">Ajuda</a></li>
-                        <li><a href="#">Contato</a></li>
-                        <li><a href="#">Política de Privacidade</a></li>
-                        <li><a href="#">Termos de Uso</a></li>
+                         <li><a href="ajuda.html">Ajuda</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                        <li><a href="privacidade.html">Política de Privacidade</a></li>
+                        <li><a href="termos.html">Termos de Uso</a></li>
                     </ul>
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2023 Caroneiro. Todos os direitos reservados.</p>
+                <p>&copy; 2025 Caroneiro. Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Dados do chat
+       
         let conversations = JSON.parse(localStorage.getItem('caroneiro-conversations')) || [
             {
                 id: 1,
@@ -642,7 +668,7 @@
             }
         ];
 
-        // Elementos do DOM
+       
         const conversationsList = document.getElementById('conversations-list');
         const messagesContainer = document.getElementById('messages-container');
         const messageInput = document.getElementById('message-input');
@@ -656,13 +682,13 @@
         const chatOptionsBtn = document.getElementById('chat-options-btn');
         const logoutBtn = document.getElementById('logout-btn');
 
-        // Variáveis de estado
+        
         let currentConversationId = null;
         let currentUser = null;
 
-        // Inicialização
+        
         document.addEventListener('DOMContentLoaded', function() {
-            // Verificar se o usuário está logado
+            
             currentUser = JSON.parse(localStorage.getItem('usuarioLogado'));
             
             if (!currentUser) {
@@ -670,13 +696,13 @@
                 return;
             }
             
-            // Configurar eventos
+        
             setupEventListeners();
             
-            // Carregar conversas
+          
             loadConversations();
             
-            // Configurar logout
+            
             logoutBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 localStorage.removeItem('usuarioLogado');
@@ -684,12 +710,12 @@
             });
         });
 
-        // Configurar eventos
+       
         function setupEventListeners() {
-            // Envio de mensagem
+           
             sendButton.addEventListener('click', sendMessage);
             
-            // Envio com Enter
+         
             messageInput.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
@@ -697,24 +723,24 @@
                 }
             });
             
-            // Auto-resize do textarea
+            
             messageInput.addEventListener('input', function() {
                 this.style.height = 'auto';
                 this.style.height = (this.scrollHeight) + 'px';
                 
-                // Habilitar/desabilitar botão de enviar
+                
                 sendButton.disabled = this.value.trim() === '';
             });
             
-            // Busca de conversas
+           
             conversationSearch.addEventListener('input', filterConversations);
             
-            // Botão de anexar arquivo
+          
             attachFileBtn.addEventListener('click', function() {
                 alert('Funcionalidade de anexar arquivo seria implementada aqui!');
             });
             
-            // Botão de informações do usuário
+            
             userInfoBtn.addEventListener('click', function() {
                 if (currentConversationId) {
                     const conversation = conversations.find(c => c.id === currentConversationId);
@@ -724,7 +750,7 @@
                 }
             });
             
-            // Botão de opções do chat
+            
             chatOptionsBtn.addEventListener('click', function() {
                 if (currentConversationId) {
                     alert('Opções da conversa:\n- Limpar conversa\n- Silenciar notificações\n- Sair da conversa');
@@ -732,7 +758,7 @@
             });
         }
 
-        // Carregar lista de conversas
+       
         function loadConversations() {
             conversationsList.innerHTML = '';
             
@@ -753,7 +779,7 @@
                 conversationItem.className = 'conversation-item';
                 conversationItem.setAttribute('data-conversation-id', conversation.id);
                 
-                // CORREÇÃO: Verificar se o avatar é uma imagem ou um emoji
+            
                 let avatarContent = '';
                 if (conversation.avatar.startsWith('http')) {
                     avatarContent = `<img src="${conversation.avatar}" alt="${conversation.name}">`;
@@ -785,7 +811,7 @@
             });
         }
 
-        // Filtrar conversas
+      
         function filterConversations() {
             const searchTerm = conversationSearch.value.toLowerCase();
             const conversationItems = document.querySelectorAll('.conversation-item');
@@ -802,15 +828,14 @@
             });
         }
 
-        // Abrir conversa
+     
         function openConversation(conversationId) {
             currentConversationId = conversationId;
             const conversation = conversations.find(c => c.id === conversationId);
             
             if (!conversation) return;
             
-            // Atualizar header do chat
-            // CORREÇÃO: Verificar se o avatar é uma imagem ou um emoji
+          
             let avatarContent = '';
             if (conversation.avatar.startsWith('http')) {
                 avatarContent = `<img src="${conversation.avatar}" alt="${conversation.name}">`;
@@ -822,32 +847,32 @@
             document.getElementById('chat-user-name').textContent = conversation.name;
             document.getElementById('chat-user-status').textContent = conversation.status;
             
-            // Mostrar elementos do chat
+         
             chatHeader.style.display = 'flex';
             messageInputArea.style.display = 'flex';
             emptyChat.style.display = 'none';
             
-            // Carregar mensagens
+        
             loadMessages(conversation);
             
-            // Marcar como lida
+          
             if (conversation.unread > 0) {
                 conversation.unread = 0;
                 saveConversations();
                 loadConversations();
             }
             
-            // Ativar item na lista
+           
             document.querySelectorAll('.conversation-item').forEach(item => {
                 item.classList.remove('active');
             });
             document.querySelector(`[data-conversation-id="${conversationId}"]`).classList.add('active');
             
-            // Focar no input
+           
             messageInput.focus();
         }
 
-        // Carregar mensagens
+       
         function loadMessages(conversation) {
             messagesContainer.innerHTML = '';
             
@@ -856,16 +881,16 @@
                 messagesContainer.appendChild(messageElement);
             });
             
-            // Adicionar indicador de digitação se necessário
+           
             if (conversation.isTyping) {
                 addTypingIndicator(conversation);
             }
             
-            // Rolar para a última mensagem
+          
             scrollToBottom();
         }
 
-        // Criar elemento de mensagem
+      
         function createMessageElement(message, conversation) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${message.sender === 'me' ? 'my-message' : 'other-message'}`;
@@ -887,7 +912,7 @@
             return messageDiv;
         }
 
-        // Adicionar indicador de digitação
+      
         function addTypingIndicator(conversation) {
             const typingDiv = document.createElement('div');
             typingDiv.className = 'typing-indicator';
@@ -904,7 +929,7 @@
             scrollToBottom();
         }
 
-        // Enviar mensagem
+        
         function sendMessage() {
             const messageText = messageInput.value.trim();
             
@@ -913,7 +938,6 @@
             const conversation = conversations.find(c => c.id === currentConversationId);
             if (!conversation) return;
             
-            // Criar nova mensagem
             const newMessage = {
                 id: Date.now(),
                 text: messageText,
@@ -922,37 +946,36 @@
                 status: 'sent'
             };
             
-            // Adicionar à conversa
+         
             conversation.messages.push(newMessage);
             
-            // Atualizar última mensagem e tempo
+            
             conversation.lastSeen = newMessage.time;
             
-            // Salvar no localStorage
+            
             saveConversations();
             
-            // Atualizar interface
+          
             const messageElement = createMessageElement(newMessage, conversation);
             messagesContainer.appendChild(messageElement);
             
-            // Limpar input
+         
             messageInput.value = '';
             messageInput.style.height = 'auto';
             sendButton.disabled = true;
-            
-            // Rolar para baixo
+         
             scrollToBottom();
             
-            // Simular resposta após um tempo
+           
             simulateReply(conversation);
             
-            // Atualizar lista de conversas
+    
             loadConversations();
         }
 
-        // Simular resposta
+        
         function simulateReply(conversation) {
-            // Apenas para demonstração - em um sistema real isso viria do servidor
+           
             const possibleReplies = [
                 "Que legal! Quando você chega?",
                 "Interessante! Vou verificar minha agenda",
@@ -961,13 +984,13 @@
                 "Vou consultar com o grupo e te aviso"
             ];
             
-            // 70% de chance de resposta
+            
             if (Math.random() < 0.7) {
-                // Mostrar indicador de digitação
+          
                 conversation.isTyping = true;
                 loadMessages(conversation);
                 
-                // Responder após 2-5 segundos
+              
                 setTimeout(() => {
                     conversation.isTyping = false;
                     
@@ -994,12 +1017,12 @@
             }
         }
 
-        // Rolar para a última mensagem
+      
         function scrollToBottom() {
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        // Salvar conversas no localStorage
+      
         function saveConversations() {
             localStorage.setItem('caroneiro-conversations', JSON.stringify(conversations));
         }

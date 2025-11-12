@@ -408,7 +408,7 @@
                             <div class="trip-icon">✈️</div>
                             <div class="trip-info">
                                 <h3>Florianópolis - SC</h3>
-                                <p>15 a 22 de Julho, 2023 • Buscando companhia</p>
+                                <p>15 a 22 de Julho, 2025 • Buscando companhia</p>
                             </div>
                         </div>
                         <div class="trip-actions">
@@ -421,7 +421,7 @@
                             <div class="trip-icon">🏔️</div>
                             <div class="trip-info">
                                 <h3>Chapada Diamantina - BA</h3>
-                                <p>10 a 18 de Setembro, 2023 • Grupo formado</p>
+                                <p>10 a 18 de Setembro, 2025 • Grupo formado</p>
                             </div>
                         </div>
                         <div class="trip-actions">
@@ -485,7 +485,7 @@
                             <div class="trip-icon">🏖️</div>
                             <div class="trip-info">
                                 <h3>Rio de Janeiro - RJ</h3>
-                                <p>Março, 2023 • 7 dias • Com 2 companheiros</p>
+                                <p>Março, 2025 • 7 dias • Com 2 companheiros</p>
                             </div>
                         </div>
                         <div class="trip-actions">
@@ -529,7 +529,7 @@
                         <div class="review-header">
                             <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="João" class="review-avatar">
                             <div class="review-author">João Mendes</div>
-                            <div class="review-date">15/06/2023</div>
+                            <div class="review-date">15/06/2025</div>
                         </div>
                         <div class="review-text">
                             Viajar com a Carolina foi uma experiência incrível! Ela é muito organizada, divertida e conhece os melhores lugares. Super recomendo!
@@ -539,7 +539,7 @@
                         <div class="review-header">
                             <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Ana" class="review-avatar">
                             <div class="review-author">Ana Paula</div>
-                            <div class="review-date">02/05/2023</div>
+                            <div class="review-date">02/05/2025</div>
                         </div>
                         <div class="review-text">
                             Companheira de viagem perfeita! Sempre com bom humor e disposta a novas aventuras. Já estamos planejando nossa próxima viagem juntas.
@@ -556,7 +556,7 @@
             <div class="footer-content">
                 <div class="footer-column">
                     <h3>Caroneiro</h3>
-                    <p>Conectando viajantes desde 2023</p>
+                    <p>Conectando viajantes desde 2025</p>
                     <div class="social-icons">
                         <a href="#" class="social-icon">FB</a>
                         <a href="#" class="social-icon">IG</a>
@@ -575,15 +575,15 @@
                 <div class="footer-column">
                     <h3>Suporte</h3>
                     <ul>
-                        <li><a href="#">Ajuda</a></li>
-                        <li><a href="#">Contato</a></li>
-                        <li><a href="#">Política de Privacidade</a></li>
-                        <li><a href="#">Termos de Uso</a></li>
+                           <li><a href="ajuda.html">Ajuda</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                        <li><a href="privacidade.html">Política de Privacidade</a></li>
+                        <li><a href="termos.html">Termos de Uso</a></li>
                     </ul>
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2023 Caroneiro. Todos os direitos reservados.</p>
+                <p>&copy; 2025 Caroneiro. Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>
@@ -740,14 +740,14 @@
                     {
                         id: 1,
                         destination: "Florianópolis - SC",
-                        dates: "15 a 22 de Julho, 2023",
+                        dates: "15 a 22 de Julho, 2025",
                         description: "Buscando companhia",
                         icon: "✈️"
                     },
                     {
                         id: 2,
                         destination: "Chapada Diamantina - BA",
-                        dates: "10 a 18 de Setembro, 2023",
+                        dates: "10 a 18 de Setembro, 2025",
                         description: "Grupo formado",
                         icon: "🏔️"
                     }
@@ -756,7 +756,7 @@
                     {
                         id: 3,
                         destination: "Rio de Janeiro - RJ",
-                        dates: "Março, 2023",
+                        dates: "Março, 2025",
                         description: "7 dias • Com 2 companheiros",
                         icon: "🏖️"
                     },
@@ -844,8 +844,67 @@
                 return;
             }
             
-            // Carregar dados do perfil
-            carregarPerfil(usuarioLogado);
+            // No script da página perfil.html, substitua a função carregarPerfil por:
+
+function carregarPerfil(usuario) {
+    // Verificar se há um parâmetro de usuário na URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const userParam = urlParams.get('user');
+    
+    // Se houver um parâmetro, carregar o perfil correspondente
+    if (userParam) {
+        const userProfiles = {
+            'carolina': {
+                nome: 'Carolina Silva',
+                bio: 'Aventureira de plantão! Amo conhecer novos lugares, culturas e pessoas. Já visitei 15 países e não pretendo parar por aí. Buscando companhia para explorar a América do Sul.',
+                foto: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+                viagens: 8,
+                amigos: 24,
+                avaliacoes: 12
+            },
+            'rafael': {
+                nome: 'Rafael Costa',
+                bio: 'Fotógrafo e mochileiro. Adoro explorar lugares fora do comum e capturar momentos únicos. Sempre em busca da próxima aventura!',
+                foto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+                viagens: 12,
+                amigos: 18,
+                avaliacoes: 8
+            },
+            'juliana': {
+                nome: 'Juliana Mendes',
+                bio: 'Viajante cultural, buscando conhecer a história de cada lugar. Adoro museus, arquitetura e culinária local. Vamos explorar juntos?',
+                foto: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+                viagens: 6,
+                amigos: 32,
+                avaliacoes: 15
+            }
+        };
+        
+        const profile = userProfiles[userParam];
+        if (profile) {
+            document.getElementById('profile-name').textContent = profile.nome;
+            document.getElementById('profile-bio').textContent = profile.bio;
+            document.getElementById('profile-avatar').src = profile.foto;
+            document.getElementById('trips-count').textContent = profile.viagens;
+            document.getElementById('friends-count').textContent = profile.amigos;
+            document.getElementById('reviews-count').textContent = profile.avaliacoes;
+            return;
+        }
+    }
+    
+    // Se não houver parâmetro ou o perfil não for encontrado, carregar o perfil do usuário logado
+    if (usuario.nome) {
+        document.getElementById('profile-name').textContent = usuario.nome;
+    }
+    
+    if (usuario.bio) {
+        document.getElementById('profile-bio').textContent = usuario.bio;
+    }
+    
+    if (usuario.foto) {
+        document.getElementById('profile-avatar').src = usuario.foto;
+    }
+}
             
             // Configurar eventos
             configurarEventos();
