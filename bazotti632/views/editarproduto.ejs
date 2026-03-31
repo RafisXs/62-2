@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Produto</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<h1>Editar Produto</h1>
+
+<form action="/produtos/editar/<%= produto.id %>" method="POST">
+    <input name="nome" value="<%= produto.nome %>" required>
+    <input name="preco" value="<%= produto.preco %>" required>
+    <button>Salvar</button>
+</form>
+
+<a href="/produtos">Voltar</a>
+
+</body>
+</html>
