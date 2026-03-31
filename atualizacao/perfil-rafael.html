@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rafael Costa - Caroneiro</title>
+    <link rel="stylesheet" href="perfis.css">
+</head>
+<body>
+    <!-- Header/Navegação -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <a href="index.html" class="logo">Caroneiro<span>.</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="index.html#destinos">Destinos</a></li>
+                        <li><a href="index.html#viajantes">Viajantes</a></li>
+                        <li><a href="grupos.html">Grupos</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-secondary">Entrar</a>
+                    <a href="cadastro.html" class="btn btn-primary">Cadastrar</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Perfil do Viajante -->
+    <section class="profile-hero">
+        <div class="container">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Rafael Costa">
+                </div>
+                <div class="profile-info">
+                    <h1>Rafael Costa</h1>
+                    <p class="profile-location">Belo Horizonte, MG</p>
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <span class="stat-number">8</span>
+                            <span class="stat-label">Países</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">16</span>
+                            <span class="stat-label">Viagens</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="followers-count">12</span>
+                            <span class="stat-label">Seguidores</span>
+                        </div>
+                    </div>
+                    <div class="profile-actions">
+                        <a href="chat.html?user=rafael" class="btn btn-primary">Enviar Mensagem</a>
+                        <button class="btn btn-secondary" id="follow-btn">Seguir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="profile-content">
+        <div class="container">
+            <div class="profile-grid">
+                <div class="profile-main">
+                    <div class="profile-section">
+                        <h2>Sobre Mim</h2>
+                        <p>Fotógrafo e mochileiro. Adoro explorar lugares fora do comum e capturar momentos únicos através das lentes. Minha paixão é documentar culturas tradicionais e paisagens intocadas.</p>
+                        <p>Trabalho como fotógrafo freelance, o que me permite viajar com frequência. Já expus meu trabalho em duas galerias e tenho um blog sobre viagens e fotografia com mais de 10 mil seguidores.</p>
+                    </div>
+
+                    <div class="profile-section">
+                        <h2>Próximas Viagens</h2>
+                        <div class="trip-cards">
+                            <div class="trip-card">
+                                <div class="trip-image" style="background-image: url('https://images.unsplash.com/photo-1621359440164-b7405876fd7a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');"></div>
+                                <div class="trip-info">
+                                    <h3>Chapada Diamantina</h3>
+                                    <p class="trip-date">5 a 12 de Agosto, 2025</p>
+                                    <p class="trip-description">Expedição fotográfica pelas cachoeiras e trilhas. Vagas para 2 acompanhantes.</p>
+                                    <div class="trip-status">
+                                        <span class="status limited">Vagas limitadas</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trip-card">
+                                <div class="trip-image" style="background-image: url('https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80');"></div>
+                                <div class="trip-info">
+                                    <h3>Gramado</h3>
+                                    <p class="trip-date">15 a 20 de Setembro, 2025</p>
+                                    <p class="trip-description">Capturando a atmosfera europeia no Brasil durante o festival de cinema.</p>
+                                    <div class="trip-status">
+                                        <span class="status open">Aceitando companhia</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-section">
+                        <h2>Interesses de Viagem</h2>
+                        <div class="interests">
+                            <span class="interest-tag">Fotografia</span>
+                            <span class="interest-tag">Culturas Tradicionais</span>
+                            <span class="interest-tag">Trilhas</span>
+                            <span class="interest-tag">Mochilão</span>
+                            <span class="interest-tag">Natureza</span>
+                            <span class="interest-tag">Aventura</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-sidebar">
+                    <div class="sidebar-section">
+                        <h3>Detalhes</h3>
+                        <div class="detail-item">
+                            <strong>Idade:</strong> 32 anos
+                        </div>
+                        <div class="detail-item">
+                            <strong>Profissão:</strong> Fotógrafo Freelance
+                        </div>
+                        <div class="detail-item">
+                            <strong>Idiomas:</strong> Português, Inglês
+                        </div>
+                        <div class="detail-item">
+                            <strong>Estilo de Viagem:</strong> Mochilão/Aventura
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>Equipamentos</h3>
+                        <ul class="destinations-list">
+                            <li>Câmera Sony A7III</li>
+                            <li>Lentes 16-35mm, 24-70mm</li>
+                            <li>Drone DJI Mavic Air 2</li>
+                            <li>Tripé Manfrotto</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>Avaliações</h3>
+                        <div class="rating">
+                            <div class="stars">★★★★★</div>
+                            <div class="rating-count">4.8 (16 avaliações)</div>
+                        </div>
+                        <div class="review">
+                            <p>"Rafael tem um olhar incrível para paisagens e nos mostrou ângulos que nunca teríamos visto sozinhos."</p>
+                            <div class="review-author">- Mariana T.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Caroneiro</h3>
+                    <p>Conectando viajantes desde 2025</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">FB</a>
+                        <a href="#" class="social-icon">IG</a>
+                        <a href="#" class="social-icon">TW</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="sobre.html">Sobre o Projeto</a></li>
+                        <li><a href="perfil.html">Meu Perfil</a></li>
+                        <li><a href="chat.html">Chat</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Suporte</h3>
+                    <ul>
+                           <li><a href="ajuda.html">Ajuda</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                        <li><a href="privacidade.html">Política de Privacidade</a></li>
+                        <li><a href="termos.html">Termos de Uso</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Caroneiro. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notificação -->
+    <div id="notification" class="notification">
+        <span id="notification-text"></span>
+    </div>
+
+    <script>
+        // Sistema de Seguir/Deixar de Seguir
+        document.addEventListener('DOMContentLoaded', function() {
+            const followBtn = document.getElementById('follow-btn');
+            const followersCount = document.getElementById('followers-count');
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notification-text');
+            
+            // Verificar se já está seguindo (do localStorage)
+            let isFollowing = localStorage.getItem('following-rafael') === 'true';
+            let followers = 12; // Contador inicial
+            
+            // Atualizar estado do botão
+            function updateFollowButton() {
+                if (isFollowing) {
+                    followBtn.textContent = 'Seguindo';
+                    followBtn.classList.remove('btn-secondary');
+                    followBtn.classList.add('btn-following');
+                } else {
+                    followBtn.textContent = 'Seguir';
+                    followBtn.classList.remove('btn-following');
+                    followBtn.classList.add('btn-secondary');
+                }
+                followersCount.textContent = followers;
+            }
+            
+            // Mostrar notificação
+            function showNotification(message) {
+                notificationText.textContent = message;
+                notification.classList.add('show');
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+            
+            // Evento de clique no botão Seguir
+            followBtn.addEventListener('click', function() {
+                if (isFollowing) {
+                    // Deixar de seguir
+                    isFollowing = false;
+                    followers--;
+                    localStorage.setItem('following-rafael', 'false');
+                    showNotification('Você deixou de seguir Rafael Costa');
+                } else {
+                    // Seguir
+                    isFollowing = true;
+                    followers++;
+                    localStorage.setItem('following-rafael', 'true');
+                    showNotification('Você começou a seguir Rafael Costa');
+                }
+                updateFollowButton();
+            });
+            
+            // Inicializar botão
+            updateFollowButton();
+        });
+    </script>
+</body>
+</html>
